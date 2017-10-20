@@ -1,0 +1,37 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 曜日ラベル -->
+    <style name="CalendarDayOfWeekLabelStyle" parent="android:Widget.TextView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/calendar_day_of_week_label</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">@dimen/calendar_day_of_week_label_margin</item>
+        <item name="android:paddingBottom">@dimen/calendar_day_of_week_label_margin</item>
+    </style>
+
+    <style name="CalendarWeekDayDayOfWeekLabelStyle" parent="CalendarDayOfWeekLabelStyle">
+        <item name="android:background">#909090</item>
+    </style>
+
+    <style name="CalendarSaturdayDayOfWeekLabelStyle" parent="CalendarDayOfWeekLabelStyle">
+        <item name="android:background">#9090ff</item>
+    </style>
+
+    <style name="CalendarSundayDayOfWeekLabelStyle" parent="CalendarDayOfWeekLabelStyle">
+        <item name="android:background">#ff9090</item>
+    </style>
+
+    <!-- 日付 -->
+    <style name="CalendarDayMainLayoutStyle" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/calendar_border_width</item>
+        <item name="android:layout_marginRight">@dimen/calendar_border_width</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/white_view_background</item>
+    </style>
+
+</resources>

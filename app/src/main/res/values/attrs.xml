@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="description_button_view">
+        <attr name="text" format="string"/>
+        <attr name="description" format="string"/>
+        <attr name="drawableLeft" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="calendar_view">
+        <attr name="year" format="integer"/>
+        <attr name="month" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="template_header_view">
+        <attr name="header_icon" format="reference"/>
+        <attr name="header_title" format="string"/>
+    </declare-styleable>
+</resources>

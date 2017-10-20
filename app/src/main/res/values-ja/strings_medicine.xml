@@ -1,0 +1,35 @@
+<resources>
+    <string name="input_title_person">薬を飲む人の名前</string>
+    <string name="input_title_medicine_name">薬の名前</string>
+    <string name="input_title_medicine_start_day">薬を飲み始める日付</string>
+    <string name="input_title_medicine_start_time">薬を飲み始める時間</string>
+    <string name="input_title_medicine_timetables">薬を飲むタイミング</string>
+    <string name="input_title_medicine_take_number">1回の量</string>
+    <string name="input_title_medicine_unit">薬の単位</string>
+    <string name="input_title_medicine_interval">薬を飲む間隔</string>
+    <string name="input_title_medicine_date_number">薬を飲む日数</string>
+
+    <string name="button_alarm">飲み忘れ防止アラーム</string>
+    <string name="button_camera">カメラで撮影</string>
+    <string name="button_gallery">撮影済みの\n写真から選択</string>
+
+    <string name="label_days">%1$s 日間</string>
+    <string name="day_1">1</string>
+    <string name="day_2">2</string>
+    <string name="day_3">3</string>
+    <string name="day_4_over">%1$s</string>
+    <string name="interval_title_every"/>
+    <string name="interval_title_day">日</string>
+    <string name="interval_title_days">日おき</string>
+    <string name="interval_title_month">毎月</string>
+    <string name="interval_every_day">毎日</string>
+    <string name="interval_every_other_day">1日おき</string>
+    <string name="interval_every_few_days">%1$s日おき</string>
+    <string name="interval_every_month">毎月 %1$s日</string>
+
+    <string name="interval_minute">%1$s分</string>
+    <string name="interval_hour">%1$s時間</string>
+    <string name="interval_minutes">%1$s分</string>
+    <string name="interval_hours">%1$s時間</string>
+    <string name="interval_default">1</string>
+</resources>

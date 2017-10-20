@@ -1,0 +1,73 @@
+<resources>
+    <string name="app_name">メディチェック</string>
+
+    <string name="timing_morning">朝</string>
+    <string name="timing_noon">昼</string>
+    <string name="timing_night">夜</string>
+    <string name="timing_before_sleep">就寝前</string>
+
+    <string name="timing_before_breakfast">朝食前</string>
+    <string name="timing_before_lunch">昼食前</string>
+    <string name="timing_before_dinner">夕食前</string>
+
+    <string name="timing_after_breakfast">朝食後</string>
+    <string name="timing_after_lunch">昼食後</string>
+    <string name="timing_after_dinner">夕食後</string>
+
+    <string name="timing_between_meals_morning">食間(朝食 - 昼食)</string>
+    <string name="timing_between_meals_afternoon">食間(昼食 - 夕食)</string>
+
+    <string name="person_self">自分</string>
+
+    <string name="notification_medicine_title">お薬の時間です</string>
+
+    <string name="label_minutes">分</string>
+    <string name="label_hours">時間</string>
+    <string name="label_name">名前</string>
+    <string name="label_start_day">始める日</string>
+    <string name="label_timetables">タイミング</string>
+    <string name="label_take_number">1回の量</string>
+    <string name="label_photo">写真</string>
+    <string name="label_alarm">アラーム</string>
+    <string name="label_interval">飲む間隔</string>
+    <string name="label_date_number">日数</string>
+    <string name="label_add">新しく登録する</string>
+    <string name="label_add_short">新規追加</string>
+
+    <string name="button_today_medicine">今日のお薬</string>
+    <string name="button_description_today_medicine">薬を飲んだらココ</string>
+    <string name="button_register_medicine">お薬の登録</string>
+    <string name="button_description_register_medicine">お薬をもらったらココ</string>
+    <string name="button_list_medicine">お薬の一覧</string>
+    <string name="button_description_list_medicine">お薬の削除はココ</string>
+    <string name="button_history_medicine">服用履歴</string>
+    <string name="button_description_history_medicine">飲んだお薬の履歴を見るにはココ</string>
+    <string name="button_setting">設定</string>
+    <string name="button_description_setting">人・服用時刻・アラームの変更はココ</string>
+    <string name="button_one_shot">頓服薬</string>
+
+    <string name="button_register_new_medicine">新しい薬を登録</string>
+    <string name="button_description_register_new_medicine">新しい薬をもらったらココ</string>
+    <string name="button_register_copy_medicine">前の薬をコピー</string>
+    <string name="button_description_register_copy_medicine">前と同じ薬をもらったらココ</string>
+
+    <string name="button_menu">メニューへ戻る</string>
+    <string name="button_previous_day">前の日</string>
+    <string name="button_next_day">次の日</string>
+    <string name="button_calendar">カレンダー</string>
+    <string name="button_previous_month">前の月</string>
+    <string name="button_next_month">次の月</string>
+    <string name="button_register">登録する</string>
+
+    <string name="label_person_name">飲む人</string>
+
+    <string name="calendar_sun">日</string>
+    <string name="calendar_mon">月</string>
+    <string name="calendar_tue">火</string>
+    <string name="calendar_wed">水</string>
+    <string name="calendar_thu">木</string>
+    <string name="calendar_fri">金</string>
+    <string name="calendar_sat">土</string>
+
+    <string name="medicine_unit_1">つ</string>
+</resources>

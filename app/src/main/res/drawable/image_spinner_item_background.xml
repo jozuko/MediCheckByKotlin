@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:drawable="@color/check_list_item_background"
+        android:state_pressed="false"
+        android:state_selected="false"/>
+
+    <item
+        android:drawable="@color/check_list_item_pressed_background"
+        android:state_selected="true"/>
+
+    <item
+        android:drawable="@color/check_list_item_pressed_background"
+        android:state_pressed="true"/>
+
+</selector>

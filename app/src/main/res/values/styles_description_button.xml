@@ -1,0 +1,36 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="DescriptionButtonParentStyle" parent="android:Widget">
+        <item name="android:layout_marginBottom">@dimen/input_margin</item>
+        <item name="android:layout_marginTop">@dimen/input_margin</item>
+        <item name="android:background">@drawable/description_button_background_selector</item>
+        <item name="android:padding">@dimen/input_padding</item>
+    </style>
+
+    <style name="DescriptionButtonChildStyle" parent="android:Widget">
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+        <item name="android:focusableInTouchMode">false</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DescriptionButtonImageStyle" parent="DescriptionButtonChildStyle">
+        <item name="android:padding">@dimen/button_description_padding</item>
+    </style>
+
+    <style name="DescriptionButtonTextStyle" parent="DescriptionButtonChildStyle">
+        <item name="android:textColor">@color/button_text</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:padding">@dimen/button_description_padding</item>
+    </style>
+
+    <style name="DescriptionButtonMessageStyle" parent="DescriptionButtonChildStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">@color/button_description_text</item>
+        <item name="android:textSize">@dimen/button_description_text_size</item>
+        <item name="android:padding">@dimen/button_description_padding</item>
+    </style>
+</resources>

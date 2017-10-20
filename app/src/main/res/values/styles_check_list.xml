@@ -1,0 +1,43 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- メインレイアウト -->
+    <style name="CheckListItemLayoutStyle" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/image_spinner_item_background</item>
+        <item name="android:padding">@dimen/input_padding</item>
+    </style>
+
+    <!-- 子要素のbaseスタイル -->
+    <style name="CheckListItemStyle" parent="android:Widget">
+        <item name="android:background">@color/check_list_child_background</item>
+        <item name="android:padding">@dimen/check_list_child_padding</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <!-- 子要素-画像のスタイル -->
+    <style name="CheckListItemImageStyle" parent="CheckListItemStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <!-- 子要素-大きい文字テキストのスタイル -->
+    <style name="CheckListItemBigTextStyle" parent="CheckListItemStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/check_list_child_text</item>
+        <item name="android:textSize">@dimen/check_list_child_big_text_size</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <!-- 子要素-テキストのスタイル -->
+    <style name="CheckListItemNormalTextStyle" parent="CheckListItemStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/check_list_child_text</item>
+        <item name="android:textSize">@dimen/check_list_child_normal_text_size</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+    </style>
+</resources>

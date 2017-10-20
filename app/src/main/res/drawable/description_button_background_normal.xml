@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- shadow -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/button_shadow"/>
+            <corners android:radius="@dimen/button_background_border_radius"/>
+            <padding android:bottom="@dimen/button_shadow_height"/>
+        </shape>
+    </item>
+
+    <!-- face -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/button_background"/>
+            <corners android:radius="@dimen/button_background_border_radius"/>
+            <padding
+                android:bottom="@dimen/button_background_border_padding"
+                android:left="@dimen/button_background_border_padding"
+                android:right="@dimen/button_background_border_padding"
+                android:top="@dimen/button_background_border_padding"/>
+        </shape>
+    </item>
+
+    <!-- border -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/button_background_border_radius"/>
+            <stroke
+                android:width="@dimen/button_background_border"
+                android:color="@color/button_shadow"/>
+        </shape>
+    </item>
+
+</layer-list>

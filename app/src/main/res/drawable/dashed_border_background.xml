@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- line -->
+    <item>
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="@dimen/border_size"
+                android:color="@color/line"
+                android:dashGap="@dimen/border_size"
+                android:dashWidth="@dimen/border_size"/>
+            <padding android:bottom="@dimen/border_size"/>
+        </shape>
+    </item>
+
+    <!-- face -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/background"/>
+        </shape>
+    </item>
+
+</layer-list>
