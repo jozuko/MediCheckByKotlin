@@ -51,11 +51,12 @@ abstract class ATimeType<out C : ATimeType<C>> : ADbType<Long, C>, Comparable<AT
         mValue.set(Calendar.MILLISECOND, 0)
     }
 
-    override fun setContentValue(columnName: String, contentValue: ContentValues) {
-        contentValue.put(columnName, dbValue)
-    }
+    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: ATimeType<*>): Int = dbValue.compareTo(other.dbValue)
+
+    @Suppress("UNCHECKED_CAST")
+    public override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
 
     /**
      * フィールド値と引数の時分を比較する。
@@ -63,5 +64,5 @@ abstract class ATimeType<out C : ATimeType<C>> : ADbType<Long, C>, Comparable<AT
      * @param target 比較する時分
      * @return 一致する場合はtrueを返却する
      */
-    fun equalsTime(target: Calendar): Boolean =if (mValue.get(Calendar.HOUR_OF_DAY) != target.get(Calendar.HOUR_OF_DAY)) false else mValue.get(Calendar.MINUTE) == target.get(Calendar.MINUTE)
+    fun sameTime(target: Calendar): Boolean = if (mValue.get(Calendar.HOUR_OF_DAY) != target.get(Calendar.HOUR_OF_DAY)) false else mValue.get(Calendar.MINUTE) == target.get(Calendar.MINUTE)
 }

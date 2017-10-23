@@ -51,9 +51,16 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
         mValue.set(Calendar.MILLISECOND, 0)
     }
 
-    protected constructor(year: Int, month: Int, date: Int, hourOfDay: Int, minute: Int) {
+    /**
+     * @param year 年
+     * @param month 月(1-12)
+     * @param day 日(1-31)
+     * @param hourOfDay 時間(0-23)
+     * @param minute 分(0-59)
+     */
+    protected constructor(year: Int, month: Int, day: Int, hourOfDay: Int, minute: Int) {
         mValue = Calendar.getInstance()
-        mValue.set(year, month - 1, date, hourOfDay, minute, 0)
+        mValue.set(year, month - 1, day, hourOfDay, minute, 0)
         mValue.set(Calendar.MILLISECOND, 0)
     }
 
@@ -69,11 +76,12 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
         mValue.set(Calendar.MILLISECOND, 0)
     }
 
-    override fun setContentValue(columnName: String, contentValue: ContentValues) {
-        contentValue.put(columnName, dbValue)
-    }
+    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: ADatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
+
+    @Suppress("UNCHECKED_CAST")
+    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
 
     /**
      * フィールドが保持する日時とパラメータの示す日時の差分を分単位で返却する
@@ -104,9 +112,25 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
         return datetimeType
     }
 
-    abstract fun addMinute(minute: Int): C
 
-    abstract fun addDay(day: Int): C
+    fun addMinute(minutes: Int): C {
+        val datetimeType = clone()
+        datetimeType.mValue.add(Calendar.MINUTE, minutes)
 
-    abstract fun addMonth(month: Int): C
+        return datetimeType
+    }
+
+    fun addDay(days: Int): C {
+        val datetimeType = clone()
+        datetimeType.mValue.add(Calendar.DAY_OF_MONTH, days)
+
+        return datetimeType
+    }
+
+    fun addMonth(months: Int): C {
+        val datetimeType = clone()
+        datetimeType.mValue.add(Calendar.MONTH, months)
+
+        return datetimeType
+    }
 }
