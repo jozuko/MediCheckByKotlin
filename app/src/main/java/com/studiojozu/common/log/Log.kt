@@ -1,5 +1,7 @@
 package com.studiojozu.common.log
 
+import android.util.Log as AndroidLog
+
 /**
  * ログ出力クラス
  */
@@ -22,7 +24,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @param message ログメッセージ
      */
     fun d(message: String) {
-        android.util.Log.d(tag, message)
+        AndroidLog.d(tag, message)
     }
 
     /**
@@ -31,7 +33,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @param message ログメッセージ
      */
     fun i(message: String) {
-        android.util.Log.i(tag, message)
+        AndroidLog.i(tag, message)
     }
 
     /**
@@ -40,7 +42,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @param throwable 例外
      */
     fun i(throwable: Throwable) {
-        android.util.Log.i(tag, getThrowableMessage(throwable), throwable)
+        AndroidLog.i(tag, getThrowableMessage(throwable), throwable)
     }
 
     /**
@@ -49,7 +51,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @param message ログメッセージ
      */
     fun w(message: String) {
-        android.util.Log.w(tag, message)
+        AndroidLog.w(tag, message)
     }
 
     /**
@@ -58,7 +60,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @param throwable 例外
      */
     fun e(throwable: Throwable) {
-        android.util.Log.e(tag, getThrowableMessage(throwable), throwable)
+        AndroidLog.e(tag, getThrowableMessage(throwable), throwable)
     }
 
     /**
