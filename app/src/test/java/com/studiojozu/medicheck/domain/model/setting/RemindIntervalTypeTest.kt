@@ -1,3 +1,5 @@
+@file:Suppress("FunctionName")
+
 package com.studiojozu.medicheck.domain.model.setting
 
 import android.content.ContentValues
@@ -9,93 +11,91 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import java.util.*
-import kotlin.reflect.KProperty1
-import kotlin.reflect.full.memberProperties
-import kotlin.reflect.jvm.isAccessible
 
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class RemindIntervalTypeTest {
+class RemindIntervalTypeTest : ATestParent() {
+    private val mValueProperty = findProperty(RemindIntervalType::class, "mValue")
 
     @Test
     @Throws(Exception::class)
-    fun constractor_NoParameter() {
+    fun constructor_NoParameter() {
         val remindIntervalType = RemindIntervalType()
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, findProperty("mValue").call(remindIntervalType))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, mValueProperty.call(remindIntervalType))
     }
 
     @Test
     @Throws(Exception::class)
-    fun constractor_RemindIntervalPattern() {
+    fun constructor_RemindIntervalPattern() {
         var param: RemindIntervalType.RemindIntervalPattern = RemindIntervalType.RemindIntervalPattern.MINUTE_1
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
 
         param = RemindIntervalType.RemindIntervalPattern.MINUTE_5
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
 
         param = RemindIntervalType.RemindIntervalPattern.MINUTE_10
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
 
         param = RemindIntervalType.RemindIntervalPattern.MINUTE_15
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
 
         param = RemindIntervalType.RemindIntervalPattern.MINUTE_30
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
 
         param = RemindIntervalType.RemindIntervalPattern.HOUR_1
-        assertEquals(param, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(param, mValueProperty.call(RemindIntervalType(param)))
     }
 
     @Test
     @Throws(Exception::class)
-    fun constractor_Long() {
+    fun constructor_Long() {
         var param: Long = 1
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_1, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_1, mValueProperty.call(RemindIntervalType(param)))
 
         param = 5
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, mValueProperty.call(RemindIntervalType(param)))
 
         param = 10
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_10, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_10, mValueProperty.call(RemindIntervalType(param)))
 
         param = 15
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_15, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_15, mValueProperty.call(RemindIntervalType(param)))
 
         param = 30
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_30, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_30, mValueProperty.call(RemindIntervalType(param)))
 
         param = 60
-        assertEquals(RemindIntervalType.RemindIntervalPattern.HOUR_1, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.HOUR_1, mValueProperty.call(RemindIntervalType(param)))
     }
 
     @Test
     @Throws(Exception::class)
-    fun constractor_Int() {
+    fun constructor_Int() {
         @Suppress("RedundantExplicitType")
         var param: Int = 1
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_1, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_1, mValueProperty.call(RemindIntervalType(param)))
 
         param = 5
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_5, mValueProperty.call(RemindIntervalType(param)))
 
         param = 10
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_10, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_10, mValueProperty.call(RemindIntervalType(param)))
 
         param = 15
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_15, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_15, mValueProperty.call(RemindIntervalType(param)))
 
         param = 30
-        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_30, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_30, mValueProperty.call(RemindIntervalType(param)))
 
         param = 60
-        assertEquals(RemindIntervalType.RemindIntervalPattern.HOUR_1, findProperty("mValue").call(RemindIntervalType(param)))
+        assertEquals(RemindIntervalType.RemindIntervalPattern.HOUR_1, mValueProperty.call(RemindIntervalType(param)))
     }
 
     @Test
     @Throws(Exception::class)
-    fun constractor_Unknown() {
+    fun constructor_Unknown() {
         try {
             RemindIntervalType("1")
             fail()
@@ -154,15 +154,15 @@ class RemindIntervalTypeTest {
     fun compareTo() {
         var remindIntervalType1 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1)
         var remindIntervalType2 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1)
-        assertTrue(remindIntervalType1.compareTo(remindIntervalType2) == 0)
+        assertTrue(remindIntervalType1 == remindIntervalType2)
 
         remindIntervalType1 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1)
         remindIntervalType2 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5)
-        assertTrue(remindIntervalType1.compareTo(remindIntervalType2) < 0)
+        assertTrue(remindIntervalType1 < remindIntervalType2)
 
         remindIntervalType1 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1)
         remindIntervalType2 = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1)
-        assertTrue(remindIntervalType1.compareTo(remindIntervalType2) > 0)
+        assertTrue(remindIntervalType1 > remindIntervalType2)
     }
 
     @Test
@@ -211,11 +211,5 @@ class RemindIntervalTypeTest {
         valueMap.entries.forEach { (k, v) ->
             assertEquals(expectMap[k], v)
         }
-    }
-
-    private fun findProperty(name: String): KProperty1<*, *> {
-        val mValueProperty = RemindIntervalType::class.memberProperties.find { it.name == name }
-        mValueProperty!!.isAccessible = true
-        return mValueProperty
     }
 }
