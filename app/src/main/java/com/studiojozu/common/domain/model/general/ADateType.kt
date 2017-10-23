@@ -8,10 +8,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
-/**
- * 日付を表す型クラス
- */
-abstract class DateType<C : DateType<C>> : ADbType<Long, C>, Comparable<DateType<*>> {
+abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<ADateType<*>> {
     companion object {
         private val serialVersionUID = 5505479830648039872L
     }
@@ -31,8 +28,8 @@ abstract class DateType<C : DateType<C>> : ADbType<Long, C>, Comparable<DateType
         val timeInMillis = when (millisecond) {
             is Long -> millisecond
             is Calendar -> millisecond.timeInMillis
-            is DateType<*> -> millisecond.dbValue
-            is DatetimeType<*> -> millisecond.dbValue
+            is ADateType<*> -> millisecond.dbValue
+            is ADatetimeType<*> -> millisecond.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
@@ -54,7 +51,7 @@ abstract class DateType<C : DateType<C>> : ADbType<Long, C>, Comparable<DateType
         contentValue.put(columnName, dbValue)
     }
 
-    override fun compareTo(other: DateType<*>): Int =dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ADateType<*>): Int =dbValue.compareTo(other.dbValue)
 
     /**
      * フィールド値と引数の年月日を比較する。

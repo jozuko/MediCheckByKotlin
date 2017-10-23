@@ -6,10 +6,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * 時間を表す型クラス
- */
-abstract class TimeType<C : TimeType<C>> : ADbType<Long, C>, Comparable<TimeType<*>> {
+abstract class ATimeType<out C : ATimeType<C>> : ADbType<Long, C>, Comparable<ATimeType<*>> {
     companion object {
         private val serialVersionUID = 2498883479425278479L
     }
@@ -29,8 +26,8 @@ abstract class TimeType<C : TimeType<C>> : ADbType<Long, C>, Comparable<TimeType
         val timeInMillis = when (millisecond) {
             is Long -> millisecond
             is Calendar -> millisecond.timeInMillis
-            is TimeType<*> -> millisecond.dbValue
-            is DatetimeType<*> -> millisecond.dbValue
+            is ATimeType<*> -> millisecond.dbValue
+            is ADatetimeType<*> -> millisecond.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
@@ -58,7 +55,7 @@ abstract class TimeType<C : TimeType<C>> : ADbType<Long, C>, Comparable<TimeType
         contentValue.put(columnName, dbValue)
     }
 
-    override fun compareTo(other: TimeType<*>): Int = dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ATimeType<*>): Int = dbValue.compareTo(other.dbValue)
 
     /**
      * フィールド値と引数の時分を比較する。

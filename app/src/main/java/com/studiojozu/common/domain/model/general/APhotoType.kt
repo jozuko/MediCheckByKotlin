@@ -4,10 +4,7 @@ import android.net.Uri
 
 import java.io.File
 
-/**
- * 写真パスを管理するクラス
- */
-abstract class PhotoType<C : PhotoType<C>> : TextType<C> {
+abstract class APhotoType<out C : APhotoType<C>> : ATextType<C> {
     companion object {
         private val serialVersionUID = 4343775991858053805L
     }

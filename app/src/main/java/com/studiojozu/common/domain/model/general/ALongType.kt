@@ -4,10 +4,7 @@ import android.content.ContentValues
 
 import com.studiojozu.common.domain.model.ADbType
 
-/**
- * longの型クラス
- */
-class LongType<C : LongType<C>> @JvmOverloads protected constructor(value: Any = 0L) : ADbType<Long, C>(), Comparable<LongType<*>> {
+abstract class ALongType<out C : ALongType<C>> @JvmOverloads protected constructor(value: Any = 0L) : ADbType<Long, C>(), Comparable<ALongType<*>> {
     companion object {
         private val serialVersionUID = 7610652992905703415L
     }
@@ -28,5 +25,5 @@ class LongType<C : LongType<C>> @JvmOverloads protected constructor(value: Any =
         contentValue.put(columnName, dbValue)
     }
 
-    override fun compareTo(other: LongType<*>): Int = dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ALongType<*>): Int = dbValue.compareTo(other.dbValue)
 }

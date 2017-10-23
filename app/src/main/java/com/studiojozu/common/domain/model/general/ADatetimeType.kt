@@ -6,10 +6,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-/**
- * 時間を表す型クラス
- */
-abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<DatetimeType<*>> {
+abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Comparable<ADatetimeType<*>> {
     companion object {
         private val serialVersionUID = 3758376193729504494L
     }
@@ -44,7 +41,7 @@ abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<
         val timeInMillis: Long = when (millisecond) {
             is Long -> millisecond
             is Calendar -> millisecond.timeInMillis
-            is DatetimeType<*> -> millisecond.dbValue
+            is ADatetimeType<*> -> millisecond.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
@@ -60,7 +57,7 @@ abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<
         mValue.set(Calendar.MILLISECOND, 0)
     }
 
-    protected constructor(dateModel: DateType<*>, timeModel: TimeType<*>) {
+    protected constructor(dateModel: ADateType<*>, timeModel: ATimeType<*>) {
         val dateCalendar = Calendar.getInstance()
         dateCalendar.timeInMillis = dateModel.dbValue
 
@@ -76,7 +73,7 @@ abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<
         contentValue.put(columnName, dbValue)
     }
 
-    override fun compareTo(other: DatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ADatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
 
     /**
      * フィールドが保持する日時とパラメータの示す日時の差分を分単位で返却する
@@ -84,7 +81,7 @@ abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<
      * @param other 差分を求める日時
      * @return 差分
      */
-    fun diffMinutes(other: DatetimeType<*>): Long {
+    fun diffMinutes(other: ADatetimeType<*>): Long {
         val targetCalendar = Calendar.getInstance()
         targetCalendar.timeInMillis = other.dbValue
 
@@ -99,7 +96,7 @@ abstract class DatetimeType<C : DatetimeType<C>> : ADbType<Long, C>, Comparable<
      * @param minute    分
      * @return 時分を置き換えたクローンインスタンス
      */
-    fun setHourMinute(hourOfDay: Int, minute: Int): DatetimeType<*> {
+    fun setHourMinute(hourOfDay: Int, minute: Int): ADatetimeType<*> {
         val datetimeType = clone()
         datetimeType.mValue.set(Calendar.HOUR_OF_DAY, hourOfDay)
         datetimeType.mValue.set(Calendar.MINUTE, minute)

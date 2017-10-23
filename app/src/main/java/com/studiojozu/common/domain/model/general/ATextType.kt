@@ -3,13 +3,8 @@ package com.studiojozu.common.domain.model.general
 import android.content.ContentValues
 
 import com.studiojozu.common.domain.model.ADbType
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
-/**
- * intの型クラス
- */
-abstract class TextType<C : TextType<C>> : ADbType<String, C>, Comparable<TextType<*>> {
+abstract class ATextType<out C : ATextType<C>> : ADbType<String, C>, Comparable<ATextType<*>> {
     companion object {
         private val serialVersionUID = -4630676994700703038L
     }
@@ -38,5 +33,5 @@ abstract class TextType<C : TextType<C>> : ADbType<String, C>, Comparable<TextTy
         contentValue.put(columnName, dbValue)
     }
 
-    override fun compareTo(other: TextType<*>): Int =dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ATextType<*>): Int =dbValue.compareTo(other.dbValue)
 }
