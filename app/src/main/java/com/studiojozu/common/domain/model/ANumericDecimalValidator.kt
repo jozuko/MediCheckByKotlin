@@ -8,7 +8,10 @@ import org.jetbrains.annotations.Contract
 
 import java.math.BigDecimal
 
-abstract class ANumericDecimalValidator protected constructor(private val mMin: BigDecimal, private val mMax: BigDecimal, private val mAllowMinValue: Boolean, private val mAllowMaxValue: Boolean) : IValidator {
+abstract class ANumericDecimalValidator protected constructor(mMin: BigDecimal, mMax: BigDecimal, private val mAllowMinValue: Boolean, private val mAllowMaxValue: Boolean) : IValidator {
+
+    private val mMin: BigDecimal = if (mMin < mMax) mMin else mMax
+    private val mMax: BigDecimal = if (mMin < mMax) mMax else mMin
 
     @StringRes
     override fun validate(vararg validateTargets: Any): Int {
@@ -26,13 +29,11 @@ abstract class ANumericDecimalValidator protected constructor(private val mMin: 
         return if (!checkRange(BigDecimal(data))) R.string.validation_out_of_range else IValidator.NO_ERROR_RESOURCE_ID
     }
 
-    private fun isNumeric(data: String): Boolean {
-        return try {
-            BigDecimal(data)
-            true
-        } catch (e: NumberFormatException) {
-            false
-        }
+    private fun isNumeric(data: String): Boolean = try {
+        BigDecimal(data)
+        true
+    } catch (e: NumberFormatException) {
+        false
     }
 
     @Contract(pure = true)
