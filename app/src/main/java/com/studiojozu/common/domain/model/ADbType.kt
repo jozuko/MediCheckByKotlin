@@ -7,7 +7,7 @@ import java.io.Serializable
 abstract class ADbType<out T, out C : ADbType<T, C>> : Serializable, Cloneable {
 
     companion object {
-        private const val serialVersionUID = -7199799314817003653L
+        const val serialVersionUID = -7199799314817003653L
     }
 
     /**
