@@ -58,7 +58,7 @@ class RemindIntervalType @JvmOverloads constructor(mIntervalMinutes: Any = Remin
 
     companion object {
 
-        private val serialVersionUID = -2200953636883165844L
+        const val serialVersionUID = -2200953636883165844L
 
         /**
          * 選択肢のIDとなる分とそれに対応する表示文字列をMapで返却する
