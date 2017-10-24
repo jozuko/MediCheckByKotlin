@@ -1,7 +1,6 @@
-package com.studiojozu.common.domain.model.general
+package com.studiojozu.common.domain.model
 
 import android.content.ContentValues
-import com.studiojozu.common.domain.model.ADbType
 
 class TestDbType(value: Int) : ADbType<Int, TestDbType>() {
 

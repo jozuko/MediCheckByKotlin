@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model
 
-import com.studiojozu.common.domain.model.general.TestDbType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import junit.framework.Assert.*
 import org.junit.Test
