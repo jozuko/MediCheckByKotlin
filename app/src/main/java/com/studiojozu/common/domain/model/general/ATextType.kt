@@ -6,7 +6,7 @@ import com.studiojozu.common.domain.model.ADbType
 
 abstract class ATextType<out C : ATextType<C>> : ADbType<String, C>, Comparable<ATextType<*>> {
     companion object {
-        private val serialVersionUID = -4630676994700703038L
+        const val serialVersionUID = -4630676994700703038L
     }
 
     protected val mValue: String
@@ -22,16 +22,15 @@ abstract class ATextType<out C : ATextType<C>> : ADbType<String, C>, Comparable<
     }
 
     protected constructor(value: Any?) {
-        mValue = when(value) {
-            value === null -> ""
+        mValue = when (value) {
+            null -> ""
             is String -> value
+            is ATextType<*> -> value.mValue
             else -> throw IllegalArgumentException("unknown type.")
         }
     }
 
-    override fun setContentValue(columnName: String, contentValue: ContentValues) {
-        contentValue.put(columnName, dbValue)
-    }
+    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
-    override fun compareTo(other: ATextType<*>): Int =dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ATextType<*>): Int = dbValue.compareTo(other.dbValue)
 }

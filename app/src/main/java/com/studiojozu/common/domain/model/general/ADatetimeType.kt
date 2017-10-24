@@ -8,7 +8,7 @@ import java.util.*
 
 abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Comparable<ADatetimeType<*>> {
     companion object {
-        private val serialVersionUID = 3758376193729504494L
+        const val serialVersionUID = 3758376193729504494L
     }
 
     protected val mValue: Calendar

@@ -6,7 +6,7 @@ import java.io.File
 
 abstract class APhotoType<out C : APhotoType<C>> : ATextType<C> {
     companion object {
-        private val serialVersionUID = 4343775991858053805L
+        const val serialVersionUID = 4343775991858053805L
     }
 
     val photoUri: Uri?
@@ -15,11 +15,12 @@ abstract class APhotoType<out C : APhotoType<C>> : ATextType<C> {
 
             val photoPath = File(dbValue)
             if (!photoPath.exists()) return null
-            return if (!photoPath.canRead()) null else Uri.fromFile(photoPath)
+            if (!photoPath.canRead()) return null
+
+            return Uri.fromFile(photoPath)
         }
 
-    protected constructor() : super("") {}
+    protected constructor() : super()
 
-    protected constructor(value: Any?) : super(value) {}
-
+    protected constructor(value: Any?) : super(value)
 }

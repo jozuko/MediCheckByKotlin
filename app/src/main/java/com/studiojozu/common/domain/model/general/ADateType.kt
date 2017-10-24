@@ -8,7 +8,7 @@ import java.util.*
 
 abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<ADateType<*>> {
     companion object {
-        private val serialVersionUID = 5505479830648039872L
+        const val serialVersionUID = 5505479830648039872L
     }
 
     protected val mValue: Calendar
@@ -47,7 +47,7 @@ abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<AD
 
     override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
-    override fun compareTo(other: ADateType<*>): Int =dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: ADateType<*>): Int = dbValue.compareTo(other.dbValue)
 
     @Suppress("UNCHECKED_CAST")
     override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C

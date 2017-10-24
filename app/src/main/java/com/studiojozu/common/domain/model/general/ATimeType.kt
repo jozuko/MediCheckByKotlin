@@ -8,7 +8,7 @@ import java.util.*
 
 abstract class ATimeType<out C : ATimeType<C>> : ADbType<Long, C>, Comparable<ATimeType<*>> {
     companion object {
-        private val serialVersionUID = 2498883479425278479L
+        const val serialVersionUID = 2498883479425278479L
     }
 
     protected val mValue: Calendar
@@ -56,7 +56,7 @@ abstract class ATimeType<out C : ATimeType<C>> : ADbType<Long, C>, Comparable<AT
     override fun compareTo(other: ATimeType<*>): Int = dbValue.compareTo(other.dbValue)
 
     @Suppress("UNCHECKED_CAST")
-    public override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
+    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
 
     /**
      * フィールド値と引数の時分を比較する。

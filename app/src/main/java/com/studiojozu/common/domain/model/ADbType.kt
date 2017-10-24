@@ -44,5 +44,5 @@ abstract class ADbType<out T, out C : ADbType<T, C>> : Serializable, Cloneable {
     override fun hashCode(): Int = dbValue!!.hashCode()
 
     @Suppress("UNCHECKED_CAST")
-    override fun clone(): C = super.clone() as C
+    override public fun clone(): C = super.clone() as C
 }
