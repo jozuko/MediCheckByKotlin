@@ -2,12 +2,18 @@ package com.studiojozu.common.domain.model
 
 import android.support.annotation.StringRes
 import com.studiojozu.medicheck.R
-import org.jetbrains.annotations.Contract
 
-abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, private val mAllowMinValue: Boolean, private val mAllowMaxValue: Boolean) : IValidator {
+abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : IValidator {
 
-    private val mMin: Long = if (mMin < mMax) mMin else mMax
-    private val mMax: Long = if (mMin < mMax) mMax else mMin
+    private val mMin: Long
+    private val mMax: Long
+
+    init {
+        val min = if (mMin < mMax) mMin else mMax
+        this.mMin = if (mAllowMinValue) min else min.inc()
+        val max = if (mMin < mMax) mMax else mMin
+        this.mMax = if (mAllowMaxValue) max else max.dec()
+    }
 
     @StringRes
     override fun validate(vararg validateTargets: Any): Int {
@@ -22,22 +28,13 @@ abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, p
         if (!isNumeric(data))
             return R.string.validation_numeric
 
-        return if (!checkRange(java.lang.Long.parseLong(data))) R.string.validation_out_of_range else IValidator.NO_ERROR_RESOURCE_ID
+        return if (data.toLong() in mMin..mMax) IValidator.NO_ERROR_RESOURCE_ID else R.string.validation_out_of_range
     }
 
     private fun isNumeric(data: String): Boolean = try {
-        java.lang.Long.parseLong(data)
+        data.toLong()
         true
     } catch (e: NumberFormatException) {
         false
     }
-
-    @Contract(pure = true)
-    private fun checkRange(data: Long): Boolean = compareMinValue(data) && compareMaxValue(data)
-
-    @Contract(pure = true)
-    private fun compareMinValue(data: Long): Boolean = if (mAllowMinValue) data >= mMin else data > mMin
-
-    @Contract(pure = true)
-    private fun compareMaxValue(data: Long): Boolean = if (mAllowMaxValue) data <= mMax else data < mMax
 }
