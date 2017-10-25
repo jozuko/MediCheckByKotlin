@@ -95,13 +95,15 @@ class RemindIntervalTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() {
-        try {
-            RemindIntervalType("1")
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertTrue(true)
-        }
+    fun constructor_RemindIntervalType() = assertEquals(RemindIntervalType.RemindIntervalPattern.MINUTE_1, mValueProperty.call(RemindIntervalType(RemindIntervalType(1))))
+
+    @Test
+    @Throws(Exception::class)
+    fun constructor_Unknown() = try {
+        RemindIntervalType("1")
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertTrue(true)
     }
 
     @Test
@@ -117,13 +119,11 @@ class RemindIntervalTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun displayValue() {
-        try {
-            RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1).displayValue
-            fail()
-        } catch (e: RuntimeException) {
-            assertEquals("you need to call getDisplayValue(TakeIntervalModeType).", e.message)
-        }
+    fun displayValue() = try {
+        RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1).displayValue
+        fail()
+    } catch (e: RuntimeException) {
+        assertEquals("you need to call getDisplayValue(Resources).", e.message)
     }
 
 
