@@ -2,7 +2,6 @@ package com.studiojozu.medicheck.domain.model.setting
 
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.medicheck.domain.model.schedule.PlanDate
-import com.studiojozu.medicheck.domain.model.schedule.PlanDateType
 import java.io.Serializable
 
 /**
@@ -48,8 +47,7 @@ data class Timetable(val mTimetableId: TimetableIdType = TimetableIdType(),
      */
     fun getPlanDateTime(datetimeType: ADatetimeType<*>): PlanDate {
         val planDatetime = mTimetableTime.replaceHourMinute(datetimeType)
-        val planDate = PlanDateType(datetimeType)
-        return PlanDate(planDatetime, planDate, mTimetableId)
+        return PlanDate(planDatetime, mTimetableId)
     }
 
     /**

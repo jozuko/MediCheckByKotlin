@@ -130,8 +130,8 @@ class TimetableTest : ATestParent() {
         entity.setTimetableTime(3, 4)
 
         val actualResult = entity.getPlanDateTime(dateTimeType)
-        assertEquals("12345678", actualResult.timetableId.dbValue)
-        assertEquals(planDateTime.timeInMillis, actualResult.planDatetime.dbValue)
+        assertEquals("12345678", actualResult.mTimetableId.dbValue)
+        assertEquals(planDateTime.timeInMillis, actualResult.mPlanDatetime.dbValue)
         assertEquals(day.timeInMillis, actualResult.planDate.dbValue)
     }
 
