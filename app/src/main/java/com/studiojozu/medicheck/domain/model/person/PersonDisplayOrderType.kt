@@ -4,7 +4,7 @@ import com.studiojozu.common.domain.model.general.ALongType
 
 class PersonDisplayOrderType : ALongType<PersonDisplayOrderType> {
     companion object {
-        private val serialVersionUID = -1248465725190951112L
+        const val serialVersionUID = -1248465725190951112L
     }
 
     constructor() : super()
