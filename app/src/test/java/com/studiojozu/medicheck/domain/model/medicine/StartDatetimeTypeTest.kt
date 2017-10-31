@@ -1,4 +1,4 @@
-package com.studiojozu.medicheck.domain.model.schedule
+package com.studiojozu.medicheck.domain.model.medicine
 
 import com.studiojozu.common.domain.model.general.TestDateType
 import com.studiojozu.common.domain.model.general.TestTimeType
@@ -15,39 +15,47 @@ import java.util.*
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class TookDatetimeTypeTest : ATestParent() {
+class StartDatetimeTypeTest : ATestParent() {
+
+    @Test
+    @Throws(Exception::class)
+    fun constructor_NoParameter() {
+        val startDatetimeType = StartDatetimeType()
+        Assert.assertNotNull(startDatetimeType.dbValue)
+        Assert.assertTrue(0 < startDatetimeType.dbValue)
+    }
 
     @Test
     @Throws(Exception::class)
     fun constructor_Calendar() {
         val now = Calendar.getInstance()
-        val tookDatetimeType = TookDatetimeType(now)
+        val startDatetimeType = StartDatetimeType(now)
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
     fun constructor_Long() {
         val now = Calendar.getInstance()
-        val tookDatetimeType = TookDatetimeType(now.timeInMillis)
+        val startDatetimeType = StartDatetimeType(now.timeInMillis)
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
-    fun constructor_TookDatetimeType() {
+    fun constructor_StartDatetimeType() {
         val now = Calendar.getInstance()
-        val tookDatetimeType = TookDatetimeType(TookDatetimeType(now))
+        val startDatetimeType = StartDatetimeType(StartDatetimeType(now))
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
@@ -59,15 +67,15 @@ class TookDatetimeTypeTest : ATestParent() {
 
         val dateModel = TestDateType(now)
         val timeModel = TestTimeType(now)
-        val tookDatetimeType = TookDatetimeType(dateModel, timeModel)
+        val startDatetimeType = StartDatetimeType(dateModel, timeModel)
 
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
     fun constructor_Unknown() = try {
-        TookDatetimeType("test")
+        StartDatetimeType("test")
         Assert.fail()
     } catch (e: IllegalArgumentException) {
         Assert.assertEquals("unknown type.", e.message)

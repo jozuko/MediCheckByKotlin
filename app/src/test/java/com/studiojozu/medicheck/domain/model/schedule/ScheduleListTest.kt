@@ -2,12 +2,9 @@ package com.studiojozu.medicheck.domain.model.schedule
 
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.common.domain.model.general.TestDatetimeType
-import com.studiojozu.medicheck.domain.model.medicine.Medicine
-import com.studiojozu.medicheck.domain.model.medicine.MedicineDateNumberType
-import com.studiojozu.medicheck.domain.model.medicine.MedicineTimetableList
-import com.studiojozu.medicheck.domain.model.medicine.TakeIntervalModeType
+import com.studiojozu.medicheck.domain.model.medicine.*
 import com.studiojozu.medicheck.domain.model.setting.*
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -72,20 +69,19 @@ class ScheduleListTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getNextStartDatetimeFunction_planDateNull() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-
+        val medicine = Medicine(mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4))
         val scheduleList = ScheduleList()
         val result: ADatetimeType<*> = getNextStartDatetimeFunction.call(scheduleList, medicine, null) as ADatetimeType<*>
-        assertEquals(medicine.startDatetime, result)
+        assertEquals(medicine.mStartDatetime, result)
     }
 
     @Test
     @Throws(Exception::class)
     fun getNextStartDatetimeFunction_notLastTimetable() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3))
+        )
 
         val planDateTime = TestDatetimeType(2017, 1, 2, 7, 0)
         val planDate = PlanDate(mPlanDatetime = planDateTime, mTimetableId = timetable1.mTimetableId)
@@ -98,10 +94,12 @@ class ScheduleListTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getNextStartDatetimeFunction_isLastTimetableIntervalOneDay() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setTakeInterval(1, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                mTakeInterval = TakeIntervalType(0),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val planDateTime = TestDatetimeType(2017, 1, 2, 19, 0)
         val planDate = PlanDate(mPlanDatetime = planDateTime, mTimetableId = timetable3.mTimetableId)
@@ -114,10 +112,12 @@ class ScheduleListTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getNextStartDatetimeFunction_isLastTimetableIntervalTwoDay() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setTakeInterval(2, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                mTakeInterval = TakeIntervalType(1),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val planDateTime = TestDatetimeType(2017, 1, 2, 19, 0)
         val planDate = PlanDate(mPlanDatetime = planDateTime, mTimetableId = timetable3.mTimetableId)
@@ -129,11 +129,13 @@ class ScheduleListTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun getNextStartDatetimeFunction_isLastTimetableIntervalOneMonth() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setTakeInterval(1, TakeIntervalModeType.DateIntervalPattern.MONTH)
+    fun getNextStartDatetimeFunction_isLastTimetableIntervalMonthPattern1() {
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                mTakeInterval = TakeIntervalType(1),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
 
         val planDateTime = TestDatetimeType(2017, 1, 2, 19, 0)
         val planDate = PlanDate(mPlanDatetime = planDateTime, mTimetableId = timetable3.mTimetableId)
@@ -145,11 +147,13 @@ class ScheduleListTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun getNextStartDatetimeFunction_isLastTimetableIntervalTwoMonth() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setTakeInterval(15, TakeIntervalModeType.DateIntervalPattern.MONTH)
+    fun getNextStartDatetimeFunction_isLastTimetableIntervalMonthPattern2() {
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                mTakeInterval = TakeIntervalType(15),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
 
         val planDateTime = TestDatetimeType(2017, 1, 2, 19, 0)
         val planDate = PlanDate(mPlanDatetime = planDateTime, mTimetableId = timetable3.mTimetableId)
@@ -163,7 +167,7 @@ class ScheduleListTest : ATestParent() {
     @Throws(Exception::class)
     fun createScheduleList_OneShotMedicine() {
         val medicine = Medicine()
-        medicine.timetableList.isOneShotMedicine = true
+        medicine.mTimetableList.isOneShotMedicine = true
 
         val scheduleList = ScheduleList()
         scheduleList.createScheduleList(medicine)
@@ -174,11 +178,13 @@ class ScheduleListTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun createScheduleList_SevenDaysThreeTimesInDay() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setDateNumber(7)
-        medicine.setTakeInterval(1, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                mDateNumber = MedicineDateNumberType(7),
+                mTakeInterval = TakeIntervalType(0),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val scheduleList = ScheduleList()
         scheduleList.createScheduleList(medicine)
@@ -275,11 +281,13 @@ class ScheduleListTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun createScheduleList_ThreeDaysOneTimesInTwoDays() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1))
-        medicine.setDateNumber(3)
-        medicine.setTakeInterval(2, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1)),
+                mDateNumber = MedicineDateNumberType(3),
+                mTakeInterval = TakeIntervalType(1),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val scheduleList = ScheduleList()
         scheduleList.createScheduleList(medicine)
@@ -301,14 +309,20 @@ class ScheduleListTest : ATestParent() {
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
+    /**
+     * 開始日 2017/1/2
+     * 毎月 15日
+     */
     @Test
     @Throws(Exception::class)
     fun createScheduleList_OnceAMonthForSixMonths() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1))
-        medicine.setDateNumber(6)
-        medicine.setTakeInterval(15, TakeIntervalModeType.DateIntervalPattern.MONTH)
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1)),
+                mDateNumber = MedicineDateNumberType(6),
+                mTakeInterval = TakeIntervalType(15),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
 
         val scheduleList = ScheduleList()
         scheduleList.createScheduleList(medicine)
@@ -341,4 +355,111 @@ class ScheduleListTest : ATestParent() {
         assertEquals("17/06/15", scheduleListProperty[index].mPlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
+
+    /**
+     * 開始日 2017/10/31
+     * 毎月 15日
+     */
+    @Test
+    @Throws(Exception::class)
+    fun createScheduleList_OnceAMonthForSixMonthsPattern2() {
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 10, 31, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1)),
+                mDateNumber = MedicineDateNumberType(3),
+                mTakeInterval = TakeIntervalType(15),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
+
+        val scheduleList = ScheduleList()
+        scheduleList.createScheduleList(medicine)
+
+        val scheduleListProperty = getScheduleList(scheduleList)
+
+        assertEquals(3, scheduleListProperty.count())
+
+        var index = 0
+        assertEquals("17/11/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 1
+        assertEquals("17/12/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 2
+        assertEquals("18/01/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+    }
+
+    /**
+     * 開始日 2017/1/15
+     * 毎月 31日(月末)
+     */
+    @Test
+    @Throws(Exception::class)
+    fun createScheduleList_OnceAMonthForSixMonthsPattern3() {
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 15, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1)),
+                mDateNumber = MedicineDateNumberType(6),
+                mTakeInterval = TakeIntervalType(31),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
+
+        val scheduleList = ScheduleList()
+        scheduleList.createScheduleList(medicine)
+
+        val scheduleListProperty = getScheduleList(scheduleList)
+
+        assertEquals(6, scheduleListProperty.count())
+
+        var index = 0
+        assertEquals("17/01/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 1
+        assertEquals("17/02/28", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 2
+        assertEquals("17/03/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 3
+        assertEquals("17/04/30", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 4
+        assertEquals("17/05/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+
+        index = 5
+        assertEquals("17/06/30", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun iterate() {
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 10, 31, 3, 4),
+                mTimetableList = MedicineTimetableList(mutableListOf(timetable1)),
+                mDateNumber = MedicineDateNumberType(3),
+                mTakeInterval = TakeIntervalType(15),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
+
+        val scheduleList = ScheduleList()
+        scheduleList.createScheduleList(medicine)
+        val iterator = scheduleList.iterator()
+
+        assertTrue(iterator.hasNext())
+        assertEquals("17/11/15", iterator.next().mPlanDate.displayValue)
+        assertTrue(iterator.hasNext())
+        assertEquals("17/12/15", iterator.next().mPlanDate.displayValue)
+        assertTrue(iterator.hasNext())
+        assertEquals("18/01/15", iterator.next().mPlanDate.displayValue)
+        assertFalse(iterator.hasNext())
+    }
+
 }

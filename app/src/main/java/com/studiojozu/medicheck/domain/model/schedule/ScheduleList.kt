@@ -42,7 +42,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
     private fun clearScheduleList() = mScheduleList.clear()
 
     fun createScheduleList(medicine: Medicine) {
-        val medicineNumber = calculateMedicineNumber(medicine.timetableList, medicine.dateNumber)
+        val medicineNumber = calculateMedicineNumber(medicine.mTimetableList, medicine.mDateNumber)
         createScheduleList(medicine, medicineNumber)
     }
 
@@ -72,10 +72,10 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             val standardDatetime = getNextStartDatetime(medicine, planDate)
 
             // 服用予定日時を取得する
-            planDate = medicine.timetableList.getPlanDate(standardDatetime)
+            planDate = medicine.mTimetableList.getPlanDate(standardDatetime)
 
             // 服用予定日時を一覧に追加する
-            val schedule = Schedule(medicine.medicineId, planDate!!.planDate, planDate.mTimetableId, ScheduleNeedAlarmType(), IsTakeType(), TookDatetimeType())
+            val schedule = Schedule(medicine.mMedicineId, planDate.planDate, planDate.mTimetableId, ScheduleNeedAlarmType(), IsTakeType(), TookDatetimeType())
             mScheduleList.add(schedule)
         }
     }
@@ -88,11 +88,11 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             return getFirstDatetime(medicine)
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻ではなかった場合は予定日時を返却する
-        if (!medicine.timetableList.isFinalTime(planDate.mTimetableId))
+        if (!medicine.mTimetableList.isFinalTime(planDate.mTimetableId))
             return planDate.mPlanDatetime
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻の場合はIntervalを加算する
-        val afterIntervalDateTime = medicine.takeInterval.addInterval(planDate.mPlanDatetime, medicine.takeIntervalMode)
+        val afterIntervalDateTime = medicine.mTakeInterval.addInterval(planDate.mPlanDatetime, medicine.mTakeIntervalMode)
         val nextDay = Calendar.getInstance()
         nextDay.timeInMillis = afterIntervalDateTime.dbValue
         nextDay.set(Calendar.HOUR_OF_DAY, 0)
@@ -101,14 +101,14 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
     }
 
     private fun getFirstDatetime(medicine: Medicine): ADatetimeType<*> {
-        if (medicine.takeIntervalMode.isDays)
-            return medicine.startDatetime
+        if (medicine.mTakeIntervalMode.isDays)
+            return medicine.mStartDatetime
 
         val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = medicine.startDatetime.dbValue
-        nextDay.set(Calendar.DAY_OF_MONTH, medicine.takeInterval.dbValue.toInt())
+        nextDay.timeInMillis = medicine.mStartDatetime.dbValue
+        nextDay.set(Calendar.DAY_OF_MONTH, medicine.mTakeInterval.dbValue.toInt())
 
-        if (nextDay.timeInMillis < medicine.startDatetime.dbValue)
+        if (nextDay.timeInMillis < medicine.mStartDatetime.dbValue)
             nextDay.add(Calendar.MONTH, 1)
 
         return StartDatetimeType(nextDay)

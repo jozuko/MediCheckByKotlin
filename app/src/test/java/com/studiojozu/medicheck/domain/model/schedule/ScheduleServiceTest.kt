@@ -1,9 +1,8 @@
 package com.studiojozu.medicheck.domain.model.schedule
 
-import com.studiojozu.medicheck.domain.model.medicine.Medicine
-import com.studiojozu.medicheck.domain.model.medicine.TakeIntervalModeType
+import com.studiojozu.medicheck.domain.model.medicine.*
 import com.studiojozu.medicheck.domain.model.setting.*
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -42,7 +41,7 @@ class ScheduleServiceTest : ATestParent() {
     @Throws(Exception::class)
     fun getScheduleList_OneShotMedicine() {
         val medicine = Medicine()
-        medicine.timetableList.isOneShotMedicine = true
+        medicine.mTimetableList.isOneShotMedicine = true
 
         val scheduleService = ScheduleService()
         val scheduleList = scheduleService.createScheduleList(medicine)
@@ -54,11 +53,16 @@ class ScheduleServiceTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getScheduleList_SevenDaysThreeTimesInDay() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
-        medicine.setDateNumber(7)
-        medicine.setTakeInterval(1, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val timetableList = MedicineTimetableList()
+        timetableList.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
+
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = timetableList,
+                mDateNumber = MedicineDateNumberType(7),
+                mTakeInterval = TakeIntervalType(0),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val scheduleService = ScheduleService()
         val scheduleList = scheduleService.createScheduleList(medicine)
@@ -154,11 +158,16 @@ class ScheduleServiceTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getScheduleList_ThreeDaysOneTimesInTwoDays() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1))
-        medicine.setDateNumber(3)
-        medicine.setTakeInterval(2, TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val timetableList = MedicineTimetableList()
+        timetableList.setTimetableList(mutableListOf(timetable1))
+
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = timetableList,
+                mDateNumber = MedicineDateNumberType(3),
+                mTakeInterval = TakeIntervalType(1),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        )
 
         val scheduleService = ScheduleService()
         val scheduleList = scheduleService.createScheduleList(medicine)
@@ -182,11 +191,16 @@ class ScheduleServiceTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun getScheduleList_OnceAMonthForSixMonths() {
-        val medicine = Medicine()
-        medicine.setStartDatetime(2017, 1, 2, 3, 4)
-        medicine.setTimetableList(mutableListOf(timetable1))
-        medicine.setDateNumber(6)
-        medicine.setTakeInterval(15, TakeIntervalModeType.DateIntervalPattern.MONTH)
+        val timetableList = MedicineTimetableList()
+        timetableList.setTimetableList(mutableListOf(timetable1))
+
+        val medicine = Medicine(
+                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mTimetableList = timetableList,
+                mDateNumber = MedicineDateNumberType(6),
+                mTakeInterval = TakeIntervalType(15),
+                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        )
 
         val scheduleService = ScheduleService()
         val scheduleList = scheduleService.createScheduleList(medicine)
