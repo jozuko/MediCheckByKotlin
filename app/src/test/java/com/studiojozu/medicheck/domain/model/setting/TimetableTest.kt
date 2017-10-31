@@ -1,7 +1,7 @@
 package com.studiojozu.medicheck.domain.model.setting
 
 import com.studiojozu.common.domain.model.general.TestDatetimeType
-import junit.framework.Assert.*
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -69,43 +69,36 @@ class TimetableTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun setTimetableTime_getTimetableTime() {
-        val entity = Timetable()
+    fun getTimetableTime() {
+        val expect = Calendar.getInstance()
+        expect.set(2000, 0, 1, 3, 4, 0)
+        expect.set(Calendar.MILLISECOND, 0)
 
-        val now = Calendar.getInstance()
-        now.set(2000, 0, 1, 3, 4, 0)
-        now.set(Calendar.MILLISECOND, 0)
+        var entity = Timetable(mTimetableTime = TimetableTimeType(3, 4))
+        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
 
-        entity.setTimetableTime(3, 4)
-        assertEquals(now.timeInMillis, entity.getTimetableTime().dbValue)
-
-        now.set(2000, 0, 1, 15, 4, 0)
-        entity.setTimetableTime(15, 4)
-        assertEquals(now.timeInMillis, entity.getTimetableTime().dbValue)
+        expect.set(2000, 0, 1, 15, 4, 0)
+        entity = Timetable(mTimetableTime = TimetableTimeType(15, 4))
+        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
     }
 
     @Test
     @Throws(Exception::class)
-    fun setTimetableName_getTimetableName() {
-        val entity = Timetable()
+    fun getTimetableName() {
         val value = "sample name"
-
-        entity.setTimetableName(value)
+        val entity = Timetable(mTimetableName = TimetableNameType(value))
         assertEquals(value, getTimetableName(entity).dbValue)
     }
 
     @Test
     @Throws(Exception::class)
     fun propertyTimetableNameWithTime() {
-        val entity = Timetable()
         val name = "sample name"
 
-        entity.setTimetableName(name)
-        entity.setTimetableTime(0, 0)
+        var entity = Timetable(mTimetableName = TimetableNameType(name), mTimetableTime = TimetableTimeType(0, 0))
         assertEquals("sample name(0:00)", entity.timetableNameWithTime)
 
-        entity.setTimetableName(name)
-        entity.setTimetableTime(23, 59)
+        entity = Timetable(mTimetableName = TimetableNameType(name), mTimetableTime = TimetableTimeType(23, 59))
         assertEquals("sample name(23:59)", entity.timetableNameWithTime)
     }
 
@@ -126,8 +119,7 @@ class TimetableTest : ATestParent() {
 
         val dateTimeType = TestDatetimeType(day)
 
-        val entity = Timetable(mTimetableId = TimetableIdType("12345678"))
-        entity.setTimetableTime(3, 4)
+        val entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableTime = TimetableTimeType(3, 4))
 
         val actualResult = entity.getPlanDateTime(dateTimeType)
         assertEquals("12345678", actualResult.mTimetableId.dbValue)

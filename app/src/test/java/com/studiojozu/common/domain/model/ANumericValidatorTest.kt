@@ -2,7 +2,7 @@ package com.studiojozu.common.domain.model
 
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import junit.framework.Assert.assertEquals
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore

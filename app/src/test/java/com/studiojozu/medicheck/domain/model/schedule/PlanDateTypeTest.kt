@@ -1,8 +1,8 @@
 package com.studiojozu.medicheck.domain.model.schedule
 
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore

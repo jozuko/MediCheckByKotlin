@@ -5,7 +5,7 @@ package com.studiojozu.common.domain.model.general
 import android.annotation.SuppressLint
 import android.net.Uri
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import junit.framework.Assert.*
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore

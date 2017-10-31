@@ -3,7 +3,7 @@ package com.studiojozu.medicheck.domain.model.schedule
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
-import junit.framework.Assert.*
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore

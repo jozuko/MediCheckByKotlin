@@ -2,7 +2,7 @@ package com.studiojozu.medicheck.domain.model.setting
 
 import com.studiojozu.common.domain.model.general.TestDateType
 import com.studiojozu.common.domain.model.general.TestTimeType
-import junit.framework.Assert.*
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -56,48 +56,9 @@ class SettingTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun setUseReminder() {
-        val settingEntity = Setting(mUseReminder = UseReminderType(false))
-        assertEquals(false, getUseReminder(settingEntity).isTrue)
-
-        settingEntity.setUseReminder(true)
-        assertEquals(true, getUseReminder(settingEntity).isTrue)
-        assertEquals(5, getRemindInterval(settingEntity).dbValue)
-        assertEquals(60 * 24, getRemindTimeout(settingEntity).dbValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setRemindInterval() {
-        val settingEntity = Setting(mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30))
-        assertEquals(30, getRemindInterval(settingEntity).dbValue)
-
-        settingEntity.setRemindInterval(60)
-        assertEquals(true, getUseReminder(settingEntity).isTrue)
-        assertEquals(60, getRemindInterval(settingEntity).dbValue)
-        assertEquals(60 * 24, getRemindTimeout(settingEntity).dbValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setRemindTimeout() {
-        val settingEntity = Setting(mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_30))
-        assertEquals(30, getRemindTimeout(settingEntity).dbValue)
-
-        settingEntity.setRemindTimeout(60)
-        assertEquals(true, getUseReminder(settingEntity).isTrue)
-        assertEquals(5, getRemindInterval(settingEntity).dbValue)
-        assertEquals(60, getRemindTimeout(settingEntity).dbValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
     fun useReminder() {
         val settingEntity = Setting(mUseReminder = UseReminderType(false))
         assertEquals(false, settingEntity.useReminder())
-
-        settingEntity.setUseReminder(true)
-        assertEquals(true, settingEntity.useReminder())
     }
 
     @Test
