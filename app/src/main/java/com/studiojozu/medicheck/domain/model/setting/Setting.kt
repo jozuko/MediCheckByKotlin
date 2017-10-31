@@ -13,41 +13,12 @@ import java.util.*
  * @property mRemindInterval リマンダ機能のインターバル時間
  * @property mRemindTimeout リマンダ機能のタイムアウト時間
  */
-data class Setting(private var mUseReminder: UseReminderType = UseReminderType(),
-                   private var mRemindInterval: RemindIntervalType = RemindIntervalType(),
-                   private var mRemindTimeout: RemindTimeoutType = RemindTimeoutType()) : Serializable {
+data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
+                   val mRemindInterval: RemindIntervalType = RemindIntervalType(),
+                   val mRemindTimeout: RemindTimeoutType = RemindTimeoutType()) : Serializable {
 
     companion object {
         const val serialVersionUID = -8960841441881026848L
-    }
-
-    /**
-     * リマンダ機能を使用するかを設定する
-     *
-     * @param useReminder リマンダ機能を使用する場合はtrueを設定する
-     */
-    fun setUseReminder(useReminder: Boolean) {
-        mUseReminder = UseReminderType(useReminder)
-    }
-
-    /**
-     * リマンダ機能のタイムアウト時間を設定する
-     *
-     * @param timeoutMinute タイムアウト時間（分）.
-     * 選択できる時間は、[.getRemindTimeoutMap] で取得する
-     */
-    fun setRemindTimeout(timeoutMinute: Int) {
-        mRemindTimeout = RemindTimeoutType(timeoutMinute)
-    }
-
-    /**
-     * リマンダ機能のインターバルを設定する
-     *
-     * @param intervalMinute リマンダ機能のインターバル(分).
-     * 選択できる時間は、[.getRemindIntervalMap] で取得する
-     */
-    fun setRemindInterval(intervalMinute: Int) {
-        mRemindInterval = RemindIntervalType(intervalMinute)
     }
 
     fun useReminder(): Boolean = mUseReminder.isTrue

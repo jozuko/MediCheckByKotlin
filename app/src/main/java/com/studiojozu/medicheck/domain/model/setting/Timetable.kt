@@ -14,9 +14,9 @@ import java.io.Serializable
  * @property timetableNameWithTime タイムテーブルの名称＋(時刻)
  */
 data class Timetable(val mTimetableId: TimetableIdType = TimetableIdType(),
-                     private var mTimetableName: TimetableNameType = TimetableNameType(),
-                     private var mTimetableTime: TimetableTimeType = TimetableTimeType(),
-                     private var mTimetableDisplayOrder: TimetableDisplayOrderType = TimetableDisplayOrderType()) : Serializable {
+                     val mTimetableName: TimetableNameType = TimetableNameType(),
+                     val mTimetableTime: TimetableTimeType = TimetableTimeType(),
+                     val mTimetableDisplayOrder: TimetableDisplayOrderType = TimetableDisplayOrderType()) : Serializable {
 
     companion object {
         const val serialVersionUID = -6460483527021583480L
@@ -31,15 +31,8 @@ data class Timetable(val mTimetableId: TimetableIdType = TimetableIdType(),
 
     fun getTimetableTime(): TimetableTimeType = mTimetableTime
 
-    fun setTimetableTime(hourOfDay: Int, minute: Int) {
-        mTimetableTime = TimetableTimeType(hourOfDay, minute)
-    }
-
-    fun setTimetableName(timetableName: String) {
-        mTimetableName = TimetableNameType(timetableName)
-    }
-
     /**
+     * 日付を表すパラメータを使用して予定日時を作成する
      * 日付を表すパラメータを使用して予定日時を作成する
      *
      * @param datetimeType 日付
