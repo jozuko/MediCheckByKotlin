@@ -4,7 +4,7 @@ import android.support.annotation.StringRes
 import com.studiojozu.medicheck.R
 import java.math.BigDecimal
 
-abstract class ANumericDecimalValidator protected constructor(mMin: BigDecimal, mMax: BigDecimal, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : IValidator {
+abstract class ANumericDecimalValidator protected constructor(mMin: BigDecimal, mMax: BigDecimal, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : AValidator() {
 
     private val mMin: BigDecimal
     private val mMax: BigDecimal
@@ -17,25 +17,18 @@ abstract class ANumericDecimalValidator protected constructor(mMin: BigDecimal, 
     }
 
     @StringRes
-    override fun validate(vararg validateTargets: Any): Int {
+    override fun validate(vararg validateTargets: Any?): Int {
         if (validateTargets.isEmpty())
-            return IValidator.NO_ERROR_RESOURCE_ID
+            return R.string.validation_require
 
-        if (validateTargets[0] !is String)
-            return IValidator.NO_ERROR_RESOURCE_ID
+        val requiredResult = requiredCheck(value = validateTargets[0])
+        if (requiredResult != IValidator.NO_ERROR_RESOURCE_ID)
+            return requiredResult
 
-        val data = validateTargets[0] as String
-
-        if (!isNumeric(data))
+        val data = validateTargets[0]!! as String
+        if (!isDecimal(data))
             return R.string.validation_numeric
 
         return if (BigDecimal(data) in this.mMin..this.mMax) IValidator.NO_ERROR_RESOURCE_ID else R.string.validation_out_of_range
-    }
-
-    private fun isNumeric(data: String): Boolean = try {
-        BigDecimal(data)
-        true
-    } catch (e: NumberFormatException) {
-        false
     }
 }

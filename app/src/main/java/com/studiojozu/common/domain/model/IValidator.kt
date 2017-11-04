@@ -9,5 +9,5 @@ interface IValidator {
     }
 
     @StringRes
-    fun validate(vararg validateTargets: Any): Int
+    fun validate(vararg validateTargets: Any?): Int
 }

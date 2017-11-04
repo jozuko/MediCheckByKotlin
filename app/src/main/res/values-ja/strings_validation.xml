@@ -1,5 +1,8 @@
 <resources>
     <string name="validation_require">必ず入力してください。</string>
+    <string name="validation_require_select">1つ以上選択してください。</string>
+    <string name="validation_require_timetable">タイムテーブルを選択するか、頓服薬を選択してください。</string>
+
     <string name="validation_numeric">数値を入力してください。</string>
     <string name="validation_out_of_range">正しい値を入力してください。</string>
 

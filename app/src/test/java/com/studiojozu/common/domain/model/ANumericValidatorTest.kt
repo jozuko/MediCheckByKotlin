@@ -25,10 +25,12 @@ class ANumericValidatorTest : ATestParent() {
         val mAllowMaxValue = true
         val validator = TestNumericValidator(mMin, mMax, mAllowMinValue, mAllowMaxValue)
 
-        assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate())
-        assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate(1))
-        assertEquals(R.string.validation_numeric, validator.validate(""))
+        assertEquals(R.string.validation_require, validator.validate())
+        assertEquals(R.string.validation_require, validator.validate(1))
+        assertEquals(R.string.validation_require, validator.validate(""))
         assertEquals(R.string.validation_numeric, validator.validate("a"))
+        val value: String? = null
+        assertEquals(R.string.validation_require, validator.validate(value))
     }
 
     @Test

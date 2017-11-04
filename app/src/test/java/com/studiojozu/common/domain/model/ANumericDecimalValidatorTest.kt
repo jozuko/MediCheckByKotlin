@@ -1,8 +1,12 @@
 package com.studiojozu.common.domain.model
 
 import com.studiojozu.medicheck.R
+import com.studiojozu.medicheck.domain.model.medicine.MedicineUnit
+import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitDisplayOrderType
+import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitIdType
+import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitValueType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import org.junit.Assert.assertEquals
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -26,10 +30,12 @@ class ANumericDecimalValidatorTest : ATestParent() {
         val mAllowMaxValue = true
         val validator = TestNumericDecimalValidator(mMin, mMax, mAllowMinValue, mAllowMaxValue)
 
-        assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate())
-        assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate(1))
-        assertEquals(R.string.validation_numeric, validator.validate(""))
+        assertEquals(R.string.validation_require, validator.validate())
+        assertEquals(R.string.validation_require, validator.validate(1))
+        assertEquals(R.string.validation_require, validator.validate(""))
         assertEquals(R.string.validation_numeric, validator.validate("a"))
+        val value: String? = null
+        assertEquals(R.string.validation_require, validator.validate(value))
     }
 
     @Test
@@ -72,6 +78,48 @@ class ANumericDecimalValidatorTest : ATestParent() {
 
         validator = TestNumericDecimalValidator(BigDecimal(10), BigDecimal(0), false, false)
         assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("9"))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun compareToDisplayOrderPriority() {
+        val entity1 = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("11111111"),
+                mMedicineUnitValue = MedicineUnitValueType("1111"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+
+        val entity2 = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("11111111"),
+                mMedicineUnitValue = MedicineUnitValueType("1111"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+
+        val entity3 = entity1.copy()
+
+        assertTrue(entity1.compareToDisplayOrderPriority(entity2) < 0)
+        assertTrue(entity2.compareToDisplayOrderPriority(entity1) > 0)
+        assertTrue(entity1.compareToDisplayOrderPriority(entity3) == 0)
+        assertFalse(entity1 === entity3)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun compareToDisplayValuePriority() {
+        val entity1 = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("11111111"),
+                mMedicineUnitValue = MedicineUnitValueType("1111"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+
+        val entity2 = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("11111111"),
+                mMedicineUnitValue = MedicineUnitValueType("2222"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+
+        val entity3 = entity1.copy()
+
+        assertTrue(entity1.compareToDisplayOrderPriority(entity2) < 0)
+        assertTrue(entity2.compareToDisplayOrderPriority(entity1) > 0)
+        assertTrue(entity1.compareToDisplayOrderPriority(entity3) == 0)
+        assertFalse(entity1 === entity3)
     }
 }
 
