@@ -1,6 +1,6 @@
 package com.studiojozu.medicheck.domain.model.medicine.validator
 
-import com.studiojozu.common.domain.model.ANumericDecimalValidator
+import com.studiojozu.common.domain.model.validator.ANumericDecimalValidator
 
 import java.math.BigDecimal
 

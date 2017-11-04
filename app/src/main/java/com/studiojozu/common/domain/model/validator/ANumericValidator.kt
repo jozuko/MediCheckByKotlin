@@ -1,9 +1,9 @@
-package com.studiojozu.common.domain.model
+package com.studiojozu.common.domain.model.validator
 
 import android.support.annotation.StringRes
 import com.studiojozu.medicheck.R
 
-abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : AValidator() {
+abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : IRequiredValidator {
 
     private val mMin: Long
     private val mMax: Long
@@ -17,10 +17,7 @@ abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, m
 
     @StringRes
     override fun validate(vararg validateTargets: Any?): Int {
-        if (validateTargets.isEmpty())
-            return R.string.validation_require
-
-        val requiredResult = requiredCheck(value = validateTargets[0])
+        val requiredResult = super.validate(*validateTargets)
         if (requiredResult != IValidator.NO_ERROR_RESOURCE_ID)
             return requiredResult
 
@@ -29,5 +26,12 @@ abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, m
             return R.string.validation_numeric
 
         return if (data.toLong() in mMin..mMax) IValidator.NO_ERROR_RESOURCE_ID else R.string.validation_out_of_range
+    }
+
+    private fun isLong(data: String): Boolean = try {
+        data.toLong()
+        true
+    } catch (e: NumberFormatException) {
+        false
     }
 }

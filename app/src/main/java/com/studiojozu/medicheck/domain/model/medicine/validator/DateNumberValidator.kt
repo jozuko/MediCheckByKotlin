@@ -1,6 +1,6 @@
 package com.studiojozu.medicheck.domain.model.medicine.validator
 
-import com.studiojozu.common.domain.model.ANumericValidator
+import com.studiojozu.common.domain.model.validator.ANumericValidator
 
 class DateNumberValidator : ANumericValidator(
         mMin = 1,

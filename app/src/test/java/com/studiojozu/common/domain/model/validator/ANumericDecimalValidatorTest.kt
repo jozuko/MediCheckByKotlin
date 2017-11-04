@@ -1,4 +1,4 @@
-package com.studiojozu.common.domain.model
+package com.studiojozu.common.domain.model.validator
 
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.medicine.MedicineUnit

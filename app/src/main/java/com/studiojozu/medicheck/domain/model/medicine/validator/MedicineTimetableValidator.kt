@@ -1,12 +1,11 @@
 package com.studiojozu.medicheck.domain.model.medicine.validator
 
 import android.support.annotation.StringRes
-import com.studiojozu.common.domain.model.AValidator
-import com.studiojozu.common.domain.model.IValidator
+import com.studiojozu.common.domain.model.validator.IValidator
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.setting.Timetable
 
-class MedicineTimetableValidator : AValidator() {
+class MedicineTimetableValidator : IValidator {
 
     @StringRes
     @Suppress("UNCHECKED_CAST")

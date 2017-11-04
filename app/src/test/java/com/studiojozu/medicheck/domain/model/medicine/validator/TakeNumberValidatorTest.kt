@@ -1,6 +1,6 @@
 package com.studiojozu.medicheck.domain.model.medicine.validator
 
-import com.studiojozu.common.domain.model.IValidator
+import com.studiojozu.common.domain.model.validator.IValidator
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert
