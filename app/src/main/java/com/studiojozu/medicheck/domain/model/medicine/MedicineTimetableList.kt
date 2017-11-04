@@ -65,7 +65,7 @@ class MedicineTimetableList : Iterable<Timetable>, Iterator<Timetable>, Serializ
 
     fun setTimetableList(timetableList: List<Timetable>?) {
         clearTimetableList()
-        timetableList?.let { mTimetableList.addAll(timetableList) }
+        timetableList?.let { mTimetableList.addAll(it) }
     }
 
     /**
