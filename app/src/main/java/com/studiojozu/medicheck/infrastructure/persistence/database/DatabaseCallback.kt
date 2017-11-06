@@ -8,6 +8,8 @@ import android.content.Context
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitIdType
 import com.studiojozu.medicheck.domain.model.person.PersonIdType
+import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
+import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
 
 class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() {
 
@@ -17,6 +19,7 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
         // insert init data
         initMedicineUnit(db)
         initPerson(db)
+        initSetting(db)
     }
 
     private fun initMedicineUnit(db: SupportSQLiteDatabase) {
@@ -36,5 +39,14 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
         contentValues.put("person_display_order", 1)
 
         db.insert("person", OnConflictStrategy.IGNORE, contentValues)
+    }
+
+    private fun initSetting(db: SupportSQLiteDatabase) {
+        val contentValues = ContentValues()
+        contentValues.put("use_reminder", true)
+        contentValues.put("remind_interval", RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5).dbValue)
+        contentValues.put("remind_timeout", RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24).dbValue)
+
+        db.insert("setting", OnConflictStrategy.IGNORE, contentValues)
     }
 }
