@@ -2,7 +2,6 @@
 
 package com.studiojozu.medicheck.domain.model.setting
 
-import android.content.ContentValues
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -11,7 +10,6 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import java.util.*
-
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
@@ -124,29 +122,6 @@ class RemindIntervalTypeTest : ATestParent() {
         fail()
     } catch (e: RuntimeException) {
         assertEquals("you need to call getDisplayValue(Resources).", e.message)
-    }
-
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-
-        contentValue.clear()
-        var remindIntervalType = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_1)
-        remindIntervalType.setContentValue(columnName, contentValue)
-        assertEquals(1, contentValue.get(columnName))
-
-        contentValue.clear()
-        remindIntervalType = RemindIntervalType()
-        remindIntervalType.setContentValue(columnName, contentValue)
-        assertEquals(5, contentValue.get(columnName))
-
-        contentValue.clear()
-        remindIntervalType = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1)
-        remindIntervalType.setContentValue(columnName, contentValue)
-        assertEquals(60, contentValue.get(columnName))
     }
 
     @Test

@@ -12,14 +12,14 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class DeleteFlagTypeTest : ATestParent() {
+class MedicineDeleteFlagTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        Assert.assertFalse(DeleteFlagType().isTrue)
-        Assert.assertTrue(DeleteFlagType(true).isTrue)
-        Assert.assertFalse(DeleteFlagType(false).isTrue)
-        Assert.assertTrue(DeleteFlagType(1).isTrue)
+        Assert.assertFalse(MedicineDeleteFlagType().isTrue)
+        Assert.assertTrue(MedicineDeleteFlagType(true).isTrue)
+        Assert.assertFalse(MedicineDeleteFlagType(false).isTrue)
+        Assert.assertTrue(MedicineDeleteFlagType(1).isTrue)
     }
 }

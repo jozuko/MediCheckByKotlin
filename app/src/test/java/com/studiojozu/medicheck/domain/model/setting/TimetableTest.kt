@@ -30,7 +30,7 @@ class TimetableTest : ATestParent() {
         val entity = Timetable()
         assertNotNull(entity.mTimetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
-        assertTrue(0 < getTimetableTime(entity).dbValue)
+        assertTrue(0 < getTimetableTime(entity).dbValue.timeInMillis)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
     }
 
@@ -40,13 +40,13 @@ class TimetableTest : ATestParent() {
         var entity = Timetable(mTimetableId = TimetableIdType("12345678"))
         assertEquals("12345678", entity.mTimetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
-        assertTrue(0 < getTimetableTime(entity).dbValue)
+        assertTrue(0 < getTimetableTime(entity).dbValue.timeInMillis)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
 
         entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableName = TimetableNameType("sample name"))
         assertEquals("12345678", entity.mTimetableId.dbValue)
         assertEquals("sample name", getTimetableName(entity).dbValue)
-        assertTrue(0 < getTimetableTime(entity).dbValue)
+        assertTrue(0 < getTimetableTime(entity).dbValue.timeInMillis)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
 
         val time = Calendar.getInstance()
@@ -57,13 +57,13 @@ class TimetableTest : ATestParent() {
         time.set(2000, 0, 1, 3, 4, 0)
         assertEquals("12345678", entity.mTimetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
-        assertEquals(time.timeInMillis, getTimetableTime(entity).dbValue)
+        assertEquals(time.timeInMillis, getTimetableTime(entity).dbValue.timeInMillis)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
 
         entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableDisplayOrder = TimetableDisplayOrderType(Long.MAX_VALUE))
         assertEquals("12345678", entity.mTimetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
-        assertTrue(0 < getTimetableTime(entity).dbValue)
+        assertTrue(0 < getTimetableTime(entity).dbValue.timeInMillis)
         assertEquals(Long.MAX_VALUE, getTimetableDisplayOrder(entity).dbValue)
     }
 
@@ -75,11 +75,11 @@ class TimetableTest : ATestParent() {
         expect.set(Calendar.MILLISECOND, 0)
 
         var entity = Timetable(mTimetableTime = TimetableTimeType(3, 4))
-        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
+        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue.timeInMillis)
 
         expect.set(2000, 0, 1, 15, 4, 0)
         entity = Timetable(mTimetableTime = TimetableTimeType(15, 4))
-        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
+        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue.timeInMillis)
     }
 
     @Test
@@ -123,8 +123,8 @@ class TimetableTest : ATestParent() {
 
         val actualResult = entity.getPlanDateTime(dateTimeType)
         assertEquals("12345678", actualResult.mTimetableId.dbValue)
-        assertEquals(planDateTime.timeInMillis, actualResult.mPlanDatetime.dbValue)
-        assertEquals(day.timeInMillis, actualResult.planDate.dbValue)
+        assertEquals(planDateTime.timeInMillis, actualResult.mPlanDatetime.dbValue.timeInMillis)
+        assertEquals(day.timeInMillis, actualResult.planDate.dbValue.timeInMillis)
     }
 
     @Test

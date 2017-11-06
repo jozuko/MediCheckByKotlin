@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert.*
 import org.junit.Test
@@ -81,20 +80,6 @@ class ABooleanTypeTest : ATestParent() {
         assertEquals("true", TestBooleanType(value).displayValue)
         value = false
         assertEquals("false", TestBooleanType(value).displayValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-
-        TestBooleanType(true).setContentValue(columnName, contentValue)
-        assertEquals(1, contentValue.get(columnName))
-
-        contentValue.clear()
-        TestBooleanType(false).setContentValue(columnName, contentValue)
-        assertEquals(0, contentValue.get(columnName))
     }
 
     @Test

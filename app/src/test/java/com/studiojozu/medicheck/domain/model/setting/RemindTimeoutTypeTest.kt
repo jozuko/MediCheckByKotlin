@@ -1,6 +1,5 @@
 package com.studiojozu.medicheck.domain.model.setting
 
-import android.content.ContentValues
 import com.studiojozu.common.domain.model.general.TestDateType
 import com.studiojozu.common.domain.model.general.TestDatetimeType
 import com.studiojozu.common.domain.model.general.TestTimeType
@@ -177,18 +176,6 @@ class RemindTimeoutTypeTest : ATestParent() {
         fail()
     } catch (e: RuntimeException) {
         assertEquals("you need to call getDisplayValue(Resources).", e.message)
-    }
-
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-
-        contentValue.clear()
-        RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_1).setContentValue(columnName, contentValue)
-        assertEquals(1, contentValue.get(columnName))
     }
 
     @Test

@@ -12,12 +12,12 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class TakeNumberTypeTest : ATestParent() {
+class MedicineTakeNumberTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        Assert.assertEquals("0", TakeNumberType().dbValue)
-        Assert.assertEquals("test", TakeNumberType("test").dbValue)
+        Assert.assertEquals("0", MedicineTakeNumberType().dbValue)
+        Assert.assertEquals("test", MedicineTakeNumberType("test").dbValue)
     }
 }

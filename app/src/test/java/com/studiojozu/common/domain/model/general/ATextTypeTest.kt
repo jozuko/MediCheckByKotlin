@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert.*
 import org.junit.Test
@@ -68,20 +67,6 @@ class ATextTypeTest : ATestParent() {
     fun displayValue() {
         assertEquals("", TestTextType().displayValue)
         assertEquals("test", TestTextType("test").displayValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-
-        TestTextType(null).setContentValue(columnName, contentValue)
-        assertEquals("", contentValue.get(columnName))
-
-        contentValue.clear()
-        TestTextType("test").setContentValue(columnName, contentValue)
-        assertEquals("test", contentValue.get(columnName))
     }
 
     @Test

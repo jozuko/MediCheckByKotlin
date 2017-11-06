@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert.*
 import org.junit.Test
@@ -18,7 +17,6 @@ import java.util.*
 class ATimeTypeTest : ATestParent() {
 
     private val mValueProperty = findProperty(TestTimeType::class, "mValue")
-
 
     @Test
     @Throws(Exception::class)
@@ -36,16 +34,11 @@ class ATimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() {
-        val now = Calendar.getInstance()
-        val testTimeType = TestTimeType(now.timeInMillis)
-
-        now.set(Calendar.YEAR, 2000)
-        now.set(Calendar.MONTH, 0)
-        now.set(Calendar.DAY_OF_MONTH, 1)
-        now.set(Calendar.SECOND, 0)
-        now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now, mValueProperty.call(testTimeType))
+    fun constructor_Long() = try {
+        TestTimeType(Calendar.getInstance().timeInMillis)
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -78,13 +71,11 @@ class ATimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() {
-        try {
-            TestTimeType("test")
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertEquals("unknown type.", e.message)
-        }
+    fun constructor_Unknown() = try {
+        TestTimeType("test")
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -96,19 +87,6 @@ class ATimeTypeTest : ATestParent() {
 
         val testTimeType = TestTimeType(2, 3)
         assertEquals(now, mValueProperty.call(testTimeType))
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-        val now = Calendar.getInstance()
-        now.set(2000, 0, 1, 2, 3, 0)
-        now.set(Calendar.MILLISECOND, 0)
-
-        TestTimeType(now).setContentValue(columnName, contentValue)
-        assertEquals(now.timeInMillis, contentValue.get(columnName))
     }
 
     @Test
@@ -138,7 +116,7 @@ class ATimeTypeTest : ATestParent() {
         now.set(Calendar.DAY_OF_MONTH, 1)
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, testTimeType.dbValue)
+        assertEquals(now.timeInMillis, testTimeType.dbValue.timeInMillis)
     }
 
     @Test

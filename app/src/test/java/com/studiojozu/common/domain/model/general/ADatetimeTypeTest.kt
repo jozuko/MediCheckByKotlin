@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -34,13 +33,11 @@ class ADatetimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() {
-        val now = Calendar.getInstance()
-        val testDatetimeType = TestDatetimeType(now.timeInMillis)
-
-        now.set(Calendar.SECOND, 0)
-        now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now, mValueProperty.call(testDatetimeType))
+    fun constructor_Long() = try {
+        TestDatetimeType(Calendar.getInstance().timeInMillis)
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -56,13 +53,11 @@ class ADatetimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() {
-        try {
-            TestDatetimeType("test")
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertEquals("unknown type.", e.message)
-        }
+    fun constructor_Unknown() = try {
+        TestDatetimeType("test")
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -98,7 +93,7 @@ class ADatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.dbValue.timeInMillis)
     }
 
     @Test
@@ -115,19 +110,6 @@ class ADatetimeTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDatetimeTypePm = TestDatetimeType(now)
         assertEquals("17/12/31 23:59", testDatetimeTypePm.displayValue)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-        val now = Calendar.getInstance()
-        now.set(2017, 0, 2, 3, 4, 0)
-        now.set(Calendar.MILLISECOND, 0)
-
-        TestDatetimeType(now).setContentValue(columnName, contentValue)
-        assertEquals(now.timeInMillis, contentValue.get(columnName))
     }
 
     @Test
@@ -228,7 +210,7 @@ class ADatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.HOUR_OF_DAY, 5)
         now.set(Calendar.MINUTE, 6)
-        assertEquals(now.timeInMillis, TestDatetimeType(now).dbValue)
+        assertEquals(now.timeInMillis, TestDatetimeType(now).dbValue.timeInMillis)
     }
 
     @Test
@@ -239,16 +221,16 @@ class ADatetimeTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDatetimeType = TestDatetimeType(now)
 
-        assertEquals(now.timeInMillis, testDatetimeType.addMinute(0).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMinute(0).dbValue.timeInMillis)
 
         now.set(2017, 0, 2, 3, 5, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMinute(1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMinute(1).dbValue.timeInMillis)
 
         now.set(2017, 0, 2, 3, 3, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMinute(-1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMinute(-1).dbValue.timeInMillis)
 
         now.set(2017, 0, 2, 4, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMinute(60).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMinute(60).dbValue.timeInMillis)
     }
 
     @Test
@@ -259,16 +241,16 @@ class ADatetimeTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDatetimeType = TestDatetimeType(now)
 
-        assertEquals(now.timeInMillis, testDatetimeType.addDay(0).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addDay(0).dbValue.timeInMillis)
 
         now.set(2017, 0, 3, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addDay(1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addDay(1).dbValue.timeInMillis)
 
         now.set(2017, 0, 1, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addDay(-1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addDay(-1).dbValue.timeInMillis)
 
         now.set(2017, 1, 1, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addDay(30).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addDay(30).dbValue.timeInMillis)
     }
 
     @Test
@@ -279,15 +261,15 @@ class ADatetimeTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDatetimeType = TestDatetimeType(now)
 
-        assertEquals(now.timeInMillis, testDatetimeType.addMonth(0).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMonth(0).dbValue.timeInMillis)
 
         now.set(2017, 1, 2, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMonth(1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMonth(1).dbValue.timeInMillis)
 
         now.set(2016, 11, 2, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMonth(-1).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMonth(-1).dbValue.timeInMillis)
 
         now.set(2018, 0, 2, 3, 4, 0)
-        assertEquals(now.timeInMillis, testDatetimeType.addMonth(12).dbValue)
+        assertEquals(now.timeInMillis, testDatetimeType.addMonth(12).dbValue.timeInMillis)
     }
 }

@@ -1,10 +1,8 @@
 package com.studiojozu.common.domain.model
 
-import android.content.ContentValues
-
 import java.io.Serializable
 
-abstract class ADbType<out T, out C : ADbType<T, C>> : Serializable, Cloneable {
+abstract class AValueObject<out T, out C : AValueObject<T, C>> : Serializable, Cloneable {
 
     companion object {
         const val serialVersionUID = -7199799314817003653L
@@ -31,15 +29,11 @@ abstract class ADbType<out T, out C : ADbType<T, C>> : Serializable, Cloneable {
     val dbWhereValue: String
         get() = dbValue.toString()
 
-    /**
-     * insertで使用するContentValueに型名と値設定する
-     *
-     * @param columnName   型名称
-     * @param contentValue 値
-     */
-    abstract fun setContentValue(columnName: String, contentValue: ContentValues)
-
-    override fun equals(other: Any?): Boolean = if (other == null || other !is ADbType<*, *>) false else dbValue == other.dbValue
+    override fun equals(other: Any?): Boolean {
+        other ?: return false
+        if (other !is AValueObject<*, *>) return false
+        return dbValue == other.dbValue
+    }
 
     override fun hashCode(): Int = dbValue!!.hashCode()
 

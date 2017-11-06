@@ -1,10 +1,8 @@
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
+import com.studiojozu.common.domain.model.AValueObject
 
-import com.studiojozu.common.domain.model.ADbType
-
-abstract class ABooleanType<out C : ABooleanType<C>> protected constructor(value: Any) : ADbType<Int, C>(), Comparable<ABooleanType<*>> {
+abstract class ABooleanType<out C : ABooleanType<C>> protected constructor(value: Any) : AValueObject<Int, C>(), Comparable<ABooleanType<*>> {
     companion object {
         const val serialVersionUID = -2292450454310417909L
         private val TRUE_VALUE = 1
@@ -24,8 +22,6 @@ abstract class ABooleanType<out C : ABooleanType<C>> protected constructor(value
 
     override val displayValue: String
         get() = if (isTrue) "true" else "false"
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: ABooleanType<*>): Int = dbValue.compareTo(other.dbValue)
 }

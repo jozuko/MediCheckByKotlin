@@ -1,7 +1,7 @@
 <resources>
     <string name="validation_require">Input something, please.</string>
     <string name="validation_require_select">Select something, please.</string>
-    <string name="validation_require_timetable">Select timetable or choose one shot medicine, please.</string>
+    <string name="validation_require_timetable">Select timetable or choose one shot sqliteMedicine, please.</string>
 
     <string name="validation_numeric">Enter a number, please.</string>
     <string name="validation_out_of_range">Enter the correct value, please.</string>

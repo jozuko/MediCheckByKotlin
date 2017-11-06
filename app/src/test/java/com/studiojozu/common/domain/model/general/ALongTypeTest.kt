@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert
 import org.junit.Assert.assertEquals
@@ -52,20 +51,6 @@ class ALongTypeTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun displayValue() = assertEquals(Long.MIN_VALUE.toString(), TestLongType(Long.MIN_VALUE).displayValue)
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-
-        TestLongType(Long.MAX_VALUE).setContentValue(columnName, contentValue)
-        assertEquals(Long.MAX_VALUE, contentValue.get(columnName))
-
-        contentValue.clear()
-        TestLongType(Int.MAX_VALUE).setContentValue(columnName, contentValue)
-        assertEquals(Int.MAX_VALUE.toLong(), contentValue.get(columnName))
-    }
 
     @Test
     @Throws(Exception::class)

@@ -1,20 +1,19 @@
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
-import com.studiojozu.common.domain.model.ADbType
+import com.studiojozu.common.domain.model.AValueObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Comparable<ADatetimeType<*>> {
+abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, C>, Comparable<ADatetimeType<*>> {
     companion object {
         const val serialVersionUID = 3758376193729504494L
     }
 
     protected val mValue: Calendar
 
-    override val dbValue: Long
-        get() = mValue.timeInMillis
+    override val dbValue: Calendar
+        get() = mValue
 
     override val displayValue: String
         get() {
@@ -37,16 +36,14 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
     val minute: Int
         get() = mValue.get(Calendar.MINUTE)
 
-    protected constructor(millisecond: Any) {
-        val timeInMillis: Long = when (millisecond) {
-            is Long -> millisecond
-            is Calendar -> millisecond.timeInMillis
-            is ADatetimeType<*> -> millisecond.dbValue
+    protected constructor(calendarDatetime: Any) {
+        val calendar: Calendar = when (calendarDatetime) {
+            is Calendar -> calendarDatetime
+            is ADatetimeType<*> -> calendarDatetime.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = Calendar.getInstance()
-        mValue.timeInMillis = timeInMillis
+        mValue = calendar.clone() as Calendar
         mValue.set(Calendar.SECOND, 0)
         mValue.set(Calendar.MILLISECOND, 0)
     }
@@ -66,17 +63,15 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
 
     protected constructor(dateModel: ADateType<*>, timeModel: ATimeType<*>) {
         val dateCalendar = Calendar.getInstance()
-        dateCalendar.timeInMillis = dateModel.dbValue
+        dateCalendar.timeInMillis = dateModel.dbValue.timeInMillis
 
         val timeCalendar = Calendar.getInstance()
-        timeCalendar.timeInMillis = timeModel.dbValue
+        timeCalendar.timeInMillis = timeModel.dbValue.timeInMillis
 
         mValue = Calendar.getInstance()
         mValue.set(dateCalendar.get(Calendar.YEAR), dateCalendar.get(Calendar.MONTH), dateCalendar.get(Calendar.DAY_OF_MONTH), timeCalendar.get(Calendar.HOUR_OF_DAY), timeCalendar.get(Calendar.MINUTE), 0)
         mValue.set(Calendar.MILLISECOND, 0)
     }
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: ADatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
 
@@ -91,9 +86,9 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : ADbType<Long, C>, Compa
      */
     fun diffMinutes(other: ADatetimeType<*>): Long {
         val targetCalendar = Calendar.getInstance()
-        targetCalendar.timeInMillis = other.dbValue
+        targetCalendar.timeInMillis = other.dbValue.timeInMillis
 
-        val diff = dbValue - other.dbValue
+        val diff = dbValue.timeInMillis - other.dbValue.timeInMillis
         return diff / (60 * 1000)
     }
 

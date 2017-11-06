@@ -1,17 +1,16 @@
 package com.studiojozu.medicheck.domain.model.setting
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import android.support.annotation.StringRes
-import com.studiojozu.common.domain.model.ADbType
+import com.studiojozu.common.domain.model.AValueObject
 import com.studiojozu.medicheck.R
 import java.util.*
 
 /**
  * 通知の繰り返し間隔を表す型クラス
  */
-class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = RemindIntervalType.RemindIntervalPattern.MINUTE_5) : ADbType<Int, RemindIntervalType>(), Comparable<RemindIntervalType> {
+class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = RemindIntervalType.RemindIntervalPattern.MINUTE_5) : AValueObject<Int, RemindIntervalType>(), Comparable<RemindIntervalType> {
     companion object {
         const val serialVersionUID = -2200953636883165844L
 
@@ -43,8 +42,6 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
         get() = throw RuntimeException("you need to call getDisplayValue(Resources).")
 
     fun getDisplayValue(resources: Resources): String = mValue.getDisplayValue(resources)
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: RemindIntervalType): Int = mValue.compareTo(other.mValue)
 

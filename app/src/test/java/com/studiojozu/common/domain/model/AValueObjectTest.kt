@@ -13,24 +13,24 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class ADbTypeTest : ATestParent() {
+class AValueObjectTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun dbWhereValue() = assertEquals(Int.MAX_VALUE.toString(), TestDbType(Int.MAX_VALUE).dbWhereValue)
+    fun dbWhereValue() = assertEquals(Int.MAX_VALUE.toString(), TestValueObject(Int.MAX_VALUE).dbWhereValue)
 
     @Test
     @Throws(Exception::class)
-    fun test_equals() = assertTrue(TestDbType(Int.MAX_VALUE) == (TestDbType(Int.MAX_VALUE)))
+    fun test_equals() = assertTrue(TestValueObject(Int.MAX_VALUE) == (TestValueObject(Int.MAX_VALUE)))
 
     @Test
     @Throws(Exception::class)
-    fun test_hashCode() = assertEquals(Int.MAX_VALUE.hashCode(), TestDbType(Int.MAX_VALUE).hashCode())
+    fun test_hashCode() = assertEquals(Int.MAX_VALUE.hashCode(), TestValueObject(Int.MAX_VALUE).hashCode())
 
     @Test
     @Throws(Exception::class)
     fun clone() {
-        val value1 = TestDbType(Int.MAX_VALUE)
+        val value1 = TestValueObject(Int.MAX_VALUE)
         val value2 = value1.clone()
         assertTrue(value1 == value2)
         assertFalse(value1 === value2)

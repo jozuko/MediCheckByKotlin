@@ -32,7 +32,7 @@ data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
      * @return リマインド機能の限界時間を超えている場合はtrueを返却する
      */
     fun isRemindTimeout(now: Calendar, scheduleDate: ADateType<*>, scheduleTime: ATimeType<*>): Boolean {
-        val reminderDatetimeType = ReminderDatetimeType(now.timeInMillis)
+        val reminderDatetimeType = ReminderDatetimeType(now)
         return mRemindTimeout.isTimeout(reminderDatetimeType, scheduleDate, scheduleTime)
     }
 
@@ -46,7 +46,7 @@ data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
      */
     fun isRemindTiming(now: Calendar, scheduleDate: ADateType<*>, scheduleTime: ATimeType<*>): Boolean {
         val scheduleDatetime = ReminderDatetimeType(scheduleDate, scheduleTime)
-        val currentDateTime = ReminderDatetimeType(now.timeInMillis)
+        val currentDateTime = ReminderDatetimeType(now)
 
         val diffMinutes = currentDateTime.diffMinutes(scheduleDatetime)
         return if (diffMinutes <= 0L) false else (diffMinutes % mRemindInterval.dbValue == 0L)

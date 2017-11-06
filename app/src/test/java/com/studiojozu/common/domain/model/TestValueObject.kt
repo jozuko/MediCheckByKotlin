@@ -1,8 +1,6 @@
 package com.studiojozu.common.domain.model
 
-import android.content.ContentValues
-
-class TestDbType(value: Int) : ADbType<Int, TestDbType>() {
+class TestValueObject(value: Int) : AValueObject<Int, TestValueObject>() {
 
     private val mValue: Int = value
 
@@ -11,6 +9,4 @@ class TestDbType(value: Int) : ADbType<Int, TestDbType>() {
 
     override val displayValue: String
         get() = mValue.toString()
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = Unit
 }

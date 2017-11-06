@@ -1,10 +1,9 @@
 package com.studiojozu.medicheck.domain.model.setting
 
-import android.content.ContentValues
 import android.content.Context
 import android.content.res.Resources
 import android.support.annotation.StringRes
-import com.studiojozu.common.domain.model.ADbType
+import com.studiojozu.common.domain.model.AValueObject
 import com.studiojozu.common.domain.model.general.ADateType
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.common.domain.model.general.ATimeType
@@ -14,7 +13,7 @@ import java.util.*
 /**
  * 通知の繰り返しタイムアウトを表す型クラス
  */
-class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTimeoutType.RemindTimeoutPattern.HOUR_24) : ADbType<Int, RemindTimeoutType>(), Comparable<RemindTimeoutType> {
+class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTimeoutType.RemindTimeoutPattern.HOUR_24) : AValueObject<Int, RemindTimeoutType>(), Comparable<RemindTimeoutType> {
     companion object {
         const val serialVersionUID = 2910275487868116214L
 
@@ -46,8 +45,6 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
         get() = throw RuntimeException("you need to call getDisplayValue(Resources).")
 
     fun getDisplayValue(resources: Resources): String = mValue.getDisplayValue(resources)
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: RemindTimeoutType): Int = mValue.compareTo(other.mValue)
 

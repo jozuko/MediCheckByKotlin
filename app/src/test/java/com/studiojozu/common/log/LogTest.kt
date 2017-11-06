@@ -1,8 +1,7 @@
 package com.studiojozu.common.log
 
 import com.studiojozu.medicheck.BuildConfig
-
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.powermock.core.classloader.annotations.PowerMockIgnore
@@ -11,6 +10,7 @@ import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
 import android.util.Log as AndroidLog
 
+@Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
@@ -51,7 +51,7 @@ class LogTest {
         val throwable = Exception()
         log.i(throwable)
 
-        assertLogged(AndroidLog.INFO, "MediCheck.LogTest",throwable.toString(), throwable)
+        assertLogged(AndroidLog.INFO, "MediCheck.LogTest", throwable.toString(), throwable)
     }
 
     @Test
@@ -72,6 +72,7 @@ class LogTest {
 
         assertLogged(AndroidLog.ERROR, "MediCheck.LogTest", "exception message", throwable)
     }
+
     @Test
     @Throws(Exception::class)
     fun e_throwableNoMessage() {
@@ -79,7 +80,7 @@ class LogTest {
         val throwable = Exception()
         log.e(throwable)
 
-        assertLogged(AndroidLog.ERROR, "MediCheck.LogTest",throwable.toString(), throwable)
+        assertLogged(AndroidLog.ERROR, "MediCheck.LogTest", throwable.toString(), throwable)
     }
 
     private fun assertLogged(type: Int, tag: String, msg: String, throwable: Throwable?) {

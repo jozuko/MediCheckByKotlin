@@ -1,10 +1,8 @@
 package com.studiojozu.medicheck.domain.model.medicine
 
-import android.content.ContentValues
+import com.studiojozu.common.domain.model.AValueObject
 
-import com.studiojozu.common.domain.model.ADbType
-
-class TakeIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : ADbType<Int, TakeIntervalModeType>(), Comparable<TakeIntervalModeType> {
+class MedicineIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : AValueObject<Int, MedicineIntervalModeType>(), Comparable<MedicineIntervalModeType> {
     companion object {
         const val serialVersionUID = -469466334517497620L
     }
@@ -13,7 +11,7 @@ class TakeIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : ADbType<
 
     init {
         mValue = when (initValue) {
-            is TakeIntervalModeType -> initValue.mValue
+            is MedicineIntervalModeType -> initValue.mValue
             is DateIntervalPattern -> initValue
             is Long -> DateIntervalPattern.typeOf(initValue.toInt())
             is Int -> DateIntervalPattern.typeOf(initValue)
@@ -30,9 +28,7 @@ class TakeIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : ADbType<
     val isDays: Boolean
         get() = mValue == DateIntervalPattern.DAYS
 
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
-
-    override fun compareTo(other: TakeIntervalModeType): Int = dbValue.compareTo(other.dbValue)
+    override fun compareTo(other: MedicineIntervalModeType): Int = dbValue.compareTo(other.dbValue)
 
     enum class DateIntervalPattern {
         DAYS,

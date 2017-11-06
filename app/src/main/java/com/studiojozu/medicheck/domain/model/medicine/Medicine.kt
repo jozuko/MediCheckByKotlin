@@ -7,27 +7,27 @@ import java.io.Serializable
  * @property mMedicineId 薬ID
  * @property mTimetableList タイムテーブルの一覧
  * @property mMedicineName 薬の名前
- * @property mTakeNumber 服用数
+ * @property mMedicineTakeNumber 服用数
  * @property mMedicineUnit 薬の単位
- * @property mDateNumber 服用日数
- * @property mStartDatetime 服用開始日時
- * @property mTakeInterval 服用間隔
- * @property mTakeIntervalMode 服用間隔タイプ
+ * @property mMedicineDateNumber 服用日数
+ * @property mMedicineStartDatetime 服用開始日時
+ * @property mMedicineInterval 服用間隔
+ * @property mMedicineIntervalMode 服用間隔タイプ
  * @property mMedicinePhoto 薬の写真パス
- * @property mNeedAlarm アラーム要否フラグ
- * @property mDeleteFlagType 削除フラグ
+ * @property mMedicineNeedAlarm アラーム要否フラグ
+ * @property mMedicineDeleteFlag 削除フラグ
  */
 data class Medicine(val mMedicineId: MedicineIdType = MedicineIdType(),
                     val mMedicineName: MedicineNameType = MedicineNameType(),
-                    val mTakeNumber: TakeNumberType = TakeNumberType(),
+                    val mMedicineTakeNumber: MedicineTakeNumberType = MedicineTakeNumberType(),
                     val mMedicineUnit: MedicineUnit = MedicineUnit(),
-                    val mDateNumber: MedicineDateNumberType = MedicineDateNumberType(),
-                    val mStartDatetime: StartDatetimeType = StartDatetimeType(),
-                    val mTakeInterval: TakeIntervalType = TakeIntervalType(),
-                    val mTakeIntervalMode: TakeIntervalModeType = TakeIntervalModeType(),
+                    val mMedicineDateNumber: MedicineDateNumberType = MedicineDateNumberType(),
+                    val mMedicineStartDatetime: MedicineStartDatetimeType = MedicineStartDatetimeType(),
+                    val mMedicineInterval: MedicineIntervalType = MedicineIntervalType(),
+                    val mMedicineIntervalMode: MedicineIntervalModeType = MedicineIntervalModeType(),
                     val mMedicinePhoto: MedicinePhotoType = MedicinePhotoType(),
-                    val mNeedAlarm: MedicineNeedAlarmType = MedicineNeedAlarmType(),
-                    val mDeleteFlagType: DeleteFlagType = DeleteFlagType(),
+                    val mMedicineNeedAlarm: MedicineNeedAlarmType = MedicineNeedAlarmType(),
+                    val mMedicineDeleteFlag: MedicineDeleteFlagType = MedicineDeleteFlagType(),
                     val mTimetableList: MedicineTimetableList = MedicineTimetableList()) : Serializable {
 
     companion object {

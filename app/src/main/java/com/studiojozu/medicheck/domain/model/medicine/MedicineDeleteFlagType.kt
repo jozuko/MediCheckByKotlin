@@ -2,7 +2,7 @@ package com.studiojozu.medicheck.domain.model.medicine
 
 import com.studiojozu.common.domain.model.general.ABooleanType
 
-class DeleteFlagType : ABooleanType<DeleteFlagType> {
+class MedicineDeleteFlagType : ABooleanType<MedicineDeleteFlagType> {
     companion object {
         const val serialVersionUID = -4357707301598095745L
     }

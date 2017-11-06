@@ -2,7 +2,6 @@
 
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert.*
 import org.junit.Test
@@ -34,15 +33,11 @@ class ADateTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() {
-        val now = Calendar.getInstance()
-        val testDateType = TestDateType(now.timeInMillis)
-
-        now.set(Calendar.HOUR_OF_DAY, 0)
-        now.set(Calendar.MINUTE, 0)
-        now.set(Calendar.SECOND, 0)
-        now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now, mValueProperty.call(testDateType))
+    fun constructor_Long() = try {
+        TestDateType(Calendar.getInstance().timeInMillis)
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -73,13 +68,11 @@ class ADateTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() {
-        try {
-            TestDateType("test")
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertEquals("unknown type.", e.message)
-        }
+    fun constructor_Unknown() = try {
+        TestDateType("test")
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -91,19 +84,6 @@ class ADateTypeTest : ATestParent() {
 
         val testDateType = TestDateType(2017, 1, 2)
         assertEquals(now, mValueProperty.call(testDateType))
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun setContentValue() {
-        val contentValue = ContentValues()
-        val columnName = "columnName"
-        val now = Calendar.getInstance()
-        now.set(2017, 0, 2, 0, 0, 0)
-        now.set(Calendar.MILLISECOND, 0)
-
-        TestDateType(now).setContentValue(columnName, contentValue)
-        assertEquals(now.timeInMillis, contentValue.get(columnName))
     }
 
     @Test
@@ -150,16 +130,16 @@ class ADateTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDateType = TestDateType(now)
 
-        assertEquals(now.timeInMillis, testDateType.addDay(0).dbValue)
+        assertEquals(now.timeInMillis, testDateType.addDay(0).dbValue.timeInMillis)
 
         now.set(2017, 0, 3, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(1).dbValue)
+        assertEquals(now.timeInMillis, testDateType.addDay(1).dbValue.timeInMillis)
 
         now.set(2017, 0, 1, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(-1).dbValue)
+        assertEquals(now.timeInMillis, testDateType.addDay(-1).dbValue.timeInMillis)
 
         now.set(2017, 1, 1, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(30).dbValue)
+        assertEquals(now.timeInMillis, testDateType.addDay(30).dbValue.timeInMillis)
     }
 
     @Test
@@ -172,7 +152,7 @@ class ADateTypeTest : ATestParent() {
         now.set(Calendar.MINUTE, 0)
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, testDateType.dbValue)
+        assertEquals(now.timeInMillis, testDateType.dbValue.timeInMillis)
     }
 
     @Test

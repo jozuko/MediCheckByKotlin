@@ -9,7 +9,7 @@ class TimetableTimeType : ATimeType<TimetableTimeType> {
         const val serialVersionUID = 5169596478420128156L
     }
 
-    constructor() : super(System.currentTimeMillis())
+    constructor() : super(Calendar.getInstance())
     constructor(millisecond: Any) : super(millisecond)
     constructor(hourOfDay: Int, minute: Int) : super(hourOfDay, minute)
 

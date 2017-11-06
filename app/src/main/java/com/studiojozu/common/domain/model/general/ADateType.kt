@@ -1,20 +1,19 @@
 package com.studiojozu.common.domain.model.general
 
-import android.content.ContentValues
-import com.studiojozu.common.domain.model.ADbType
+import com.studiojozu.common.domain.model.AValueObject
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<ADateType<*>> {
+abstract class ADateType<out C : ADateType<C>> : AValueObject<Calendar, C>, Comparable<ADateType<*>> {
     companion object {
         const val serialVersionUID = 5505479830648039872L
     }
 
     protected val mValue: Calendar
 
-    override val dbValue: Long
-        get() = mValue.timeInMillis
+    override val dbValue: Calendar
+        get() = mValue
 
     override val displayValue: String
         get() {
@@ -22,17 +21,15 @@ abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<AD
             return format.format(mValue.time)
         }
 
-    protected constructor(millisecond: Any) {
-        val timeInMillis = when (millisecond) {
-            is Long -> millisecond
-            is Calendar -> millisecond.timeInMillis
-            is ADateType<*> -> millisecond.dbValue
-            is ADatetimeType<*> -> millisecond.dbValue
+    protected constructor(calendarDate: Any) {
+        val calendar: Calendar = when (calendarDate) {
+            is Calendar -> calendarDate
+            is ADateType<*> -> calendarDate.dbValue
+            is ADatetimeType<*> -> calendarDate.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = Calendar.getInstance()
-        mValue.timeInMillis = timeInMillis
+        mValue = calendar.clone() as Calendar
         mValue.set(Calendar.HOUR_OF_DAY, 0)
         mValue.set(Calendar.MINUTE, 0)
         mValue.set(Calendar.SECOND, 0)
@@ -44,8 +41,6 @@ abstract class ADateType<out C : ADateType<C>> : ADbType<Long, C>, Comparable<AD
         mValue.set(year, month - 1, day, 0, 0, 0)
         mValue.set(Calendar.MILLISECOND, 0)
     }
-
-    override fun setContentValue(columnName: String, contentValue: ContentValues) = contentValue.put(columnName, dbValue)
 
     override fun compareTo(other: ADateType<*>): Int = dbValue.compareTo(other.dbValue)
 

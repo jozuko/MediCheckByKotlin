@@ -10,7 +10,7 @@ import java.util.*
  * 日付の間隔の型クラス.
  * 〇日おき or 毎月〇日の〇を表す
  */
-class TakeIntervalType : ALongType<TakeIntervalType> {
+class MedicineIntervalType : ALongType<MedicineIntervalType> {
     companion object {
         const val serialVersionUID = 1399242371014805824L
     }
@@ -19,9 +19,9 @@ class TakeIntervalType : ALongType<TakeIntervalType> {
     constructor(value: Any) : super(value)
 
     override val displayValue: String
-        get() = throw RuntimeException("you need to call getDisplayValue(Resources, TakeIntervalModeType).")
+        get() = throw RuntimeException("you need to call getDisplayValue(Resources, MedicineIntervalModeType).")
 
-    fun displayValue(resources: Resources, takeIntervalModeType: TakeIntervalModeType): String
+    fun displayValue(resources: Resources, takeIntervalModeType: MedicineIntervalModeType): String
             = if (takeIntervalModeType.isDays) getDaysDisplayValue(resources) else getMonthDisplayValue(resources)
 
     private fun getDaysDisplayValue(resources: Resources): String
@@ -50,13 +50,13 @@ class TakeIntervalType : ALongType<TakeIntervalType> {
      * @return 日数の場合：パラメータの日時にInterval+1分の日数を加算した値<br></br>
      * 月数の場合：パラメータの日時の日付をIntervalに置き換えて、1か月加算した値
      */
-    fun addInterval(datetime: ADatetimeType<*>, takeIntervalMode: TakeIntervalModeType): ADatetimeType<*> {
+    fun addInterval(datetime: ADatetimeType<*>, takeIntervalMode: MedicineIntervalModeType): ADatetimeType<*> {
         if (takeIntervalMode.isDays) {
             return datetime.addDay(dbValue.toInt() + 1)
         }
 
         val calculateCalendar = Calendar.getInstance()
-        calculateCalendar.timeInMillis = datetime.dbValue
+        calculateCalendar.timeInMillis = datetime.dbValue.timeInMillis
         calculateCalendar.add(Calendar.MONTH, 1)
         val maxDay = calculateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         if (maxDay < dbValue)
@@ -64,6 +64,6 @@ class TakeIntervalType : ALongType<TakeIntervalType> {
         else
             calculateCalendar.set(Calendar.DAY_OF_MONTH, dbValue.toInt())
 
-        return StartDatetimeType(calculateCalendar)
+        return MedicineStartDatetimeType(calculateCalendar)
     }
 }

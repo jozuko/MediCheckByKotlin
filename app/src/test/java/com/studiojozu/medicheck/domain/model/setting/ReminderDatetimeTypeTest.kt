@@ -26,18 +26,16 @@ class ReminderDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
     }
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() {
-        val now = Calendar.getInstance()
-        val remindDatetimeType = ReminderDatetimeType(now.timeInMillis)
-
-        now.set(Calendar.SECOND, 0)
-        now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
+    fun constructor_Long() = try {
+        ReminderDatetimeType(Calendar.getInstance().timeInMillis)
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test
@@ -48,7 +46,7 @@ class ReminderDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
     }
 
     @Test
@@ -62,7 +60,7 @@ class ReminderDatetimeTypeTest : ATestParent() {
         val timeModel = TestTimeType(now)
         val remindDatetimeType = ReminderDatetimeType(dateModel, timeModel)
 
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
     }
 
     @Test

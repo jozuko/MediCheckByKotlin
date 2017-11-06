@@ -3,8 +3,8 @@ package com.studiojozu.medicheck.domain.model.schedule
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineDateNumberType
+import com.studiojozu.medicheck.domain.model.medicine.MedicineStartDatetimeType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineTimetableList
-import com.studiojozu.medicheck.domain.model.medicine.StartDatetimeType
 import org.jetbrains.annotations.Contract
 import java.io.Serializable
 import java.util.*
@@ -42,7 +42,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
     private fun clearScheduleList() = mScheduleList.clear()
 
     fun createScheduleList(medicine: Medicine) {
-        val medicineNumber = calculateMedicineNumber(medicine.mTimetableList, medicine.mDateNumber)
+        val medicineNumber = calculateMedicineNumber(medicine.mTimetableList, medicine.mMedicineDateNumber)
         createScheduleList(medicine, medicineNumber)
     }
 
@@ -92,25 +92,25 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             return planDate.mPlanDatetime
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻の場合はIntervalを加算する
-        val afterIntervalDateTime = medicine.mTakeInterval.addInterval(planDate.mPlanDatetime, medicine.mTakeIntervalMode)
+        val afterIntervalDateTime = medicine.mMedicineInterval.addInterval(planDate.mPlanDatetime, medicine.mMedicineIntervalMode)
         val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = afterIntervalDateTime.dbValue
+        nextDay.timeInMillis = afterIntervalDateTime.dbValue.timeInMillis
         nextDay.set(Calendar.HOUR_OF_DAY, 0)
         nextDay.set(Calendar.MINUTE, 0)
-        return StartDatetimeType(nextDay)
+        return MedicineStartDatetimeType(nextDay)
     }
 
     private fun getFirstDatetime(medicine: Medicine): ADatetimeType<*> {
-        if (medicine.mTakeIntervalMode.isDays)
-            return medicine.mStartDatetime
+        if (medicine.mMedicineIntervalMode.isDays)
+            return medicine.mMedicineStartDatetime
 
         val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = medicine.mStartDatetime.dbValue
-        nextDay.set(Calendar.DAY_OF_MONTH, medicine.mTakeInterval.dbValue.toInt())
+        nextDay.timeInMillis = medicine.mMedicineStartDatetime.dbValue.timeInMillis
+        nextDay.set(Calendar.DAY_OF_MONTH, medicine.mMedicineInterval.dbValue.toInt())
 
-        if (nextDay.timeInMillis < medicine.mStartDatetime.dbValue)
+        if (nextDay.timeInMillis < medicine.mMedicineStartDatetime.dbValue.timeInMillis)
             nextDay.add(Calendar.MONTH, 1)
 
-        return StartDatetimeType(nextDay)
+        return MedicineStartDatetimeType(nextDay)
     }
 }

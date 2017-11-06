@@ -39,15 +39,15 @@ class MedicineTest : ATestParent() {
         assertNotNull(entity.mMedicineId.dbValue)
         assertNotSame("", entity.mMedicineId.dbValue)
         assertEquals("", entity.mMedicineName.dbValue)
-        assertEquals("0", entity.mTakeNumber.dbValue)
+        assertEquals("0", entity.mMedicineTakeNumber.dbValue)
         assertEquals("", entity.mMedicineUnit.displayValue)
-        assertEquals(0, entity.mDateNumber.dbValue)
-        assertTrue(0 < entity.mStartDatetime.dbValue)
-        assertEquals(0, entity.mTakeInterval.dbValue)
-        assertEquals(0, entity.mTakeIntervalMode.dbValue)
+        assertEquals(0, entity.mMedicineDateNumber.dbValue)
+        assertTrue(0 < entity.mMedicineStartDatetime.dbValue.timeInMillis)
+        assertEquals(0, entity.mMedicineInterval.dbValue)
+        assertEquals(0, entity.mMedicineIntervalMode.dbValue)
         assertEquals("", entity.mMedicinePhoto.dbValue)
-        assertEquals(true, entity.mNeedAlarm.isTrue)
-        assertEquals(false, entity.mDeleteFlagType.isTrue)
+        assertEquals(true, entity.mMedicineNeedAlarm.isTrue)
+        assertEquals(false, entity.mMedicineDeleteFlag.isTrue)
         assertEquals(0, entity.mTimetableList.count)
 
         assertNotNull(entity.medicineUnitId.dbValue)
@@ -66,8 +66,8 @@ class MedicineTest : ATestParent() {
         entity = Medicine(mMedicineName = MedicineNameType("test"))
         assertEquals("test", entity.mMedicineName.dbValue)
 
-        entity = Medicine(mTakeNumber = TakeNumberType("1"))
-        assertEquals("1", entity.mTakeNumber.dbValue)
+        entity = Medicine(mMedicineTakeNumber = MedicineTakeNumberType("1"))
+        assertEquals("1", entity.mMedicineTakeNumber.dbValue)
 
         entity = Medicine(
                 mMedicineUnit = MedicineUnit(mMedicineUnitId = MedicineUnitIdType("5678"),
@@ -77,26 +77,26 @@ class MedicineTest : ATestParent() {
         assertEquals("錠", entity.mMedicineUnit.mMedicineUnitValue.dbValue)
         assertEquals(1L, entity.mMedicineUnit.mMedicineUnitDisplayOrder.dbValue)
 
-        entity = Medicine(mDateNumber = MedicineDateNumberType(1))
-        assertEquals(1L, entity.mDateNumber.dbValue)
+        entity = Medicine(mMedicineDateNumber = MedicineDateNumberType(1))
+        assertEquals(1L, entity.mMedicineDateNumber.dbValue)
 
-        entity = Medicine(mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4))
-        assertEquals("17/01/02 3:04", entity.mStartDatetime.displayValue)
+        entity = Medicine(mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4))
+        assertEquals("17/01/02 3:04", entity.mMedicineStartDatetime.displayValue)
 
-        entity = Medicine(mTakeInterval = TakeIntervalType(1))
-        assertEquals(1L, entity.mTakeInterval.dbValue)
+        entity = Medicine(mMedicineInterval = MedicineIntervalType(1))
+        assertEquals(1L, entity.mMedicineInterval.dbValue)
 
-        entity = Medicine(mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH))
-        assertEquals(false, entity.mTakeIntervalMode.isDays)
+        entity = Medicine(mMedicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.MONTH))
+        assertEquals(false, entity.mMedicineIntervalMode.isDays)
 
         entity = Medicine(mMedicinePhoto = MedicinePhotoType("/sdcard/CAMERA/hogehoge.jpg"))
         assertEquals("/sdcard/CAMERA/hogehoge.jpg", entity.mMedicinePhoto.dbValue)
 
-        entity = Medicine(mNeedAlarm = MedicineNeedAlarmType(false))
-        assertEquals(false, entity.mNeedAlarm.isTrue)
+        entity = Medicine(mMedicineNeedAlarm = MedicineNeedAlarmType(false))
+        assertEquals(false, entity.mMedicineNeedAlarm.isTrue)
 
-        entity = Medicine(mDeleteFlagType = DeleteFlagType(true))
-        assertEquals(true, entity.mDeleteFlagType.isTrue)
+        entity = Medicine(mMedicineDeleteFlag = MedicineDeleteFlagType(true))
+        assertEquals(true, entity.mMedicineDeleteFlag.isTrue)
 
         val timetableList = MedicineTimetableList()
         timetableList.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))

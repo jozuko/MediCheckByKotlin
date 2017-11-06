@@ -2,7 +2,7 @@ package com.studiojozu.medicheck.domain.model.medicine.validator
 
 import com.studiojozu.common.domain.model.validator.IValidator
 import com.studiojozu.medicheck.R
-import com.studiojozu.medicheck.domain.model.medicine.TakeIntervalModeType
+import com.studiojozu.medicheck.domain.model.medicine.MedicineIntervalModeType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert
 import org.junit.Test
@@ -20,7 +20,7 @@ class TakeIntervalValidatorTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun success_days() {
-        val validator = TakeIntervalValidator(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val validator = TakeIntervalValidator(MedicineIntervalModeType.DateIntervalPattern.DAYS)
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("0"))
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("1"))
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("364"))
@@ -30,7 +30,7 @@ class TakeIntervalValidatorTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun success_month() {
-        val validator = TakeIntervalValidator(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        val validator = TakeIntervalValidator(MedicineIntervalModeType.DateIntervalPattern.MONTH)
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("1"))
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("2"))
         Assert.assertEquals(IValidator.NO_ERROR_RESOURCE_ID, validator.validate("30"))
@@ -40,7 +40,7 @@ class TakeIntervalValidatorTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun failed_days() {
-        val validator = TakeIntervalValidator(TakeIntervalModeType.DateIntervalPattern.DAYS)
+        val validator = TakeIntervalValidator(MedicineIntervalModeType.DateIntervalPattern.DAYS)
         Assert.assertEquals(R.string.validation_out_of_range, validator.validate("-1"))
         Assert.assertEquals(R.string.validation_out_of_range, validator.validate("366"))
         Assert.assertEquals(R.string.validation_require, validator.validate(""))
@@ -50,7 +50,7 @@ class TakeIntervalValidatorTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun failed_month() {
-        val validator = TakeIntervalValidator(TakeIntervalModeType.DateIntervalPattern.MONTH)
+        val validator = TakeIntervalValidator(MedicineIntervalModeType.DateIntervalPattern.MONTH)
         Assert.assertEquals(R.string.validation_out_of_range, validator.validate("0"))
         Assert.assertEquals(R.string.validation_out_of_range, validator.validate("32"))
         Assert.assertEquals(R.string.validation_require, validator.validate(""))

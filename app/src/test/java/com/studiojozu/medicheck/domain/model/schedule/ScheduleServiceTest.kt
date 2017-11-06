@@ -57,11 +57,11 @@ class ScheduleServiceTest : ATestParent() {
         timetableList.setTimetableList(mutableListOf(timetable1, timetable2, timetable3))
 
         val medicine = Medicine(
-                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
                 mTimetableList = timetableList,
-                mDateNumber = MedicineDateNumberType(7),
-                mTakeInterval = TakeIntervalType(0),
-                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+                mMedicineDateNumber = MedicineDateNumberType(7),
+                mMedicineInterval = MedicineIntervalType(0),
+                mMedicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.DAYS)
         )
 
         val scheduleService = ScheduleService()
@@ -162,11 +162,11 @@ class ScheduleServiceTest : ATestParent() {
         timetableList.setTimetableList(mutableListOf(timetable1))
 
         val medicine = Medicine(
-                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
                 mTimetableList = timetableList,
-                mDateNumber = MedicineDateNumberType(3),
-                mTakeInterval = TakeIntervalType(1),
-                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.DAYS)
+                mMedicineDateNumber = MedicineDateNumberType(3),
+                mMedicineInterval = MedicineIntervalType(1),
+                mMedicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.DAYS)
         )
 
         val scheduleService = ScheduleService()
@@ -195,11 +195,11 @@ class ScheduleServiceTest : ATestParent() {
         timetableList.setTimetableList(mutableListOf(timetable1))
 
         val medicine = Medicine(
-                mStartDatetime = StartDatetimeType(2017, 1, 2, 3, 4),
+                mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
                 mTimetableList = timetableList,
-                mDateNumber = MedicineDateNumberType(6),
-                mTakeInterval = TakeIntervalType(15),
-                mTakeIntervalMode = TakeIntervalModeType(TakeIntervalModeType.DateIntervalPattern.MONTH)
+                mMedicineDateNumber = MedicineDateNumberType(6),
+                mMedicineInterval = MedicineIntervalType(15),
+                mMedicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.MONTH)
         )
 
         val scheduleService = ScheduleService()

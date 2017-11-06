@@ -19,7 +19,7 @@ class PlanDateTypeTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        assertTrue(0 < PlanDateType().dbValue)
+        assertTrue(0 < PlanDateType().dbValue.timeInMillis)
 
         val now = Calendar.getInstance()
         val expect = now.clone() as Calendar
@@ -27,9 +27,9 @@ class PlanDateTypeTest : ATestParent() {
         expect.set(Calendar.MINUTE, 0)
         expect.set(Calendar.SECOND, 0)
         expect.set(Calendar.MILLISECOND, 0)
-        assertEquals(expect.timeInMillis, PlanDateType(now).dbValue)
+        assertEquals(expect.timeInMillis, PlanDateType(now).dbValue.timeInMillis)
 
         expect.set(2017, 0, 2, 0, 0, 0)
-        assertEquals(expect.timeInMillis, PlanDateType(2017, 1, 2).dbValue)
+        assertEquals(expect.timeInMillis, PlanDateType(2017, 1, 2).dbValue.timeInMillis)
     }
 }

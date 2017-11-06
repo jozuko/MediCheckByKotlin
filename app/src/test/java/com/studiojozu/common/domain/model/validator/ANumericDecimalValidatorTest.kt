@@ -57,7 +57,6 @@ class ANumericDecimalValidatorTest : ATestParent() {
         assertEquals(R.string.validation_out_of_range, validator.validate("11"))
     }
 
-
     @Test
     @Throws(Exception::class)
     fun validate_success() {
