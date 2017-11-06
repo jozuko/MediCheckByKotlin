@@ -27,15 +27,19 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
         val dao = database.medicineViewDao()
 
         // addData
-        val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("12345678", "錠"))
-        val medicine = setSqliteMedicine(getMedicine("12345678", "メルカゾール", medicineUnit.mMedicineUnitId))
+        val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
-        // select no data
+        // findAll
         val medicines = dao.findAll()
         assertEquals(1, medicines.size)
         assert(medicine, medicineUnit, medicines[0])
+
+        // delete data
+        database.medicineDao().delete(medicine)
+        database.medicineUnitDao().delete(medicineUnit)
     }
 
     @Test
@@ -44,14 +48,18 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
         val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
         val dao = database.medicineViewDao()
 
+        // select not data
+        var medicineView = dao.findByMedicineId("")
+        assertNull(medicineView)
+
         // addData
-        val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("12345678", "錠"))
-        val medicine = setSqliteMedicine(getMedicine("12345678", "メルカゾール", medicineUnit.mMedicineUnitId))
+        val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
         // findByMedicineId
-        var medicineView = dao.findByMedicineId(medicine.mMedicineId)
+        medicineView = dao.findByMedicineId(medicine.mMedicineId)
         assertNotNull(medicineView)
         assert(medicine, medicineUnit, medicineView!!)
 
@@ -104,22 +112,10 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
         Assert.assertEquals(expectMedicineUnit.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
     }
 
-    private fun getMedicine(id: String = "", name: String = "", unitId: String = ""): Medicine {
-        var medicineId = id
-        if (medicineId.isEmpty()) medicineId = MedicineIdType().dbValue
+    private fun getMedicine(name: String = "", unitId: String = MedicineUnitIdType().dbValue): Medicine =
+            Medicine(mMedicineName = MedicineNameType(name),
+                    mMedicineUnit = MedicineUnit(mMedicineUnitId = MedicineUnitIdType(unitId)))
 
-        var medicineUnitId = unitId
-        if (medicineUnitId.isEmpty()) medicineUnitId = MedicineUnitIdType().dbValue
-
-        return Medicine(
-                mMedicineId = MedicineIdType(medicineId),
-                mMedicineName = MedicineNameType(name),
-                mMedicineUnit = MedicineUnit(mMedicineUnitId = MedicineUnitIdType(medicineUnitId)))
-    }
-
-    private fun getMedicineUnit(id: String = "", value: String = ""): MedicineUnit {
-        var medicineUnitId = id
-        if (medicineUnitId.isEmpty()) medicineUnitId = MedicineUnitIdType().dbValue
-        return MedicineUnit(mMedicineUnitId = MedicineUnitIdType(medicineUnitId), mMedicineUnitValue = MedicineUnitValueType(value))
-    }
+    private fun getMedicineUnit(value: String = ""): MedicineUnit =
+            MedicineUnit(mMedicineUnitValue = MedicineUnitValueType(value))
 }
