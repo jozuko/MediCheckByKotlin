@@ -27,7 +27,6 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun mediTimeRelationDao(): SqliteMediTimeRelationRepository
     abstract fun personMediRelationDao(): SqlitePersonMediRelationRepository
     abstract fun personDao(): SqlitePersonRepository
-    abstract fun personMedicineDao(): SqlitePersonMedicineRepository
     abstract fun scheduleDao(): SqliteScheduleRepository
     abstract fun settingDao(): SqliteSettingRepository
     abstract fun timetableDao(): SqliteTimetableRepository

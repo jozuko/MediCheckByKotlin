@@ -14,6 +14,7 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
+import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
@@ -95,4 +96,56 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         dao.delete(insertData3)
         Assert.assertEquals(0, dao.findAll().size)
     }
+
+    @Test
+    @Throws(Exception::class)
+    @Config(qualifiers = "ja")
+    fun findTimetableByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.mediTimeRelationDao()
+        val timetables = database.timetableDao().findAll()
+
+        // insert
+        val medicineId1 = MedicineIdType().dbValue
+        val medicineId2 = MedicineIdType().dbValue
+        val insertData1 = SqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
+        val insertData2 = SqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
+        val insertData3 = SqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
+        val insertData4 = SqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
+        val insertData5 = SqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
+        dao.insert(insertData1)
+        dao.insert(insertData2)
+        dao.insert(insertData3)
+        dao.insert(insertData4)
+        dao.insert(insertData5)
+
+        // findTimetableByMedicineId
+        val timetableArray = dao.findTimetableByMedicineId(medicineId1)
+        assertEquals(3, timetableArray.size)
+        var index = 0
+        assertEquals("朝", timetableArray[index].mTimetableName)
+        assertEquals(7, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
+        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+
+        index = 1
+        assertEquals("昼", timetableArray[index].mTimetableName)
+        assertEquals(12, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
+        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+
+        index = 2
+        assertEquals("夜", timetableArray[index].mTimetableName)
+        assertEquals(19, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
+        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+
+        // delete
+        dao.delete(insertData1)
+        dao.delete(insertData2)
+        dao.delete(insertData3)
+        dao.delete(insertData4)
+        dao.delete(insertData5)
+    }
+
 }

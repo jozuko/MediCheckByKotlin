@@ -38,6 +38,6 @@ interface SqliteMedicineMedicineUnitRepository {
             ",medicine_unit.medicine_unit_value as medicine_unit_value" +
             ",medicine_unit.medicine_unit_display_order as medicine_unit_display_order" +
             " from medicine left join medicine_unit on medicine.medicine_unit_id=medicine_unit.medicine_unit_id" +
-            " where medicine.medicine_unit_id=:medicineUnitId")
-    fun findByMedicineId(medicineUnitId: String): SqliteMedicineMedicineUnit?
+            " where medicine.medicine_id=:medicineId")
+    fun findByMedicineId(medicineId: String): SqliteMedicineMedicineUnit?
 }
