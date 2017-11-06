@@ -2,7 +2,6 @@ package com.studiojozu.medicheck.infrastructure.persistence.dao
 
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
@@ -33,8 +32,7 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, entities.size)
 
         // insert
-        val insertData = SqliteMediTimeRelation("12345678")
-        insertData.mTimetableId = Timetable().mTimetableId.dbValue
+        val insertData = SqliteMediTimeRelation("12345678", TimetableIdType().dbValue)
         insertData.mIsOneShot = false
 
         dao.insert(insertData)
@@ -46,8 +44,7 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(insertData.mIsOneShot, entities[0].mIsOneShot)
 
         // update
-        val updateData = SqliteMediTimeRelation(insertData.mMedicineId)
-        updateData.mTimetableId = insertData.mTimetableId
+        val updateData = SqliteMediTimeRelation(insertData.mMedicineId, insertData.mTimetableId)
         updateData.mIsOneShot = true
 
         dao.insert(updateData)
@@ -74,18 +71,15 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, dao.findAll().size)
 
         // insert
-        val insertData1 = SqliteMediTimeRelation(MedicineIdType().dbValue)
-        insertData1.mTimetableId = TimetableIdType().dbValue
+        val insertData1 = SqliteMediTimeRelation(MedicineIdType().dbValue, TimetableIdType().dbValue)
         insertData1.mIsOneShot = false
         dao.insert(insertData1)
 
-        val insertData2 = SqliteMediTimeRelation(MedicineIdType().dbValue)
-        insertData2.mTimetableId = TimetableIdType().dbValue
+        val insertData2 = SqliteMediTimeRelation(MedicineIdType().dbValue, insertData1.mTimetableId)
         insertData2.mIsOneShot = false
         dao.insert(insertData2)
 
-        val insertData3 = SqliteMediTimeRelation(MedicineIdType().dbValue)
-        insertData3.mTimetableId = ""
+        val insertData3 = SqliteMediTimeRelation(insertData1.mMedicineId, "")
         insertData3.mIsOneShot = true
         dao.insert(insertData3)
 
