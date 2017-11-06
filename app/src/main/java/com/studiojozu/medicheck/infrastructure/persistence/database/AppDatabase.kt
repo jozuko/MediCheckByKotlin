@@ -4,18 +4,21 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMediTimeRelationRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineMedicineUnitRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineUnitRepository
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineUnit
 
-@Database(entities = arrayOf(SqliteMedicine::class, SqliteMedicineUnit::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(SqliteMedicine::class, SqliteMedicineUnit::class, SqliteMediTimeRelation::class), version = 1, exportSchema = false)
 internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun medicineDao(): SqliteMedicineRepository
     abstract fun medicineUnitDao(): SqliteMedicineUnitRepository
     abstract fun medicineViewDao(): SqliteMedicineMedicineUnitRepository
+    abstract fun mediTimeRelationDao(): SqliteMediTimeRelationRepository
 
     companion object {
         private var instance: AppDatabase? = null
