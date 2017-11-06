@@ -8,7 +8,7 @@ import com.studiojozu.medicheck.infrastructure.persistence.converter.SqliteConve
 import java.util.*
 
 @Entity(tableName = "medicine")
-class SqliteMedicine(medicineId: String) {
+open class SqliteMedicine(medicineId: String) {
     /** ID  */
     @PrimaryKey
     @ColumnInfo(name = "medicine_id")

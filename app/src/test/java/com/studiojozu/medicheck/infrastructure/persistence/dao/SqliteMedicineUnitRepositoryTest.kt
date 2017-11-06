@@ -79,6 +79,10 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
         // findById - not exists
         entity = dao.findById("unknown id")
         assertNull(entity)
+
+        // delete
+        val deleteMedicineEntity = insertMedicineUnit.copy()
+        dao.delete(setSqliteMedicineUnit(deleteMedicineEntity))
     }
 
     private fun setSqliteMedicineUnit(medicineUnit: MedicineUnit): SqliteMedicineUnit {

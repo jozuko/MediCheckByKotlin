@@ -30,21 +30,21 @@ class SqliteMedicineRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineEntity = com.studiojozu.medicheck.domain.model.medicine.Medicine()
-        dao.insert(setRepositoryMedicine(insertMedicineEntity))
+        dao.insert(setSqliteMedicine(insertMedicineEntity))
         medicines = dao.findAll()
         assertEquals(1, medicines.size)
         assert(insertMedicineEntity, medicines[0])
 
         // update
         val updateMedicineEntity = insertMedicineEntity.copy(mMedicineName = MedicineNameType("メルカゾール"))
-        dao.insert(setRepositoryMedicine(updateMedicineEntity))
+        dao.insert(setSqliteMedicine(updateMedicineEntity))
         medicines = dao.findAll()
         assertEquals(1, medicines.size)
         assert(updateMedicineEntity, medicines[0])
 
         // delete
         val deleteMedicineEntity = insertMedicineEntity.copy()
-        dao.delete(setRepositoryMedicine(deleteMedicineEntity))
+        dao.delete(setSqliteMedicine(deleteMedicineEntity))
         medicines = dao.findAll()
         assertEquals(0, medicines.size)
     }
@@ -57,7 +57,7 @@ class SqliteMedicineRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineEntity = com.studiojozu.medicheck.domain.model.medicine.Medicine()
-        dao.insert(setRepositoryMedicine(insertMedicineEntity))
+        dao.insert(setSqliteMedicine(insertMedicineEntity))
 
         // findById
         val medicine1 = dao.findById(insertMedicineEntity.mMedicineId.dbValue)
@@ -69,10 +69,10 @@ class SqliteMedicineRepositoryTest : ATestParent() {
 
         // delete
         val deleteMedicineEntity = insertMedicineEntity.copy()
-        dao.delete(setRepositoryMedicine(deleteMedicineEntity))
+        dao.delete(setSqliteMedicine(deleteMedicineEntity))
     }
 
-    private fun setRepositoryMedicine(medicineEntity: com.studiojozu.medicheck.domain.model.medicine.Medicine): SqliteMedicine {
+    private fun setSqliteMedicine(medicineEntity: com.studiojozu.medicheck.domain.model.medicine.Medicine): SqliteMedicine {
         val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId.dbValue)
         medicine.mMedicineName = medicineEntity.mMedicineName.dbValue
         medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber.dbValue

@@ -12,6 +12,8 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
 
     override fun onCreate(db: SupportSQLiteDatabase) {
         super.onCreate(db)
+
+        // insert init data
         initMedicineUnit(db)
     }
 

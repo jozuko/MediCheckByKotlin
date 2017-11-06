@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
-
+import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineMedicineUnitRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineUnitRepository
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
@@ -15,6 +15,7 @@ internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun medicineDao(): SqliteMedicineRepository
     abstract fun medicineUnitDao(): SqliteMedicineUnitRepository
+    abstract fun medicineViewDao(): SqliteMedicineMedicineUnitRepository
 
     companion object {
         private var instance: AppDatabase? = null
