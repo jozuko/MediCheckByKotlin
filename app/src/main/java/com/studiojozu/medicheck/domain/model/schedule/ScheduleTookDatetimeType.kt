@@ -5,7 +5,7 @@ import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.common.domain.model.general.ATimeType
 import java.util.*
 
-class TookDatetimeType : ADatetimeType<TookDatetimeType> {
+class ScheduleTookDatetimeType : ADatetimeType<ScheduleTookDatetimeType> {
     companion object {
         const val serialVersionUID = 4076300522326519800L
     }

@@ -75,7 +75,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             planDate = medicine.mTimetableList.getPlanDate(standardDatetime)
 
             // 服用予定日時を一覧に追加する
-            val schedule = Schedule(medicine.mMedicineId, planDate.planDate, planDate.mTimetableId, ScheduleNeedAlarmType(), IsTakeType(), TookDatetimeType())
+            val schedule = Schedule(medicine.mMedicineId, planDate.mSchedulePlanDate, planDate.mTimetableId, ScheduleNeedAlarmType(), ScheduleIsTakeType(), ScheduleTookDatetimeType())
             mScheduleList.add(schedule)
         }
     }

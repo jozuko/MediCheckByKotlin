@@ -13,8 +13,8 @@ data class PlanDate(
         const val serialVersionUID = 1510995332489280524L
     }
 
-    val planDate: PlanDateType
-        get() = PlanDateType(mPlanDatetime)
+    val mSchedulePlanDate: SchedulePlanDateType
+        get() = SchedulePlanDateType(mPlanDatetime)
 
     /**
      * フィールドが保持する日時に、パラメータのdayを日数として追加した値を返却する。

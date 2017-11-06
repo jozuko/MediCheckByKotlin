@@ -6,11 +6,11 @@ import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import java.io.Serializable
 
 data class Schedule(val mMedicineId: MedicineIdType,
-                    val mPlanDate: PlanDateType,
+                    val mSchedulePlanDate: SchedulePlanDateType,
                     val mTimetableId: TimetableIdType,
-                    val mNeedAlarm: ScheduleNeedAlarmType = ScheduleNeedAlarmType(),
-                    val mIsTake: IsTakeType = IsTakeType(),
-                    val mTookDatetime: TookDatetimeType = TookDatetimeType()) : Serializable {
+                    val mScheduleNeedAlert: ScheduleNeedAlarmType = ScheduleNeedAlarmType(),
+                    val mScheduleIsTake: ScheduleIsTakeType = ScheduleIsTakeType(),
+                    val mScheduleTookDatetime: ScheduleTookDatetimeType = ScheduleTookDatetimeType()) : Serializable {
 
     companion object {
         const val serialVersionUID = 8903872909322659419L

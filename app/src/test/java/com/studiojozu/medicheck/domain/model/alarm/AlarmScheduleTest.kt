@@ -5,8 +5,8 @@ import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineNameType
 import com.studiojozu.medicheck.domain.model.person.Person
 import com.studiojozu.medicheck.domain.model.person.PersonNameType
-import com.studiojozu.medicheck.domain.model.schedule.PlanDateType
 import com.studiojozu.medicheck.domain.model.schedule.Schedule
+import com.studiojozu.medicheck.domain.model.schedule.SchedulePlanDateType
 import com.studiojozu.medicheck.domain.model.setting.*
 import org.junit.Assert.*
 import org.junit.Test
@@ -26,7 +26,7 @@ class AlarmScheduleTest : ATestParent() {
     @Throws(Exception::class)
     fun medicineName() {
         val entity = AlarmSchedule(
-                mSchedule = Schedule(mMedicineId = MedicineIdType(), mPlanDate = PlanDateType(), mTimetableId = TimetableIdType()),
+                mSchedule = Schedule(mMedicineId = MedicineIdType(), mSchedulePlanDate = SchedulePlanDateType(), mTimetableId = TimetableIdType()),
                 mTimetable = Timetable(),
                 mMedicine = Medicine(mMedicineName = MedicineNameType("テスト薬名")),
                 mPerson = Person())
@@ -38,7 +38,7 @@ class AlarmScheduleTest : ATestParent() {
     @Throws(Exception::class)
     fun personName() {
         val entity = AlarmSchedule(
-                mSchedule = Schedule(mMedicineId = MedicineIdType(), mPlanDate = PlanDateType(), mTimetableId = TimetableIdType()),
+                mSchedule = Schedule(mMedicineId = MedicineIdType(), mSchedulePlanDate = SchedulePlanDateType(), mTimetableId = TimetableIdType()),
                 mTimetable = Timetable(),
                 mMedicine = Medicine(mMedicineName = MedicineNameType("テスト薬名")),
                 mPerson = Person(mPersonName = PersonNameType("サンプル さん")))
@@ -56,7 +56,7 @@ class AlarmScheduleTest : ATestParent() {
         val timetable = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val schedule = Schedule(
                 mMedicineId = MedicineIdType(),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = timetable.mTimetableId)
         val entity = AlarmSchedule(
                 mSchedule = schedule,
@@ -79,7 +79,7 @@ class AlarmScheduleTest : ATestParent() {
         val timetable = Timetable(mTimetableTime = TimetableTimeType(2, 4))
         val schedule = Schedule(
                 mMedicineId = MedicineIdType(),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = timetable.mTimetableId)
         val entity = AlarmSchedule(
                 mSchedule = schedule,
@@ -101,7 +101,7 @@ class AlarmScheduleTest : ATestParent() {
         val timetable = Timetable(mTimetableTime = TimetableTimeType(2, 4))
         val schedule = Schedule(
                 mMedicineId = MedicineIdType(),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = timetable.mTimetableId)
         val entity = AlarmSchedule(
                 mSchedule = schedule,
@@ -122,7 +122,7 @@ class AlarmScheduleTest : ATestParent() {
         val timetable = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val schedule = Schedule(
                 mMedicineId = MedicineIdType(),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = timetable.mTimetableId)
         val entity = AlarmSchedule(
                 mSchedule = schedule,
@@ -166,14 +166,14 @@ class AlarmScheduleTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun compareDate() {
-        val schedule1 = Schedule(mPlanDate = PlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule1 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val entity1 = AlarmSchedule(mSchedule = schedule1, mTimetable = Timetable(), mMedicine = Medicine(), mPerson = Person())
 
         val schedule2 = schedule1.copy()
         val entity2 = AlarmSchedule(mSchedule = schedule2, mTimetable = Timetable(), mMedicine = Medicine(), mPerson = Person())
         assertTrue(entity1.compareDate(entity2) == 0)
 
-        val schedule3 = Schedule(mPlanDate = PlanDateType(2017, 1, 3), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule3 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 3), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val entity3 = AlarmSchedule(mSchedule = schedule3, mTimetable = Timetable(), mMedicine = Medicine(), mPerson = Person())
         assertTrue(entity1.compareDate(entity3) < 0)
         assertTrue(entity3.compareDate(entity1) > 0)
@@ -182,7 +182,7 @@ class AlarmScheduleTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun compareTime() {
-        val schedule = Schedule(mPlanDate = PlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
 
         val timetable1 = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val entity1 = AlarmSchedule(mTimetable = timetable1, mSchedule = schedule, mMedicine = Medicine(), mPerson = Person())

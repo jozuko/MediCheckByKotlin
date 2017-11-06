@@ -2,8 +2,8 @@ package com.studiojozu.medicheck.domain.model.alarm
 
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.person.Person
-import com.studiojozu.medicheck.domain.model.schedule.PlanDateType
 import com.studiojozu.medicheck.domain.model.schedule.Schedule
+import com.studiojozu.medicheck.domain.model.schedule.SchedulePlanDateType
 import com.studiojozu.medicheck.domain.model.setting.Setting
 import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.TimetableComparator
@@ -21,8 +21,8 @@ data class AlarmSchedule(private val mSchedule: Schedule,
     val personName: String
         get() = mPerson.mPersonName.displayValue
 
-    private val alarmDate: PlanDateType
-        get() = mSchedule.mPlanDate
+    private val alarmDate: SchedulePlanDateType
+        get() = mSchedule.mSchedulePlanDate
 
     private val alarmTime: TimetableTimeType
         get() = mTimetable.getTimetableTime()

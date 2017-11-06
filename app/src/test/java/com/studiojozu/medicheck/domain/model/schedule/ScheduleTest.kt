@@ -29,14 +29,14 @@ class ScheduleTest : ATestParent() {
 
         val entity = Schedule(
                 mMedicineId = MedicineIdType("1234"),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = TimetableIdType("4567"))
         assertEquals("1234", entity.mMedicineId.dbValue)
-        assertEquals("17/01/02", entity.mPlanDate.displayValue)
+        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("4567", entity.mTimetableId.dbValue)
-        assertTrue(entity.mNeedAlarm.isTrue)
-        assertFalse(entity.mIsTake.isTrue)
-        assertEquals("$year/$month/$day $hour:$minute", entity.mTookDatetime.displayValue)
+        assertTrue(entity.mScheduleNeedAlert.isTrue)
+        assertFalse(entity.mScheduleIsTake.isTrue)
+        assertEquals("$year/$month/$day $hour:$minute", entity.mScheduleTookDatetime.displayValue)
     }
 
     @Test
@@ -44,17 +44,17 @@ class ScheduleTest : ATestParent() {
     fun constructor_withParameter() {
         val entity = Schedule(
                 mMedicineId = MedicineIdType("1234"),
-                mPlanDate = PlanDateType(2017, 1, 2),
+                mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = TimetableIdType("4567"),
-                mNeedAlarm = ScheduleNeedAlarmType(false),
-                mIsTake = IsTakeType(true),
-                mTookDatetime = TookDatetimeType(2017, 1, 2, 3, 4)
+                mScheduleNeedAlert = ScheduleNeedAlarmType(false),
+                mScheduleIsTake = ScheduleIsTakeType(true),
+                mScheduleTookDatetime = ScheduleTookDatetimeType(2017, 1, 2, 3, 4)
         )
         assertEquals("1234", entity.mMedicineId.dbValue)
-        assertEquals("17/01/02", entity.mPlanDate.displayValue)
+        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("4567", entity.mTimetableId.dbValue)
-        assertFalse(entity.mNeedAlarm.isTrue)
-        assertTrue(entity.mIsTake.isTrue)
-        assertEquals("17/01/02 3:04", entity.mTookDatetime.displayValue)
+        assertFalse(entity.mScheduleNeedAlert.isTrue)
+        assertTrue(entity.mScheduleIsTake.isTrue)
+        assertEquals("17/01/02 3:04", entity.mScheduleTookDatetime.displayValue)
     }
 }

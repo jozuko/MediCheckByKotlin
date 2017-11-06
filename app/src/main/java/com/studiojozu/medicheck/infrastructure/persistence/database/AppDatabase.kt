@@ -13,7 +13,8 @@ import com.studiojozu.medicheck.infrastructure.persistence.entity.*
                 SqliteMedicineUnit::class,
                 SqliteMediTimeRelation::class,
                 SqlitePersonMediRelation::class,
-                SqlitePerson::class),
+                SqlitePerson::class,
+                SqliteSchedule::class),
         version = 1,
         exportSchema = false)
 internal abstract class AppDatabase : RoomDatabase() {
@@ -25,6 +26,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun personMediRelationDao(): SqlitePersonMediRelationRepository
     abstract fun personDao(): SqlitePersonRepository
     abstract fun personMedicineDao(): SqlitePersonMedicineRepository
+    abstract fun scheduleDao(): SqliteScheduleRepository
 
     companion object {
         private var instance: AppDatabase? = null

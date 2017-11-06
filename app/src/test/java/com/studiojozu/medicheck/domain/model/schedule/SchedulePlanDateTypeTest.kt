@@ -14,12 +14,12 @@ import java.util.*
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class PlanDateTypeTest : ATestParent() {
+class SchedulePlanDateTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        assertTrue(0 < PlanDateType().dbValue.timeInMillis)
+        assertTrue(0 < SchedulePlanDateType().dbValue.timeInMillis)
 
         val now = Calendar.getInstance()
         val expect = now.clone() as Calendar
@@ -27,9 +27,9 @@ class PlanDateTypeTest : ATestParent() {
         expect.set(Calendar.MINUTE, 0)
         expect.set(Calendar.SECOND, 0)
         expect.set(Calendar.MILLISECOND, 0)
-        assertEquals(expect.timeInMillis, PlanDateType(now).dbValue.timeInMillis)
+        assertEquals(expect.timeInMillis, SchedulePlanDateType(now).dbValue.timeInMillis)
 
         expect.set(2017, 0, 2, 0, 0, 0)
-        assertEquals(expect.timeInMillis, PlanDateType(2017, 1, 2).dbValue.timeInMillis)
+        assertEquals(expect.timeInMillis, SchedulePlanDateType(2017, 1, 2).dbValue.timeInMillis)
     }
 }

@@ -22,12 +22,12 @@ class PlanDateTest : ATestParent() {
     fun constructor_WithParameter() {
         var entity = PlanDate(mPlanDatetime = TestDatetimeType(2017, 1, 2, 3, 4))
         assertNotSame("", entity.mTimetableId.dbValue)
-        assertEquals("17/01/02", entity.planDate.displayValue)
+        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("17/01/02 3:04", entity.mPlanDatetime.displayValue)
 
         entity = PlanDate(mPlanDatetime = TestDatetimeType(2017, 1, 2, 3, 4), mTimetableId = TimetableIdType("12345678"))
         assertEquals("12345678", entity.mTimetableId.dbValue)
-        assertEquals("17/01/02", entity.planDate.displayValue)
+        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("17/01/02 3:04", entity.mPlanDatetime.displayValue)
     }
 

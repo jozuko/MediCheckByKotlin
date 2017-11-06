@@ -3,8 +3,8 @@ package com.studiojozu.medicheck.domain.model.alarm
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.person.Person
-import com.studiojozu.medicheck.domain.model.schedule.PlanDateType
 import com.studiojozu.medicheck.domain.model.schedule.Schedule
+import com.studiojozu.medicheck.domain.model.schedule.SchedulePlanDateType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
@@ -27,7 +27,7 @@ class AlarmScheduleComparatorTest : ATestParent() {
     fun compare_Same() {
         val comparator = AlarmScheduleComparator()
 
-        val schedule1 = Schedule(mPlanDate = PlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule1 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val timetable1 = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val entity1 = AlarmSchedule(mSchedule = schedule1, mTimetable = timetable1, mMedicine = Medicine(), mPerson = Person())
 
@@ -43,7 +43,7 @@ class AlarmScheduleComparatorTest : ATestParent() {
     fun compare_DiffTime() {
         val comparator = AlarmScheduleComparator()
 
-        val schedule1 = Schedule(mPlanDate = PlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule1 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val timetable1 = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val entity1 = AlarmSchedule(mSchedule = schedule1, mTimetable = timetable1, mMedicine = Medicine(), mPerson = Person())
 
@@ -60,11 +60,11 @@ class AlarmScheduleComparatorTest : ATestParent() {
     fun compare_DiffDate() {
         val comparator = AlarmScheduleComparator()
 
-        val schedule1 = Schedule(mPlanDate = PlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule1 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val timetable1 = Timetable(mTimetableTime = TimetableTimeType(3, 4))
         val entity1 = AlarmSchedule(mSchedule = schedule1, mTimetable = timetable1, mMedicine = Medicine(), mPerson = Person())
 
-        val schedule2 = Schedule(mPlanDate = PlanDateType(2017, 1, 3), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
+        val schedule2 = Schedule(mSchedulePlanDate = SchedulePlanDateType(2017, 1, 3), mMedicineId = MedicineIdType(), mTimetableId = TimetableIdType())
         val timetable2 = timetable1.copy()
         val entity2 = AlarmSchedule(mSchedule = schedule2, mTimetable = timetable2, mMedicine = Medicine(), mPerson = Person())
 

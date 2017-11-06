@@ -13,14 +13,14 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class IsTakeTypeTest : ATestParent() {
+class ScheduleIsTakeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        assertFalse(IsTakeType().isTrue)
-        assertTrue(IsTakeType(true).isTrue)
-        assertFalse(IsTakeType(false).isTrue)
-        assertTrue(IsTakeType(1).isTrue)
+        assertFalse(ScheduleIsTakeType().isTrue)
+        assertTrue(ScheduleIsTakeType(true).isTrue)
+        assertFalse(ScheduleIsTakeType(false).isTrue)
+        assertTrue(ScheduleIsTakeType(1).isTrue)
     }
 }

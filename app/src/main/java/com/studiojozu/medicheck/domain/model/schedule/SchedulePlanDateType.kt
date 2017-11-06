@@ -3,7 +3,7 @@ package com.studiojozu.medicheck.domain.model.schedule
 import com.studiojozu.common.domain.model.general.ADateType
 import java.util.*
 
-class PlanDateType : ADateType<PlanDateType> {
+class SchedulePlanDateType : ADateType<SchedulePlanDateType> {
     companion object {
         const val serialVersionUID = 9088775597942158497L
     }

@@ -194,87 +194,87 @@ class ScheduleListTest : ATestParent() {
         assertEquals(21, scheduleListProperty.count())
 
         var index = 0
-        assertEquals("17/01/02", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/02", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 1
-        assertEquals("17/01/02", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/02", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 2
-        assertEquals("17/01/02", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/02", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 3
-        assertEquals("17/01/03", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/03", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 4
-        assertEquals("17/01/03", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/03", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 5
-        assertEquals("17/01/03", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/03", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 6
-        assertEquals("17/01/04", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/04", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 7
-        assertEquals("17/01/04", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/04", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 8
-        assertEquals("17/01/04", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/04", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 9
-        assertEquals("17/01/05", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/05", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 10
-        assertEquals("17/01/05", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/05", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 11
-        assertEquals("17/01/05", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/05", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 12
-        assertEquals("17/01/06", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/06", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 13
-        assertEquals("17/01/06", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/06", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 14
-        assertEquals("17/01/06", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/06", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 15
-        assertEquals("17/01/07", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/07", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 16
-        assertEquals("17/01/07", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/07", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 17
-        assertEquals("17/01/07", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/07", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 18
-        assertEquals("17/01/08", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/08", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 19
-        assertEquals("17/01/08", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/08", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable2.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 20
-        assertEquals("17/01/08", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/08", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable3.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
@@ -297,15 +297,15 @@ class ScheduleListTest : ATestParent() {
         assertEquals(3, scheduleListProperty.count())
 
         var index = 0
-        assertEquals("17/01/02", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/02", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 1
-        assertEquals("17/01/04", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/04", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 2
-        assertEquals("17/01/06", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/06", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
@@ -332,27 +332,27 @@ class ScheduleListTest : ATestParent() {
         assertEquals(6, scheduleListProperty.count())
 
         var index = 0
-        assertEquals("17/01/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 1
-        assertEquals("17/02/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/02/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 2
-        assertEquals("17/03/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/03/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 3
-        assertEquals("17/04/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/04/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 4
-        assertEquals("17/05/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/05/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 5
-        assertEquals("17/06/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/06/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
@@ -379,15 +379,15 @@ class ScheduleListTest : ATestParent() {
         assertEquals(3, scheduleListProperty.count())
 
         var index = 0
-        assertEquals("17/11/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/11/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 1
-        assertEquals("17/12/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/12/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 2
-        assertEquals("18/01/15", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("18/01/15", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
@@ -414,27 +414,27 @@ class ScheduleListTest : ATestParent() {
         assertEquals(6, scheduleListProperty.count())
 
         var index = 0
-        assertEquals("17/01/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/01/31", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 1
-        assertEquals("17/02/28", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/02/28", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 2
-        assertEquals("17/03/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/03/31", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 3
-        assertEquals("17/04/30", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/04/30", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 4
-        assertEquals("17/05/31", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/05/31", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
 
         index = 5
-        assertEquals("17/06/30", scheduleListProperty[index].mPlanDate.displayValue)
+        assertEquals("17/06/30", scheduleListProperty[index].mSchedulePlanDate.displayValue)
         assertEquals(timetable1.mTimetableId.dbValue, scheduleListProperty[index].mTimetableId.dbValue)
     }
 
@@ -454,11 +454,11 @@ class ScheduleListTest : ATestParent() {
         val iterator = scheduleList.iterator()
 
         assertTrue(iterator.hasNext())
-        assertEquals("17/11/15", iterator.next().mPlanDate.displayValue)
+        assertEquals("17/11/15", iterator.next().mSchedulePlanDate.displayValue)
         assertTrue(iterator.hasNext())
-        assertEquals("17/12/15", iterator.next().mPlanDate.displayValue)
+        assertEquals("17/12/15", iterator.next().mSchedulePlanDate.displayValue)
         assertTrue(iterator.hasNext())
-        assertEquals("18/01/15", iterator.next().mPlanDate.displayValue)
+        assertEquals("18/01/15", iterator.next().mSchedulePlanDate.displayValue)
         assertFalse(iterator.hasNext())
     }
 

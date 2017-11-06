@@ -15,13 +15,13 @@ import java.util.*
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class TookDatetimeTypeTest : ATestParent() {
+class ScheduleTookDatetimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor_Calendar() {
         val now = Calendar.getInstance()
-        val tookDatetimeType = TookDatetimeType(now)
+        val tookDatetimeType = ScheduleTookDatetimeType(now)
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
@@ -31,7 +31,7 @@ class TookDatetimeTypeTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor_Long() = try {
-        TookDatetimeType(Calendar.getInstance().timeInMillis)
+        ScheduleTookDatetimeType(Calendar.getInstance().timeInMillis)
         Assert.fail()
     } catch (e: IllegalArgumentException) {
         Assert.assertEquals("unknown type.", e.message)
@@ -41,7 +41,7 @@ class TookDatetimeTypeTest : ATestParent() {
     @Throws(Exception::class)
     fun constructor_TookDatetimeType() {
         val now = Calendar.getInstance()
-        val tookDatetimeType = TookDatetimeType(TookDatetimeType(now))
+        val tookDatetimeType = ScheduleTookDatetimeType(ScheduleTookDatetimeType(now))
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
@@ -57,7 +57,7 @@ class TookDatetimeTypeTest : ATestParent() {
 
         val dateModel = TestDateType(now)
         val timeModel = TestTimeType(now)
-        val tookDatetimeType = TookDatetimeType(dateModel, timeModel)
+        val tookDatetimeType = ScheduleTookDatetimeType(dateModel, timeModel)
 
         Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue.timeInMillis)
     }
@@ -65,7 +65,7 @@ class TookDatetimeTypeTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor_Unknown() = try {
-        TookDatetimeType("test")
+        ScheduleTookDatetimeType("test")
         Assert.fail()
     } catch (e: IllegalArgumentException) {
         Assert.assertEquals("unknown type.", e.message)
