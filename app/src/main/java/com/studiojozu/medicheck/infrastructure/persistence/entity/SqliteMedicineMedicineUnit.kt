@@ -2,7 +2,7 @@ package com.studiojozu.medicheck.infrastructure.persistence.entity
 
 import android.arch.persistence.room.ColumnInfo
 
-class SqliteMedicineView(medicineId: String) : SqliteMedicine(medicineId) {
+class SqliteMedicineMedicineUnit(medicineId: String) : SqliteMedicine(medicineId) {
 
     /** 薬単位.表示文字列  */
     @ColumnInfo(name = "medicine_unit_value")

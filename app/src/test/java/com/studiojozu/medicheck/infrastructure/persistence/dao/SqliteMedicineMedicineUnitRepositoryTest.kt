@@ -4,8 +4,8 @@ import com.studiojozu.medicheck.domain.model.medicine.*
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineMedicineUnit
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineUnit
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineView
 import org.junit.Assert
 import org.junit.Assert.*
 import org.junit.Test
@@ -88,7 +88,7 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
         return sqliteMedicineUnit
     }
 
-    private fun assert(expectMedicine: SqliteMedicine, expectMedicineUnit: SqliteMedicineUnit, actual: SqliteMedicineView) {
+    private fun assert(expectMedicine: SqliteMedicine, expectMedicineUnit: SqliteMedicineUnit, actual: SqliteMedicineMedicineUnit) {
         Assert.assertEquals(expectMedicine.mMedicineId, actual.mMedicineId)
         Assert.assertEquals(expectMedicine.mMedicineName, actual.mMedicineName)
         Assert.assertEquals(expectMedicine.mMedicineTakeNumber, actual.mMedicineTakeNumber)

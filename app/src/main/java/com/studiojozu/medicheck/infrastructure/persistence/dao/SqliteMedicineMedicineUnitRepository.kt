@@ -2,7 +2,7 @@ package com.studiojozu.medicheck.infrastructure.persistence.dao
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Query
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineView
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineMedicineUnit
 
 @Dao
 interface SqliteMedicineMedicineUnitRepository {
@@ -21,7 +21,7 @@ interface SqliteMedicineMedicineUnitRepository {
             ",medicine_unit.medicine_unit_value as medicine_unit_value" +
             ",medicine_unit.medicine_unit_display_order as medicine_unit_display_order" +
             " from medicine left join medicine_unit on medicine.medicine_unit_id=medicine_unit.medicine_unit_id")
-    fun findAll(): Array<SqliteMedicineView>
+    fun findAll(): Array<SqliteMedicineMedicineUnit>
 
     @Query("select " +
             " medicine.medicine_id as medicine_id" +
@@ -39,5 +39,5 @@ interface SqliteMedicineMedicineUnitRepository {
             ",medicine_unit.medicine_unit_display_order as medicine_unit_display_order" +
             " from medicine left join medicine_unit on medicine.medicine_unit_id=medicine_unit.medicine_unit_id" +
             " where medicine.medicine_unit_id=:medicineUnitId")
-    fun findByMedicineId(medicineUnitId: String): SqliteMedicineView?
+    fun findByMedicineId(medicineUnitId: String): SqliteMedicineMedicineUnit?
 }
