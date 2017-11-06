@@ -1,7 +1,9 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
 import com.studiojozu.medicheck.domain.model.person.Person
+import com.studiojozu.medicheck.domain.model.person.PersonDisplayOrderType
 import com.studiojozu.medicheck.domain.model.person.PersonNameType
+import com.studiojozu.medicheck.domain.model.person.PersonPhotoType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqlitePerson
@@ -23,31 +25,36 @@ class SqlitePersonRepositoryTest : ATestParent() {
     fun crud() {
         val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
         val dao = database.personDao()
+        val defaultPerson = Person(mPersonName = PersonNameType("Myself"), mPersonPhoto = PersonPhotoType(""), mPersonDisplayOrder = PersonDisplayOrderType(1))
 
         // select no data
         var persons = dao.findAll()
         assertNotNull(persons)
-        assertEquals(0, persons.size)
+        assertEquals(1, persons.size)
+        assertIgnoreId(defaultPerson, persons[0])
 
         // insert
-        val insertEntity = Person()
+        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
         dao.insert(setSqlitePerson(insertEntity))
         persons = dao.findAll()
-        assertEquals(1, persons.size)
-        assert(insertEntity, persons[0])
+        assertEquals(2, persons.size)
+        assertIgnoreId(defaultPerson, persons[0])
+        assert(insertEntity, persons[1])
 
         // update
         val updateEntity = insertEntity.copy(mPersonName = PersonNameType("Jozuko Dev"))
         dao.insert(setSqlitePerson(updateEntity))
         persons = dao.findAll()
-        assertEquals(1, persons.size)
-        assert(updateEntity, persons[0])
+        assertEquals(2, persons.size)
+        assertIgnoreId(defaultPerson, persons[0])
+        assert(updateEntity, persons[1])
 
         // delete
         val deleteEntity = insertEntity.copy()
         dao.delete(setSqlitePerson(deleteEntity))
         persons = dao.findAll()
-        assertEquals(0, persons.size)
+        assertEquals(1, persons.size)
+        assertIgnoreId(defaultPerson, persons[0])
     }
 
     @Test
@@ -57,7 +64,7 @@ class SqlitePersonRepositoryTest : ATestParent() {
         val dao = database.personDao()
 
         // insert
-        val insertEntity = Person()
+        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
         dao.insert(setSqlitePerson(insertEntity))
 
         // findById
@@ -84,6 +91,12 @@ class SqlitePersonRepositoryTest : ATestParent() {
 
     private fun assert(expect: Person, actual: SqlitePerson) {
         assertEquals(expect.mPersonId.dbValue, actual.mPersonId)
+        assertEquals(expect.mPersonName.dbValue, actual.mPersonName)
+        assertEquals(expect.mPersonPhoto.dbValue, actual.mPersonPhoto)
+        assertEquals(expect.mPersonDisplayOrder.dbValue, actual.mPersonDisplayOrder)
+    }
+
+    private fun assertIgnoreId(expect: Person, actual: SqlitePerson) {
         assertEquals(expect.mPersonName.dbValue, actual.mPersonName)
         assertEquals(expect.mPersonPhoto.dbValue, actual.mPersonPhoto)
         assertEquals(expect.mPersonDisplayOrder.dbValue, actual.mPersonDisplayOrder)
