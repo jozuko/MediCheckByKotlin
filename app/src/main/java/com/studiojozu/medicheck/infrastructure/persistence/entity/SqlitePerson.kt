@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "person")
-class SqlitePerson(personId: String) {
+open class SqlitePerson(personId: String) {
     /** 飲む人ID */
     @PrimaryKey
     @ColumnInfo(name = "person_id")

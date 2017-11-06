@@ -24,6 +24,7 @@ internal abstract class AppDatabase : RoomDatabase() {
     abstract fun mediTimeRelationDao(): SqliteMediTimeRelationRepository
     abstract fun personMediRelationDao(): SqlitePersonMediRelationRepository
     abstract fun personDao(): SqlitePersonRepository
+    abstract fun personMedicineDao(): SqlitePersonMedicineRepository
 
     companion object {
         private var instance: AppDatabase? = null
