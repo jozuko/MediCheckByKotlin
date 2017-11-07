@@ -33,11 +33,15 @@ class ADateTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() = try {
-        TestDateType(Calendar.getInstance().timeInMillis)
-        fail()
-    } catch (e: IllegalArgumentException) {
-        assertEquals("unknown type.", e.message)
+    fun constructor_Long() {
+        val now = Calendar.getInstance()
+        val testDateType = TestDateType(now.timeInMillis)
+
+        now.set(Calendar.HOUR_OF_DAY, 0)
+        now.set(Calendar.MINUTE, 0)
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+        assertEquals(now, mValueProperty.call(testDateType))
     }
 
     @Test
@@ -68,11 +72,13 @@ class ADateTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() = try {
-        TestDateType("test")
-        fail()
-    } catch (e: IllegalArgumentException) {
-        assertEquals("unknown type.", e.message)
+    fun constructor_Unknown() {
+        try {
+            TestDateType("test")
+            fail()
+        } catch (e: IllegalArgumentException) {
+            assertEquals("unknown type.", e.message)
+        }
     }
 
     @Test
@@ -130,16 +136,16 @@ class ADateTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
         val testDateType = TestDateType(now)
 
-        assertEquals(now.timeInMillis, testDateType.addDay(0).dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testDateType.addDay(0).dbValue)
 
         now.set(2017, 0, 3, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(1).dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testDateType.addDay(1).dbValue)
 
         now.set(2017, 0, 1, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(-1).dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testDateType.addDay(-1).dbValue)
 
         now.set(2017, 1, 1, 0, 0, 0)
-        assertEquals(now.timeInMillis, testDateType.addDay(30).dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testDateType.addDay(30).dbValue)
     }
 
     @Test
@@ -152,7 +158,7 @@ class ADateTypeTest : ATestParent() {
         now.set(Calendar.MINUTE, 0)
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, testDateType.dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testDateType.dbValue)
     }
 
     @Test

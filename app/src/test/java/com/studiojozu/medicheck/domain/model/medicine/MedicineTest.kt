@@ -42,7 +42,7 @@ class MedicineTest : ATestParent() {
         assertEquals("0", entity.mMedicineTakeNumber.dbValue)
         assertEquals("", entity.mMedicineUnit.displayValue)
         assertEquals(0, entity.mMedicineDateNumber.dbValue)
-        assertTrue(0 < entity.mMedicineStartDatetime.dbValue.timeInMillis)
+        assertTrue(0 < entity.mMedicineStartDatetime.dbValue)
         assertEquals(0, entity.mMedicineInterval.dbValue)
         assertEquals(0, entity.mMedicineIntervalMode.dbValue)
         assertEquals("", entity.mMedicinePhoto.dbValue)

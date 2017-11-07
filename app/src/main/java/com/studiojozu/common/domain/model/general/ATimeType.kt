@@ -5,15 +5,15 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class ATimeType<out C : ATimeType<C>> : AValueObject<Calendar, C>, Comparable<ATimeType<*>> {
+abstract class ATimeType<out C : ATimeType<C>> : AValueObject<Long, C>, Comparable<ATimeType<*>> {
     companion object {
         const val serialVersionUID = 2498883479425278479L
     }
 
     protected val mValue: Calendar
 
-    override val dbValue: Calendar
-        get() = mValue
+    override val dbValue: Long
+        get() = mValue.timeInMillis
 
     override val displayValue: String
         get() {
@@ -21,15 +21,17 @@ abstract class ATimeType<out C : ATimeType<C>> : AValueObject<Calendar, C>, Comp
             return format.format(mValue.time)
         }
 
-    protected constructor(calendarTime: Any) {
-        val calendar: Calendar = when (calendarTime) {
-            is Calendar -> calendarTime
-            is ATimeType<*> -> calendarTime.dbValue
-            is ADatetimeType<*> -> calendarTime.dbValue
+    protected constructor(millisecond: Any) {
+        val timeInMillis = when (millisecond) {
+            is Long -> millisecond
+            is Calendar -> millisecond.timeInMillis
+            is ATimeType<*> -> millisecond.dbValue
+            is ADatetimeType<*> -> millisecond.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = calendar.clone() as Calendar
+        mValue = Calendar.getInstance()
+        mValue.timeInMillis = timeInMillis
         mValue.set(Calendar.YEAR, 2000)
         mValue.set(Calendar.MONTH, 0)
         mValue.set(Calendar.DAY_OF_MONTH, 1)

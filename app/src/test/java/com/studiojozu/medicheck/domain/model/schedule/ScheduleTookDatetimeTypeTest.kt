@@ -25,16 +25,18 @@ class ScheduleTookDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() = try {
-        ScheduleTookDatetimeType(Calendar.getInstance().timeInMillis)
-        Assert.fail()
-    } catch (e: IllegalArgumentException) {
-        Assert.assertEquals("unknown type.", e.message)
+    fun constructor_Long() {
+        val now = Calendar.getInstance()
+        val startDatetimeType = ScheduleTookDatetimeType(now.timeInMillis)
+
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
@@ -45,7 +47,7 @@ class ScheduleTookDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
     }
 
     @Test
@@ -59,7 +61,7 @@ class ScheduleTookDatetimeTypeTest : ATestParent() {
         val timeModel = TestTimeType(now)
         val tookDatetimeType = ScheduleTookDatetimeType(dateModel, timeModel)
 
-        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, tookDatetimeType.dbValue)
     }
 
     @Test

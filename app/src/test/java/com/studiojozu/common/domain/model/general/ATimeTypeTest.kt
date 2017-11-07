@@ -34,11 +34,16 @@ class ATimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() = try {
-        TestTimeType(Calendar.getInstance().timeInMillis)
-        fail()
-    } catch (e: IllegalArgumentException) {
-        assertEquals("unknown type.", e.message)
+    fun constructor_Long() {
+        val now = Calendar.getInstance()
+        val testTimeType = TestTimeType(now.timeInMillis)
+
+        now.set(Calendar.YEAR, 2000)
+        now.set(Calendar.MONTH, 0)
+        now.set(Calendar.DAY_OF_MONTH, 1)
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+        assertEquals(now, mValueProperty.call(testTimeType))
     }
 
     @Test
@@ -71,11 +76,13 @@ class ATimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() = try {
-        TestTimeType("test")
-        fail()
-    } catch (e: IllegalArgumentException) {
-        assertEquals("unknown type.", e.message)
+    fun constructor_Unknown() {
+        try {
+            TestTimeType("test")
+            fail()
+        } catch (e: IllegalArgumentException) {
+            assertEquals("unknown type.", e.message)
+        }
     }
 
     @Test
@@ -116,7 +123,7 @@ class ATimeTypeTest : ATestParent() {
         now.set(Calendar.DAY_OF_MONTH, 1)
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, testTimeType.dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, testTimeType.dbValue)
     }
 
     @Test

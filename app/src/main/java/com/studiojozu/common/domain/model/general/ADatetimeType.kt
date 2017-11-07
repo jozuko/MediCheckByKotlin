@@ -5,15 +5,15 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, C>, Comparable<ADatetimeType<*>> {
+abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, Comparable<ADatetimeType<*>> {
     companion object {
         const val serialVersionUID = 3758376193729504494L
     }
 
     protected val mValue: Calendar
 
-    override val dbValue: Calendar
-        get() = mValue
+    override val dbValue: Long
+        get() = mValue.timeInMillis
 
     override val displayValue: String
         get() {
@@ -36,14 +36,16 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, 
     val minute: Int
         get() = mValue.get(Calendar.MINUTE)
 
-    protected constructor(calendarDatetime: Any) {
-        val calendar: Calendar = when (calendarDatetime) {
-            is Calendar -> calendarDatetime
-            is ADatetimeType<*> -> calendarDatetime.dbValue
+    protected constructor(millisecond: Any) {
+        val timeInMillis: Long = when (millisecond) {
+            is Long -> millisecond
+            is Calendar -> millisecond.timeInMillis
+            is ADatetimeType<*> -> millisecond.dbValue
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = calendar.clone() as Calendar
+        mValue = Calendar.getInstance()
+        mValue.timeInMillis = timeInMillis
         mValue.set(Calendar.SECOND, 0)
         mValue.set(Calendar.MILLISECOND, 0)
     }
@@ -63,10 +65,10 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, 
 
     protected constructor(dateModel: ADateType<*>, timeModel: ATimeType<*>) {
         val dateCalendar = Calendar.getInstance()
-        dateCalendar.timeInMillis = dateModel.dbValue.timeInMillis
+        dateCalendar.timeInMillis = dateModel.dbValue
 
         val timeCalendar = Calendar.getInstance()
-        timeCalendar.timeInMillis = timeModel.dbValue.timeInMillis
+        timeCalendar.timeInMillis = timeModel.dbValue
 
         mValue = Calendar.getInstance()
         mValue.set(dateCalendar.get(Calendar.YEAR), dateCalendar.get(Calendar.MONTH), dateCalendar.get(Calendar.DAY_OF_MONTH), timeCalendar.get(Calendar.HOUR_OF_DAY), timeCalendar.get(Calendar.MINUTE), 0)
@@ -86,9 +88,9 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, 
      */
     fun diffMinutes(other: ADatetimeType<*>): Long {
         val targetCalendar = Calendar.getInstance()
-        targetCalendar.timeInMillis = other.dbValue.timeInMillis
+        targetCalendar.timeInMillis = other.dbValue
 
-        val diff = dbValue.timeInMillis - other.dbValue.timeInMillis
+        val diff = dbValue - other.dbValue
         return diff / (60 * 1000)
     }
 
@@ -106,7 +108,6 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Calendar, 
 
         return datetimeType
     }
-
 
     fun addMinute(minutes: Int): C {
         val datetimeType = clone()

@@ -4,6 +4,7 @@ package com.studiojozu.medicheck.domain.model.setting
 
 import com.studiojozu.common.domain.model.general.TestDateType
 import com.studiojozu.common.domain.model.general.TestTimeType
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 import org.junit.Test
@@ -26,16 +27,18 @@ class ReminderDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() = try {
-        ReminderDatetimeType(Calendar.getInstance().timeInMillis)
-        fail()
-    } catch (e: IllegalArgumentException) {
-        assertEquals("unknown type.", e.message)
+    fun constructor_Long() {
+        val now = Calendar.getInstance()
+        val startDatetimeType = ReminderDatetimeType(now.timeInMillis)
+
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
@@ -46,7 +49,7 @@ class ReminderDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
     }
 
     @Test
@@ -60,7 +63,7 @@ class ReminderDatetimeTypeTest : ATestParent() {
         val timeModel = TestTimeType(now)
         val remindDatetimeType = ReminderDatetimeType(dateModel, timeModel)
 
-        assertEquals(now.timeInMillis, remindDatetimeType.dbValue.timeInMillis)
+        assertEquals(now.timeInMillis, remindDatetimeType.dbValue)
     }
 
     @Test

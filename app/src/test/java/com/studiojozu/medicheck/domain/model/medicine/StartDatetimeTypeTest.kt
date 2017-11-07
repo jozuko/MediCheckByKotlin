@@ -22,7 +22,7 @@ class StartDatetimeTypeTest : ATestParent() {
     fun constructor_NoParameter() {
         val startDatetimeType = MedicineStartDatetimeType()
         Assert.assertNotNull(startDatetimeType.dbValue)
-        Assert.assertTrue(0 < startDatetimeType.dbValue.timeInMillis)
+        Assert.assertTrue(0 < startDatetimeType.dbValue)
     }
 
     @Test
@@ -33,16 +33,18 @@ class StartDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Long() = try {
-        MedicineStartDatetimeType(Calendar.getInstance().timeInMillis)
-        Assert.fail()
-    } catch (e: IllegalArgumentException) {
-        Assert.assertEquals("unknown type.", e.message)
+    fun constructor_Long() {
+        val now = Calendar.getInstance()
+        val startDatetimeType = MedicineStartDatetimeType(now.timeInMillis)
+
+        now.set(Calendar.SECOND, 0)
+        now.set(Calendar.MILLISECOND, 0)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
@@ -53,7 +55,7 @@ class StartDatetimeTypeTest : ATestParent() {
 
         now.set(Calendar.SECOND, 0)
         now.set(Calendar.MILLISECOND, 0)
-        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test
@@ -67,7 +69,7 @@ class StartDatetimeTypeTest : ATestParent() {
         val timeModel = TestTimeType(now)
         val startDatetimeType = MedicineStartDatetimeType(dateModel, timeModel)
 
-        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, startDatetimeType.dbValue)
     }
 
     @Test

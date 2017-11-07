@@ -17,7 +17,7 @@ class TimetableTimeTypeTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        Assert.assertTrue(0 < TimetableTimeType().dbValue.timeInMillis)
+        Assert.assertTrue(0 < TimetableTimeType().dbValue)
 
         val now = Calendar.getInstance()
         now.set(Calendar.YEAR, 2000)
@@ -27,10 +27,10 @@ class TimetableTimeTypeTest : ATestParent() {
         now.set(Calendar.MILLISECOND, 0)
 
         var model = TimetableTimeType(now)
-        Assert.assertEquals(now.timeInMillis, model.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, model.dbValue)
 
         model = TimetableTimeType(now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE))
-        Assert.assertEquals(now.timeInMillis, model.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, model.dbValue)
     }
 
     @Test
@@ -54,13 +54,13 @@ class TimetableTimeTypeTest : ATestParent() {
         expect.set(Calendar.MINUTE, timeParam.get(Calendar.MINUTE))
 
         val dateTimeModel = TestDatetimeType(now)
-        Assert.assertEquals(now.timeInMillis, dateTimeModel.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, dateTimeModel.dbValue)
 
         val newDateTimeModel = TimetableTimeType(timeParam).replaceHourMinute(dateTimeModel)
-        Assert.assertEquals(now.timeInMillis, dateTimeModel.dbValue.timeInMillis)
+        Assert.assertEquals(now.timeInMillis, dateTimeModel.dbValue)
 
-        Assert.assertNotEquals(now.timeInMillis, newDateTimeModel.dbValue.timeInMillis)
-        Assert.assertNotEquals(timeParam.timeInMillis, newDateTimeModel.dbValue.timeInMillis)
-        Assert.assertEquals(expect.timeInMillis, newDateTimeModel.dbValue.timeInMillis)
+        Assert.assertNotEquals(now.timeInMillis, newDateTimeModel.dbValue)
+        Assert.assertNotEquals(timeParam.timeInMillis, newDateTimeModel.dbValue)
+        Assert.assertEquals(expect.timeInMillis, newDateTimeModel.dbValue)
     }
 }

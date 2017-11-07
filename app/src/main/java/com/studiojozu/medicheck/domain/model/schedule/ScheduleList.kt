@@ -94,7 +94,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻の場合はIntervalを加算する
         val afterIntervalDateTime = medicine.mMedicineInterval.addInterval(planDate.mPlanDatetime, medicine.mMedicineIntervalMode)
         val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = afterIntervalDateTime.dbValue.timeInMillis
+        nextDay.timeInMillis = afterIntervalDateTime.dbValue
         nextDay.set(Calendar.HOUR_OF_DAY, 0)
         nextDay.set(Calendar.MINUTE, 0)
         return MedicineStartDatetimeType(nextDay)
@@ -105,10 +105,10 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             return medicine.mMedicineStartDatetime
 
         val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = medicine.mMedicineStartDatetime.dbValue.timeInMillis
+        nextDay.timeInMillis = medicine.mMedicineStartDatetime.dbValue
         nextDay.set(Calendar.DAY_OF_MONTH, medicine.mMedicineInterval.dbValue.toInt())
 
-        if (nextDay.timeInMillis < medicine.mMedicineStartDatetime.dbValue.timeInMillis)
+        if (nextDay.timeInMillis < medicine.mMedicineStartDatetime.dbValue)
             nextDay.add(Calendar.MONTH, 1)
 
         return MedicineStartDatetimeType(nextDay)

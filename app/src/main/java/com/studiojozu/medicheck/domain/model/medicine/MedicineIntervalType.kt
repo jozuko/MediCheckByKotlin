@@ -56,7 +56,7 @@ class MedicineIntervalType : ALongType<MedicineIntervalType> {
         }
 
         val calculateCalendar = Calendar.getInstance()
-        calculateCalendar.timeInMillis = datetime.dbValue.timeInMillis
+        calculateCalendar.timeInMillis = datetime.dbValue
         calculateCalendar.add(Calendar.MONTH, 1)
         val maxDay = calculateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         if (maxDay < dbValue)
