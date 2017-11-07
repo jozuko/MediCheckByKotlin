@@ -86,21 +86,21 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
     }
 
     private fun setSqliteMedicineUnit(medicineUnit: MedicineUnit): SqliteMedicineUnit {
-        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId.dbValue)
-        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue.dbValue
-        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder.dbValue
+        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId)
+        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue
+        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder
 
         return sqliteMedicineUnit
     }
 
     private fun assert(expect: MedicineUnit, actual: SqliteMedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitId.dbValue, actual.mMedicineUnitId)
-        Assert.assertEquals(expect.mMedicineUnitValue.dbValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder.dbValue, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.mMedicineUnitId, actual.mMedicineUnitId)
+        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
+        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: MedicineUnit, actual: SqliteMedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitValue.dbValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder.dbValue, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
+        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
     }
 }

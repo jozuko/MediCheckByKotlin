@@ -3,7 +3,9 @@ package com.studiojozu.medicheck.infrastructure.persistence.database
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.studiojozu.medicheck.infrastructure.persistence.converter.*
 import com.studiojozu.medicheck.infrastructure.persistence.dao.*
 import com.studiojozu.medicheck.infrastructure.persistence.entity.*
 
@@ -19,6 +21,13 @@ import com.studiojozu.medicheck.infrastructure.persistence.entity.*
                 SqliteTimetable::class),
         version = 1,
         exportSchema = false)
+@TypeConverters(
+        SqliteMedicineConverters::class,
+        SqliteMedicineUnitConverters::class,
+        SqliteScheduleConverters::class,
+        SqliteTimetableConverters::class,
+        SqlitePersonConverters::class,
+        SqliteSettingConverters::class)
 internal abstract class AppDatabase : RoomDatabase() {
 
     abstract fun medicineDao(): SqliteMedicineRepository

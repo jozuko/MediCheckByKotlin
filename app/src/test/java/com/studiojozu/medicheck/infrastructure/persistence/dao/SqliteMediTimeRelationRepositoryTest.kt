@@ -1,5 +1,6 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
+import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
@@ -14,7 +15,6 @@ import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
-import java.util.*
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
@@ -33,8 +33,8 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, entities.size)
 
         // insert
-        val insertData = SqliteMediTimeRelation("12345678", TimetableIdType().dbValue)
-        insertData.mIsOneShot = false
+        val insertData = SqliteMediTimeRelation(MedicineIdType("12345678"), TimetableIdType())
+        insertData.mIsOneShot = IsOneShotType(false)
 
         dao.insert(insertData)
 
@@ -46,7 +46,7 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
 
         // update
         val updateData = SqliteMediTimeRelation(insertData.mMedicineId, insertData.mTimetableId)
-        updateData.mIsOneShot = true
+        updateData.mIsOneShot = IsOneShotType(true)
 
         dao.insert(updateData)
 
@@ -72,16 +72,16 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, dao.findAll().size)
 
         // insert
-        val insertData1 = SqliteMediTimeRelation(MedicineIdType().dbValue, TimetableIdType().dbValue)
-        insertData1.mIsOneShot = false
+        val insertData1 = SqliteMediTimeRelation(MedicineIdType(), TimetableIdType())
+        insertData1.mIsOneShot = IsOneShotType(false)
         dao.insert(insertData1)
 
-        val insertData2 = SqliteMediTimeRelation(MedicineIdType().dbValue, insertData1.mTimetableId)
-        insertData2.mIsOneShot = false
+        val insertData2 = SqliteMediTimeRelation(MedicineIdType(), insertData1.mTimetableId)
+        insertData2.mIsOneShot = IsOneShotType(false)
         dao.insert(insertData2)
 
-        val insertData3 = SqliteMediTimeRelation(insertData1.mMedicineId, "")
-        insertData3.mIsOneShot = true
+        val insertData3 = SqliteMediTimeRelation(insertData1.mMedicineId, TimetableIdType(""))
+        insertData3.mIsOneShot = IsOneShotType(true)
         dao.insert(insertData3)
 
         Assert.assertEquals(3, dao.findAll().size)
@@ -106,8 +106,8 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         val timetables = database.timetableDao().findAll()
 
         // insert
-        val medicineId1 = MedicineIdType().dbValue
-        val medicineId2 = MedicineIdType().dbValue
+        val medicineId1 = MedicineIdType()
+        val medicineId2 = MedicineIdType()
         val insertData1 = SqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
         val insertData2 = SqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
         val insertData3 = SqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
@@ -120,25 +120,22 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         dao.insert(insertData5)
 
         // findTimetableByMedicineId
-        val timetableArray = dao.findTimetableByMedicineId(medicineId1)
+        val timetableArray = dao.findTimetableByMedicineId(medicineId1.dbValue)
         assertEquals(3, timetableArray.size)
         var index = 0
-        assertEquals("朝", timetableArray[index].mTimetableName)
-        assertEquals(7, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
-        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+        assertEquals("朝", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("7:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 1
-        assertEquals("昼", timetableArray[index].mTimetableName)
-        assertEquals(12, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
-        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+        assertEquals("昼", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("12:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 2
-        assertEquals("夜", timetableArray[index].mTimetableName)
-        assertEquals(19, timetableArray[index].mTimetableTime.get(Calendar.HOUR_OF_DAY))
-        assertEquals(0, timetableArray[index].mTimetableTime.get(Calendar.MINUTE))
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder)
+        assertEquals("夜", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("19:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         // delete
         dao.delete(insertData1)

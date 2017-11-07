@@ -127,22 +127,22 @@ class SqliteScheduleRepositoryTest : ATestParent() {
 
     private fun setSqliteSchedule(entity: Schedule): SqliteSchedule {
         val sqliteSchedule = SqliteSchedule(
-                medicineId = entity.mMedicineId.dbValue,
-                schedulePlanDate = entity.mSchedulePlanDate.dbValue,
-                timetableId = entity.mTimetableId.dbValue)
-        sqliteSchedule.mScheduleNeedAlert = entity.mScheduleNeedAlert.isTrue
-        sqliteSchedule.mScheduleIsTake = entity.mScheduleIsTake.isTrue
-        sqliteSchedule.mScheduleTookDatetime = entity.mScheduleTookDatetime.dbValue
+                medicineId = entity.mMedicineId,
+                schedulePlanDate = entity.mSchedulePlanDate,
+                timetableId = entity.mTimetableId)
+        sqliteSchedule.mScheduleNeedAlarm = entity.mScheduleNeedAlert
+        sqliteSchedule.mScheduleIsTake = entity.mScheduleIsTake
+        sqliteSchedule.mScheduleTookDatetime = entity.mScheduleTookDatetime
 
         return sqliteSchedule
     }
 
     private fun assert(expect: Schedule, actual: SqliteSchedule) {
-        assertEquals(expect.mMedicineId.dbValue, actual.mMedicineId)
-        assertEquals(expect.mSchedulePlanDate.dbValue, actual.mSchedulePlanDate)
-        assertEquals(expect.mTimetableId.dbValue, actual.mTimetableId)
-        assertEquals(expect.mScheduleNeedAlert.isTrue, actual.mScheduleNeedAlert)
-        assertEquals(expect.mScheduleIsTake.isTrue, actual.mScheduleIsTake)
-        assertEquals(expect.mScheduleTookDatetime.dbValue, actual.mScheduleTookDatetime)
+        assertEquals(expect.mMedicineId, actual.mMedicineId)
+        assertEquals(expect.mSchedulePlanDate, actual.mSchedulePlanDate)
+        assertEquals(expect.mTimetableId, actual.mTimetableId)
+        assertEquals(expect.mScheduleNeedAlert, actual.mScheduleNeedAlarm)
+        assertEquals(expect.mScheduleIsTake, actual.mScheduleIsTake)
+        assertEquals(expect.mScheduleTookDatetime, actual.mScheduleTookDatetime)
     }
 }

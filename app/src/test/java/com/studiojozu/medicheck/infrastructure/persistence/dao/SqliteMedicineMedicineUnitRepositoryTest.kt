@@ -28,7 +28,7 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
 
         // addData
         val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
-        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId.dbValue))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
@@ -54,12 +54,12 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
 
         // addData
         val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
-        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId.dbValue))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
         // findByMedicineId
-        medicineView = dao.findByMedicineId(medicine.mMedicineId)
+        medicineView = dao.findByMedicineId(medicine.mMedicineId.dbValue)
         assertNotNull(medicineView)
         assert(medicine, medicineUnit, medicineView!!)
 
@@ -73,25 +73,25 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
     }
 
     private fun setSqliteMedicine(medicineEntity: Medicine): SqliteMedicine {
-        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId.dbValue)
-        medicine.mMedicineName = medicineEntity.mMedicineName.dbValue
-        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber.dbValue
-        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId.dbValue
-        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber.dbValue.toInt()
-        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime.dbValue
-        medicine.mMedicineInterval = medicineEntity.mMedicineInterval.dbValue.toInt()
-        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode.dbValue
-        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto.dbValue
-        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm.isTrue
-        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag.isTrue
+        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId)
+        medicine.mMedicineName = medicineEntity.mMedicineName
+        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber
+        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId
+        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber
+        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime
+        medicine.mMedicineInterval = medicineEntity.mMedicineInterval
+        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode
+        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto
+        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm
+        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag
 
         return medicine
     }
 
     private fun setSqliteMedicineUnit(medicineUnit: MedicineUnit): SqliteMedicineUnit {
-        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId.dbValue)
-        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue.dbValue
-        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder.dbValue
+        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId)
+        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue
+        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder
 
         return sqliteMedicineUnit
     }

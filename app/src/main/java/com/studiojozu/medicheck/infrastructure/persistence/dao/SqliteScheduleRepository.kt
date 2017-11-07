@@ -8,7 +8,7 @@ interface SqliteScheduleRepository {
     @Query("select * from schedule")
     fun findAll(): Array<SqliteSchedule>
 
-    @Query("select * from schedule where schedule_need_alert=1 and schedule_is_take=0")
+    @Query("select * from schedule where schedule_need_alarm=1 and schedule_is_take=0")
     fun findAlertAll(): Array<SqliteSchedule>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

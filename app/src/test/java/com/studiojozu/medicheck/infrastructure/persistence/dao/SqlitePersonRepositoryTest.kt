@@ -81,24 +81,24 @@ class SqlitePersonRepositoryTest : ATestParent() {
     }
 
     private fun setSqlitePerson(entity: Person): SqlitePerson {
-        val medicine = SqlitePerson(personId = entity.mPersonId.dbValue)
-        medicine.mPersonName = entity.mPersonName.dbValue
-        medicine.mPersonPhoto = entity.mPersonPhoto.dbValue
-        medicine.mPersonDisplayOrder = entity.mPersonDisplayOrder.dbValue
+        val medicine = SqlitePerson(personId = entity.mPersonId)
+        medicine.mPersonName = entity.mPersonName
+        medicine.mPersonPhoto = entity.mPersonPhoto
+        medicine.mPersonDisplayOrder = entity.mPersonDisplayOrder
 
         return medicine
     }
 
     private fun assert(expect: Person, actual: SqlitePerson) {
-        assertEquals(expect.mPersonId.dbValue, actual.mPersonId)
-        assertEquals(expect.mPersonName.dbValue, actual.mPersonName)
-        assertEquals(expect.mPersonPhoto.dbValue, actual.mPersonPhoto)
-        assertEquals(expect.mPersonDisplayOrder.dbValue, actual.mPersonDisplayOrder)
+        assertEquals(expect.mPersonId, actual.mPersonId)
+        assertEquals(expect.mPersonName, actual.mPersonName)
+        assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
+        assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: Person, actual: SqlitePerson) {
-        assertEquals(expect.mPersonName.dbValue, actual.mPersonName)
-        assertEquals(expect.mPersonPhoto.dbValue, actual.mPersonPhoto)
-        assertEquals(expect.mPersonDisplayOrder.dbValue, actual.mPersonDisplayOrder)
+        assertEquals(expect.mPersonName, actual.mPersonName)
+        assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
+        assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
     }
 }

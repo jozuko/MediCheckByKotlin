@@ -73,32 +73,32 @@ class SqliteMedicineRepositoryTest : ATestParent() {
     }
 
     private fun setSqliteMedicine(medicineEntity: com.studiojozu.medicheck.domain.model.medicine.Medicine): SqliteMedicine {
-        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId.dbValue)
-        medicine.mMedicineName = medicineEntity.mMedicineName.dbValue
-        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber.dbValue
-        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId.dbValue
-        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber.dbValue.toInt()
-        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime.dbValue
-        medicine.mMedicineInterval = medicineEntity.mMedicineInterval.dbValue.toInt()
-        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode.dbValue
-        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto.dbValue
-        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm.isTrue
-        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag.isTrue
+        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId)
+        medicine.mMedicineName = medicineEntity.mMedicineName
+        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber
+        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId
+        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber
+        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime
+        medicine.mMedicineInterval = medicineEntity.mMedicineInterval
+        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode
+        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto
+        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm
+        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag
 
         return medicine
     }
 
     private fun assert(expect: com.studiojozu.medicheck.domain.model.medicine.Medicine, actual: SqliteMedicine) {
-        assertEquals(expect.mMedicineId.dbValue, actual.mMedicineId)
-        assertEquals(expect.mMedicineName.dbValue, actual.mMedicineName)
-        assertEquals(expect.mMedicineTakeNumber.dbValue, actual.mMedicineTakeNumber)
-        assertEquals(expect.mMedicineUnit.mMedicineUnitId.dbValue, actual.mMedicineUnitId)
-        assertEquals(expect.mMedicineDateNumber.dbValue.toInt(), actual.mMedicineDateNumber)
-        assertEquals(expect.mMedicineStartDatetime.dbValue, actual.mMedicineStartDatetime)
-        assertEquals(expect.mMedicineInterval.dbValue.toInt(), actual.mMedicineInterval)
-        assertEquals(expect.mMedicineIntervalMode.dbValue, actual.mMedicineIntervalMode)
-        assertEquals(expect.mMedicinePhoto.dbValue, actual.mMedicinePhoto)
-        assertEquals(expect.mMedicineNeedAlarm.isTrue, actual.mMedicineNeedAlarm)
-        assertEquals(expect.mMedicineDeleteFlag.isTrue, actual.mMedicineDeleteFlag)
+        assertEquals(expect.mMedicineId, actual.mMedicineId)
+        assertEquals(expect.mMedicineName, actual.mMedicineName)
+        assertEquals(expect.mMedicineTakeNumber, actual.mMedicineTakeNumber)
+        assertEquals(expect.mMedicineUnit.mMedicineUnitId, actual.mMedicineUnitId)
+        assertEquals(expect.mMedicineDateNumber, actual.mMedicineDateNumber)
+        assertEquals(expect.mMedicineStartDatetime, actual.mMedicineStartDatetime)
+        assertEquals(expect.mMedicineInterval, actual.mMedicineInterval)
+        assertEquals(expect.mMedicineIntervalMode, actual.mMedicineIntervalMode)
+        assertEquals(expect.mMedicinePhoto, actual.mMedicinePhoto)
+        assertEquals(expect.mMedicineNeedAlarm, actual.mMedicineNeedAlarm)
+        assertEquals(expect.mMedicineDeleteFlag, actual.mMedicineDeleteFlag)
     }
 }
