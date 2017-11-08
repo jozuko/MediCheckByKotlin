@@ -7,6 +7,34 @@ import com.studiojozu.medicheck.domain.model.medicine.*
 
 @Entity(tableName = "medicine")
 open class SqliteMedicine(medicineId: MedicineIdType) {
+    class Builder {
+        lateinit var mMedicine: Medicine
+
+        fun build(): SqliteMedicine {
+            val sqliteMedicine = SqliteMedicine(medicineId = mMedicine.mMedicineId)
+            sqliteMedicine.mMedicineName = mMedicine.mMedicineName
+            sqliteMedicine.mMedicineTakeNumber = mMedicine.mMedicineTakeNumber
+            sqliteMedicine.mMedicineUnitId = mMedicine.mMedicineUnit.mMedicineUnitId
+            sqliteMedicine.mMedicineDateNumber = mMedicine.mMedicineDateNumber
+            sqliteMedicine.mMedicineStartDatetime = mMedicine.mMedicineStartDatetime
+            sqliteMedicine.mMedicineInterval = mMedicine.mMedicineInterval
+            sqliteMedicine.mMedicineIntervalMode = mMedicine.mMedicineIntervalMode
+            sqliteMedicine.mMedicinePhoto = mMedicine.mMedicinePhoto
+            sqliteMedicine.mMedicineNeedAlarm = mMedicine.mMedicineNeedAlarm
+            sqliteMedicine.mMedicineDeleteFlag = mMedicine.mMedicineDeleteFlag
+
+            return sqliteMedicine
+        }
+    }
+
+    companion object {
+        fun build(f: Builder.() -> Unit): SqliteMedicine {
+            val builder = Builder()
+            builder.f()
+            return builder.build()
+        }
+    }
+
     /** ID  */
     @PrimaryKey
     @ColumnInfo(name = "medicine_id")

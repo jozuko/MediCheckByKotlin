@@ -8,7 +8,7 @@ import java.io.Serializable
 data class Schedule(val mMedicineId: MedicineIdType,
                     val mSchedulePlanDate: SchedulePlanDateType,
                     val mTimetableId: TimetableIdType,
-                    val mScheduleNeedAlert: ScheduleNeedAlarmType = ScheduleNeedAlarmType(),
+                    val mScheduleNeedAlarm: ScheduleNeedAlarmType = ScheduleNeedAlarmType(),
                     val mScheduleIsTake: ScheduleIsTakeType = ScheduleIsTakeType(),
                     val mScheduleTookDatetime: ScheduleTookDatetimeType = ScheduleTookDatetimeType()) : Serializable {
 

@@ -34,7 +34,7 @@ class ScheduleTest : ATestParent() {
         assertEquals("1234", entity.mMedicineId.dbValue)
         assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("4567", entity.mTimetableId.dbValue)
-        assertTrue(entity.mScheduleNeedAlert.isTrue)
+        assertTrue(entity.mScheduleNeedAlarm.isTrue)
         assertFalse(entity.mScheduleIsTake.isTrue)
         assertEquals("$year/$month/$day $hour:$minute", entity.mScheduleTookDatetime.displayValue)
     }
@@ -46,14 +46,14 @@ class ScheduleTest : ATestParent() {
                 mMedicineId = MedicineIdType("1234"),
                 mSchedulePlanDate = SchedulePlanDateType(2017, 1, 2),
                 mTimetableId = TimetableIdType("4567"),
-                mScheduleNeedAlert = ScheduleNeedAlarmType(false),
+                mScheduleNeedAlarm = ScheduleNeedAlarmType(false),
                 mScheduleIsTake = ScheduleIsTakeType(true),
                 mScheduleTookDatetime = ScheduleTookDatetimeType(2017, 1, 2, 3, 4)
         )
         assertEquals("1234", entity.mMedicineId.dbValue)
         assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
         assertEquals("4567", entity.mTimetableId.dbValue)
-        assertFalse(entity.mScheduleNeedAlert.isTrue)
+        assertFalse(entity.mScheduleNeedAlarm.isTrue)
         assertTrue(entity.mScheduleIsTake.isTrue)
         assertEquals("17/01/02 3:04", entity.mScheduleTookDatetime.displayValue)
     }

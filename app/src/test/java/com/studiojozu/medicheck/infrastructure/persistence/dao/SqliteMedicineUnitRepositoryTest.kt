@@ -85,13 +85,8 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
         dao.delete(setSqliteMedicineUnit(deleteMedicineEntity))
     }
 
-    private fun setSqliteMedicineUnit(medicineUnit: MedicineUnit): SqliteMedicineUnit {
-        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId)
-        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue
-        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder
-
-        return sqliteMedicineUnit
-    }
+    private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
+            SqliteMedicineUnit.build { mMedicineUnit = entity }
 
     private fun assert(expect: MedicineUnit, actual: SqliteMedicineUnit) {
         Assert.assertEquals(expect.mMedicineUnitId, actual.mMedicineUnitId)

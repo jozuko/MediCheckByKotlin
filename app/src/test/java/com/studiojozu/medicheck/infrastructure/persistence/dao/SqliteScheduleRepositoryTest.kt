@@ -38,28 +38,28 @@ class SqliteScheduleRepositoryTest : ATestParent() {
                 mMedicineId = MedicineIdType(),
                 mTimetableId = TimetableIdType(),
                 mSchedulePlanDate = SchedulePlanDateType(calendar),
-                mScheduleNeedAlert = ScheduleNeedAlarmType(true),
+                mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
                 mScheduleIsTake = ScheduleIsTakeType(false))
 
         schedule2 = Schedule(
                 mMedicineId = MedicineIdType(),
                 mTimetableId = TimetableIdType(),
                 mSchedulePlanDate = SchedulePlanDateType(calendar),
-                mScheduleNeedAlert = ScheduleNeedAlarmType(false),
+                mScheduleNeedAlarm = ScheduleNeedAlarmType(false),
                 mScheduleIsTake = ScheduleIsTakeType(false))
 
         schedule3 = Schedule(
                 mMedicineId = MedicineIdType(),
                 mTimetableId = TimetableIdType(),
                 mSchedulePlanDate = SchedulePlanDateType(calendar),
-                mScheduleNeedAlert = ScheduleNeedAlarmType(false),
+                mScheduleNeedAlarm = ScheduleNeedAlarmType(false),
                 mScheduleIsTake = ScheduleIsTakeType(true))
 
         schedule4 = Schedule(
                 mMedicineId = MedicineIdType(),
                 mTimetableId = TimetableIdType(),
                 mSchedulePlanDate = SchedulePlanDateType(calendar),
-                mScheduleNeedAlert = ScheduleNeedAlarmType(true),
+                mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
                 mScheduleIsTake = ScheduleIsTakeType(true))
     }
 
@@ -108,7 +108,7 @@ class SqliteScheduleRepositoryTest : ATestParent() {
         dao.insert(setSqliteSchedule(schedule4))
 
         // findById
-        val scheduleArray1 = dao.findAlertAll()
+        val scheduleArray1 = dao.findAlarmAll()
         assertEquals(1, scheduleArray1.size)
         assert(schedule1, scheduleArray1[0])
 
@@ -116,7 +116,7 @@ class SqliteScheduleRepositoryTest : ATestParent() {
         dao.delete(setSqliteSchedule(schedule1))
 
         // findById
-        val scheduleArray2 = dao.findAlertAll()
+        val scheduleArray2 = dao.findAlarmAll()
         assertEquals(0, scheduleArray2.size)
 
         // delete
@@ -125,23 +125,76 @@ class SqliteScheduleRepositoryTest : ATestParent() {
         dao.delete(setSqliteSchedule(schedule4))
     }
 
-    private fun setSqliteSchedule(entity: Schedule): SqliteSchedule {
-        val sqliteSchedule = SqliteSchedule(
-                medicineId = entity.mMedicineId,
-                schedulePlanDate = entity.mSchedulePlanDate,
-                timetableId = entity.mTimetableId)
-        sqliteSchedule.mScheduleNeedAlarm = entity.mScheduleNeedAlert
-        sqliteSchedule.mScheduleIsTake = entity.mScheduleIsTake
-        sqliteSchedule.mScheduleTookDatetime = entity.mScheduleTookDatetime
+    @Test
+    @Throws(Exception::class)
+    fun deleteOutSideHistoryByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.scheduleDao()
 
-        return sqliteSchedule
+        // insert
+        val schedule1_1 = schedule1.copy(mScheduleIsTake = ScheduleIsTakeType(false))
+        val schedule1_2 = schedule1_1.copy(mSchedulePlanDate = schedule1_1.mSchedulePlanDate.addDay(1))
+        val schedule1_3 = schedule1_2.copy(mSchedulePlanDate = schedule1_2.mSchedulePlanDate.addDay(1), mScheduleIsTake = ScheduleIsTakeType(true))
+        dao.insert(setSqliteSchedule(schedule1_1))
+        dao.insert(setSqliteSchedule(schedule1_2))
+        dao.insert(setSqliteSchedule(schedule1_3))
+
+        // findAll
+        val scheduleArray1 = dao.findAll()
+        assertEquals(3, scheduleArray1.size)
+
+        // deleteExceptHistoryByMedicineId
+        dao.deleteExceptHistoryByMedicineId(schedule1_1.mMedicineId.dbValue)
+
+        // findAll
+        val scheduleArray2 = dao.findAll()
+        assertEquals(1, scheduleArray2.size)
+
+        // delete
+        dao.delete(setSqliteSchedule(schedule1_1))
+        dao.delete(setSqliteSchedule(schedule1_2))
+        dao.delete(setSqliteSchedule(schedule1_3))
     }
+
+    @Test
+    @Throws(Exception::class)
+    fun deleteAllByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.scheduleDao()
+
+        // insert
+        val schedule1_1 = schedule1.copy(mScheduleIsTake = ScheduleIsTakeType(false))
+        val schedule1_2 = schedule1_1.copy(mSchedulePlanDate = schedule1_1.mSchedulePlanDate.addDay(1))
+        val schedule1_3 = schedule1_2.copy(mSchedulePlanDate = schedule1_2.mSchedulePlanDate.addDay(1), mScheduleIsTake = ScheduleIsTakeType(true))
+        dao.insert(setSqliteSchedule(schedule1_1))
+        dao.insert(setSqliteSchedule(schedule1_2))
+        dao.insert(setSqliteSchedule(schedule1_3))
+
+        // findAll
+        val scheduleArray1 = dao.findAll()
+        assertEquals(3, scheduleArray1.size)
+
+        // deleteExceptHistoryByMedicineId
+        dao.deleteAllByMedicineId(schedule1_1.mMedicineId.dbValue)
+
+        // findAll
+        val scheduleArray2 = dao.findAll()
+        assertEquals(0, scheduleArray2.size)
+
+        // delete
+        dao.delete(setSqliteSchedule(schedule1_1))
+        dao.delete(setSqliteSchedule(schedule1_2))
+        dao.delete(setSqliteSchedule(schedule1_3))
+    }
+
+    private fun setSqliteSchedule(entity: Schedule): SqliteSchedule =
+            SqliteSchedule.build { mSchedule = entity }
 
     private fun assert(expect: Schedule, actual: SqliteSchedule) {
         assertEquals(expect.mMedicineId, actual.mMedicineId)
         assertEquals(expect.mSchedulePlanDate, actual.mSchedulePlanDate)
         assertEquals(expect.mTimetableId, actual.mTimetableId)
-        assertEquals(expect.mScheduleNeedAlert, actual.mScheduleNeedAlarm)
+        assertEquals(expect.mScheduleNeedAlarm, actual.mScheduleNeedAlarm)
         assertEquals(expect.mScheduleIsTake, actual.mScheduleIsTake)
         assertEquals(expect.mScheduleTookDatetime, actual.mScheduleTookDatetime)
     }

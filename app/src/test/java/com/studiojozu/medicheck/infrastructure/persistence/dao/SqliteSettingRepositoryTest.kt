@@ -1,10 +1,8 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
-import com.studiojozu.medicheck.domain.model.setting.ATestParent
-import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
-import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
-import com.studiojozu.medicheck.domain.model.setting.UseReminderType
+import com.studiojozu.medicheck.domain.model.setting.*
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSetting
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
@@ -26,23 +24,30 @@ class SqliteSettingRepositoryTest : ATestParent() {
         val dao = database.settingDao()
 
         // select no data
-        var setting = dao.find()!!
-        assertEquals(true, setting.mUseReminder.isTrue)
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), setting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), setting.mRemindTimeout)
+        var sqliteSetting = dao.find()!!
+        assertEquals(true, sqliteSetting.mUseReminder.isTrue)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), sqliteSetting.mRemindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), sqliteSetting.mRemindTimeout)
 
         // update
-        setting.mUseReminder = UseReminderType(false)
-        setting.mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30)
-        setting.mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12)
-        dao.insert(setting)
-        setting = dao.find()!!
-        assertEquals(false, setting.mUseReminder.isTrue)
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30), setting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12), setting.mRemindTimeout)
+        val updateSetting = setSqliteSetting(Setting(
+                mUseReminder = UseReminderType(false),
+                mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30),
+                mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12)
+        ))
+        dao.insert(updateSetting)
+        sqliteSetting = dao.find()!!
+        assertEquals(false, sqliteSetting.mUseReminder.isTrue)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30), sqliteSetting.mRemindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12), sqliteSetting.mRemindTimeout)
 
         // delete
         dao.delete()
         assertNull(dao.find())
     }
+
+    private fun setSqliteSetting(entity: Setting) =
+            SqliteSetting.build {
+                mSetting = entity
+            }
 }

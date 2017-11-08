@@ -9,11 +9,17 @@ interface SqliteScheduleRepository {
     fun findAll(): Array<SqliteSchedule>
 
     @Query("select * from schedule where schedule_need_alarm=1 and schedule_is_take=0")
-    fun findAlertAll(): Array<SqliteSchedule>
+    fun findAlarmAll(): Array<SqliteSchedule>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteSchedule: SqliteSchedule)
 
     @Delete
     fun delete(sqliteSchedule: SqliteSchedule)
+
+    @Query("delete from schedule where medicine_id=:medicineId and schedule_is_take=0")
+    fun deleteExceptHistoryByMedicineId(medicineId: String)
+
+    @Query("delete from schedule where medicine_id=:medicineId")
+    fun deleteAllByMedicineId(medicineId: String)
 }

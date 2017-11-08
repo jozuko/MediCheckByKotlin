@@ -8,6 +8,27 @@ import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 
 @Entity(tableName = "medi_time_relation", primaryKeys = arrayOf("medicine_id", "timetable_id"))
 open class SqliteMediTimeRelation(medicineId: MedicineIdType, timetableId: TimetableIdType) {
+    class Builder {
+        lateinit var mMedicineId: MedicineIdType
+        lateinit var mTimetableId: TimetableIdType
+        lateinit var mIsOneShot: IsOneShotType
+
+        fun build(): SqliteMediTimeRelation {
+            val sqliteMediTimeRelation = SqliteMediTimeRelation(medicineId = mMedicineId, timetableId = mTimetableId)
+            sqliteMediTimeRelation.mIsOneShot = mIsOneShot
+
+            return sqliteMediTimeRelation
+        }
+    }
+
+    companion object {
+        fun build(f: Builder.() -> Unit): SqliteMediTimeRelation {
+            val builder = Builder()
+            builder.f()
+            return builder.build()
+        }
+    }
+
     /** 薬ID */
     @ColumnInfo(name = "medicine_id")
     var mMedicineId: MedicineIdType = medicineId

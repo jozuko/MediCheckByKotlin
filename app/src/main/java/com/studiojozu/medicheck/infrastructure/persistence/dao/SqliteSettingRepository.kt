@@ -9,12 +9,12 @@ import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSetting
 @Dao
 interface SqliteSettingRepository {
 
-    @Query("select * from setting limit 1")
+    @Query("select * from mSchedule limit 1")
     fun find(): SqliteSetting?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteSetting: SqliteSetting)
 
-    @Query("delete from setting")
+    @Query("delete from mSchedule")
     fun delete()
 }

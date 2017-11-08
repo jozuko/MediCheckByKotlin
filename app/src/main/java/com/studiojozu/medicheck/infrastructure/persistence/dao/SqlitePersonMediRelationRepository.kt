@@ -33,4 +33,7 @@ interface SqlitePersonMediRelationRepository {
 
     @Delete
     fun delete(sqlitePersonMediRelation: SqlitePersonMediRelation)
+
+    @Query("delete from person_medi_relation where person_medi_relation.medicine_id=:medicineId")
+    fun deleteByMedicineId(medicineId: String)
 }

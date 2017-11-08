@@ -3,14 +3,33 @@ package com.studiojozu.medicheck.infrastructure.persistence.entity
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
-import com.studiojozu.medicheck.domain.model.schedule.ScheduleIsTakeType
-import com.studiojozu.medicheck.domain.model.schedule.ScheduleNeedAlarmType
-import com.studiojozu.medicheck.domain.model.schedule.SchedulePlanDateType
-import com.studiojozu.medicheck.domain.model.schedule.ScheduleTookDatetimeType
+import com.studiojozu.medicheck.domain.model.schedule.*
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 
 @Entity(tableName = "schedule", primaryKeys = arrayOf("medicine_id", "schedule_plan_date", "schedule_need_alarm"))
 class SqliteSchedule(medicineId: MedicineIdType, schedulePlanDate: SchedulePlanDateType, timetableId: TimetableIdType) {
+    class Builder {
+        lateinit var mSchedule: Schedule
+
+        fun build(): SqliteSchedule {
+            val sqliteSchedule = SqliteSchedule(medicineId = mSchedule.mMedicineId,
+                    schedulePlanDate = mSchedule.mSchedulePlanDate,
+                    timetableId = mSchedule.mTimetableId)
+            sqliteSchedule.mScheduleNeedAlarm = mSchedule.mScheduleNeedAlarm
+            sqliteSchedule.mScheduleIsTake = mSchedule.mScheduleIsTake
+            sqliteSchedule.mScheduleTookDatetime = mSchedule.mScheduleTookDatetime
+
+            return sqliteSchedule
+        }
+    }
+
+    companion object {
+        fun build(f: Builder.() -> Unit): SqliteSchedule {
+            val builder = Builder()
+            builder.f()
+            return builder.build()
+        }
+    }
 
     /** 薬ID */
     @ColumnInfo(name = "medicine_id")
@@ -35,4 +54,12 @@ class SqliteSchedule(medicineId: MedicineIdType, schedulePlanDate: SchedulePlanD
     /** 服用した日時 */
     @ColumnInfo(name = "schedule_took_datetime")
     var mScheduleTookDatetime: ScheduleTookDatetimeType = ScheduleTookDatetimeType()
+
+    fun toSchedule(): Schedule =
+            Schedule(mMedicineId = mMedicineId,
+                    mSchedulePlanDate = mSchedulePlanDate,
+                    mTimetableId = mTimetableId,
+                    mScheduleNeedAlarm = mScheduleNeedAlarm,
+                    mScheduleIsTake = mScheduleIsTake,
+                    mScheduleTookDatetime = mScheduleTookDatetime)
 }

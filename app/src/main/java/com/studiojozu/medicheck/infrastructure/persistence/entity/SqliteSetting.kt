@@ -5,12 +5,34 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
 import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
+import com.studiojozu.medicheck.domain.model.setting.Setting
 import com.studiojozu.medicheck.domain.model.setting.UseReminderType
 
-@Entity(tableName = "setting")
+@Entity(tableName = "mSchedule")
 class SqliteSetting {
+    class Builder {
+        lateinit var mSetting: Setting
+
+        fun build(): SqliteSetting {
+            val sqliteSetting = SqliteSetting()
+            sqliteSetting.mUseReminder = mSetting.mUseReminder
+            sqliteSetting.mRemindInterval = mSetting.mRemindInterval
+            sqliteSetting.mRemindTimeout = mSetting.mRemindTimeout
+
+            return sqliteSetting
+        }
+    }
+
+    companion object {
+        fun build(f: Builder.() -> Unit): SqliteSetting {
+            val builder = Builder()
+            builder.f()
+            return builder.build()
+        }
+    }
+
     /** ID */
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "setting_id")
     var mSettingId: Long = 0
 
@@ -25,4 +47,9 @@ class SqliteSetting {
     /** 繰り返し通知最大時間(これ以上は通知しない) */
     @ColumnInfo(name = "remind_timeout")
     var mRemindTimeout: RemindTimeoutType = RemindTimeoutType()
+
+    fun toSetting(): Setting =
+            Setting(mUseReminder = mUseReminder,
+                    mRemindInterval = mRemindInterval,
+                    mRemindTimeout = mRemindTimeout)
 }

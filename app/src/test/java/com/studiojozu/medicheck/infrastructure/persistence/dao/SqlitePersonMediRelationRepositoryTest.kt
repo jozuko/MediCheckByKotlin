@@ -171,41 +171,56 @@ class SqlitePersonMediRelationRepositoryTest : ATestParent() {
         removeData(database)
     }
 
-    private fun setSqliteMedicine(entity: Medicine): SqliteMedicine {
-        val medicine = SqliteMedicine(medicineId = entity.mMedicineId)
-        medicine.mMedicineName = entity.mMedicineName
-        medicine.mMedicineTakeNumber = entity.mMedicineTakeNumber
-        medicine.mMedicineUnitId = entity.mMedicineUnit.mMedicineUnitId
-        medicine.mMedicineDateNumber = entity.mMedicineDateNumber
-        medicine.mMedicineStartDatetime = entity.mMedicineStartDatetime
-        medicine.mMedicineInterval = entity.mMedicineInterval
-        medicine.mMedicineIntervalMode = entity.mMedicineIntervalMode
-        medicine.mMedicinePhoto = entity.mMedicinePhoto
-        medicine.mMedicineNeedAlarm = entity.mMedicineNeedAlarm
-        medicine.mMedicineDeleteFlag = entity.mMedicineDeleteFlag
+    @Test
+    @Throws(Exception::class)
+    fun deleteByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.personMediRelationDao()
 
-        return medicine
+        // addData
+        addData(database)
+
+        // deleteByMedicineId
+        assertEquals(6, dao.findAll().size)
+        dao.deleteByMedicineId("")
+        assertEquals(6, dao.findAll().size)
+
+        dao.deleteByMedicineId(medicine6.mMedicineId.dbValue)
+        val relationArray = dao.findAll()
+        assertEquals(5, relationArray.size)
+        assertEquals(medicine1.mMedicineId, relationArray[0].mMedicineId)
+        assertEquals(person1.mPersonId, relationArray[0].mPersonId)
+
+        assertEquals(medicine2.mMedicineId, relationArray[1].mMedicineId)
+        assertEquals(person2.mPersonId, relationArray[1].mPersonId)
+
+        assertEquals(medicine3.mMedicineId, relationArray[2].mMedicineId)
+        assertEquals(person2.mPersonId, relationArray[2].mPersonId)
+
+        assertEquals(medicine4.mMedicineId, relationArray[3].mMedicineId)
+        assertEquals(person2.mPersonId, relationArray[3].mPersonId)
+
+        assertEquals(medicine5.mMedicineId, relationArray[4].mMedicineId)
+        assertEquals(person3.mPersonId, relationArray[4].mPersonId)
+
+        // delete data
+        removeData(database)
     }
 
-    private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit {
-        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = entity.mMedicineUnitId)
-        sqliteMedicineUnit.mMedicineUnitValue = entity.mMedicineUnitValue
-        sqliteMedicineUnit.mMedicineUnitDisplayOrder = entity.mMedicineUnitDisplayOrder
+    private fun setSqliteMedicine(entity: Medicine): SqliteMedicine =
+            SqliteMedicine.build { mMedicine = entity }
 
-        return sqliteMedicineUnit
-    }
+    private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
+            SqliteMedicineUnit.build { mMedicineUnit = entity }
 
-    private fun setSqlitePerson(entity: Person): SqlitePerson {
-        val medicine = SqlitePerson(personId = entity.mPersonId)
-        medicine.mPersonName = entity.mPersonName
-        medicine.mPersonPhoto = entity.mPersonPhoto
-        medicine.mPersonDisplayOrder = entity.mPersonDisplayOrder
-
-        return medicine
-    }
+    private fun setSqlitePerson(entity: Person): SqlitePerson =
+            SqlitePerson.build { mPerson = entity }
 
     private fun setSqlitePersonMediRelation(person: SqlitePerson, medicine: SqliteMedicine): SqlitePersonMediRelation =
-            SqlitePersonMediRelation(medicineId = medicine.mMedicineId, personId = person.mPersonId)
+            SqlitePersonMediRelation.build {
+                mPersonId = person.mPersonId
+                mMedicineId = medicine.mMedicineId
+            }
 
     private fun assertMedicine(expectMedicine: SqliteMedicine, expectMedicineUnit: SqliteMedicineUnit, actual: SqliteMedicineMedicineUnit) {
         assertEquals(expectMedicine.mMedicineId, actual.mMedicineId)

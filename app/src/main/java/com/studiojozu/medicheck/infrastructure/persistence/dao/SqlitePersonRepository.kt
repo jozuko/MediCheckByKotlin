@@ -11,6 +11,9 @@ interface SqlitePersonRepository {
     @Query("select * from person where person_id=:personId")
     fun findById(personId: String): SqlitePerson?
 
+    @Query("select max(person_display_order) from person")
+    fun maxDisplayOrder(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqlitePerson: SqlitePerson)
 

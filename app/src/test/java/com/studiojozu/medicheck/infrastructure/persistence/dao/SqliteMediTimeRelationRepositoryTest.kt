@@ -33,7 +33,7 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, entities.size)
 
         // insert
-        val insertData = SqliteMediTimeRelation(MedicineIdType("12345678"), TimetableIdType())
+        val insertData = setSqliteMediTimeRelation(MedicineIdType("12345678"), TimetableIdType())
         insertData.mIsOneShot = IsOneShotType(false)
 
         dao.insert(insertData)
@@ -45,7 +45,7 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(insertData.mIsOneShot, entities[0].mIsOneShot)
 
         // update
-        val updateData = SqliteMediTimeRelation(insertData.mMedicineId, insertData.mTimetableId)
+        val updateData = setSqliteMediTimeRelation(insertData.mMedicineId, insertData.mTimetableId)
         updateData.mIsOneShot = IsOneShotType(true)
 
         dao.insert(updateData)
@@ -72,15 +72,15 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         assertEquals(0, dao.findAll().size)
 
         // insert
-        val insertData1 = SqliteMediTimeRelation(MedicineIdType(), TimetableIdType())
+        val insertData1 = setSqliteMediTimeRelation(MedicineIdType(), TimetableIdType())
         insertData1.mIsOneShot = IsOneShotType(false)
         dao.insert(insertData1)
 
-        val insertData2 = SqliteMediTimeRelation(MedicineIdType(), insertData1.mTimetableId)
+        val insertData2 = setSqliteMediTimeRelation(MedicineIdType(), insertData1.mTimetableId)
         insertData2.mIsOneShot = IsOneShotType(false)
         dao.insert(insertData2)
 
-        val insertData3 = SqliteMediTimeRelation(insertData1.mMedicineId, TimetableIdType(""))
+        val insertData3 = setSqliteMediTimeRelation(insertData1.mMedicineId, TimetableIdType(""))
         insertData3.mIsOneShot = IsOneShotType(true)
         dao.insert(insertData3)
 
@@ -108,11 +108,11 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         // insert
         val medicineId1 = MedicineIdType()
         val medicineId2 = MedicineIdType()
-        val insertData1 = SqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
-        val insertData2 = SqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
-        val insertData3 = SqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
-        val insertData4 = SqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
-        val insertData5 = SqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
+        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
+        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
+        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
+        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
+        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
         dao.insert(insertData1)
         dao.insert(insertData2)
         dao.insert(insertData3)
@@ -145,4 +145,49 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         dao.delete(insertData5)
     }
 
+    @Test
+    @Throws(Exception::class)
+    @Config(qualifiers = "ja")
+    fun deleteByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.mediTimeRelationDao()
+        val timetables = database.timetableDao().findAll()
+
+        // insert
+        val medicineId1 = MedicineIdType()
+        val medicineId2 = MedicineIdType()
+        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
+        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
+        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
+        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
+        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
+        dao.insert(insertData1)
+        dao.insert(insertData2)
+        dao.insert(insertData3)
+        dao.insert(insertData4)
+        dao.insert(insertData5)
+
+        // findAll
+        assertEquals(5, dao.findAll().size)
+
+        // deleteByMedicineId
+        dao.deleteByMedicineId(medicineId1.dbValue)
+
+        // findAll
+        assertEquals(2, dao.findAll().size)
+
+        // delete
+        dao.delete(insertData1)
+        dao.delete(insertData2)
+        dao.delete(insertData3)
+        dao.delete(insertData4)
+        dao.delete(insertData5)
+    }
+
+    private fun setSqliteMediTimeRelation(medicineIdType: MedicineIdType, timetableIdType: TimetableIdType): SqliteMediTimeRelation =
+            SqliteMediTimeRelation.build {
+                mMedicineId = medicineIdType
+                mTimetableId = timetableIdType
+                mIsOneShot = IsOneShotType(true)
+            }
 }

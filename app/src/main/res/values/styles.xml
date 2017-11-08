@@ -1,7 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- アプリのテーマ -->
-    <style name="AppTheme" parent="android:Theme.Black.NoTitleBar">
+    <style name="AppTheme" parent="Base.Theme.AppCompat">
         <item name="android:buttonStyle">@style/StandardButtonTheme</item>
         <item name="android:imageButtonStyle">@style/StandardButtonTheme</item>
         <item name="android:textViewStyle">@style/StandardTextTheme</item>

@@ -72,29 +72,11 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
         database.medicineUnitDao().delete(medicineUnit)
     }
 
-    private fun setSqliteMedicine(medicineEntity: Medicine): SqliteMedicine {
-        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId)
-        medicine.mMedicineName = medicineEntity.mMedicineName
-        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber
-        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId
-        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber
-        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime
-        medicine.mMedicineInterval = medicineEntity.mMedicineInterval
-        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode
-        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto
-        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm
-        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag
+    private fun setSqliteMedicine(entity: Medicine) =
+            SqliteMedicine.build { mMedicine = entity }
 
-        return medicine
-    }
-
-    private fun setSqliteMedicineUnit(medicineUnit: MedicineUnit): SqliteMedicineUnit {
-        val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.mMedicineUnitId)
-        sqliteMedicineUnit.mMedicineUnitValue = medicineUnit.mMedicineUnitValue
-        sqliteMedicineUnit.mMedicineUnitDisplayOrder = medicineUnit.mMedicineUnitDisplayOrder
-
-        return sqliteMedicineUnit
-    }
+    private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
+            SqliteMedicineUnit.build { mMedicineUnit = entity }
 
     private fun assert(expectMedicine: SqliteMedicine, expectMedicineUnit: SqliteMedicineUnit, actual: SqliteMedicineMedicineUnit) {
         Assert.assertEquals(expectMedicine.mMedicineId, actual.mMedicineId)

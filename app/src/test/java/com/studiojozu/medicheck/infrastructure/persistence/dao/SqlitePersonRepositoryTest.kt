@@ -1,9 +1,6 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
-import com.studiojozu.medicheck.domain.model.person.Person
-import com.studiojozu.medicheck.domain.model.person.PersonDisplayOrderType
-import com.studiojozu.medicheck.domain.model.person.PersonNameType
-import com.studiojozu.medicheck.domain.model.person.PersonPhotoType
+import com.studiojozu.medicheck.domain.model.person.*
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqlitePerson
@@ -80,14 +77,31 @@ class SqlitePersonRepositoryTest : ATestParent() {
         dao.delete(setSqlitePerson(deleteMedicineEntity))
     }
 
-    private fun setSqlitePerson(entity: Person): SqlitePerson {
-        val medicine = SqlitePerson(personId = entity.mPersonId)
-        medicine.mPersonName = entity.mPersonName
-        medicine.mPersonPhoto = entity.mPersonPhoto
-        medicine.mPersonDisplayOrder = entity.mPersonDisplayOrder
+    @Test
+    @Throws(Exception::class)
+    fun maxDisplayOrder() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.personDao()
 
-        return medicine
+        dao.delete(SqlitePerson.build { mPerson = Person(mPersonId = PersonIdType(SqlitePerson.DEFAULT_PERSON_ID)) })
+
+        // maxDisplayOrder
+        assertEquals(0L, dao.maxDisplayOrder())
+
+        // insert
+        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        dao.insert(setSqlitePerson(insertEntity))
+
+        // maxDisplayOrder
+        assertEquals(2L, dao.maxDisplayOrder())
+
+        // delete
+        val deleteMedicineEntity = insertEntity.copy()
+        dao.delete(setSqlitePerson(deleteMedicineEntity))
     }
+
+    private fun setSqlitePerson(entity: Person): SqlitePerson =
+            SqlitePerson.build { mPerson = entity }
 
     private fun assert(expect: Person, actual: SqlitePerson) {
         assertEquals(expect.mPersonId, actual.mPersonId)

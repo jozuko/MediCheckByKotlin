@@ -29,10 +29,12 @@ class SqliteTimetableRepositoryTest : ATestParent() {
         assertEquals(12, timetableArray.size)
 
         // insert
-        val insertData = SqliteTimetable(TimetableIdType())
-        insertData.mTimetableName = TimetableNameType("服用時間名-1")
-        insertData.mTimetableTime = TimetableTimeType(15, 0)
-        insertData.mTimetableDisplayOrder = TimetableDisplayOrderType(13L)
+        val insertData = setSqliteTimetable(Timetable(
+                mTimetableId = TimetableIdType(),
+                mTimetableName = TimetableNameType("服用時間名-1"),
+                mTimetableTime = TimetableTimeType(15, 0),
+                mTimetableDisplayOrder = TimetableDisplayOrderType(13L)
+        ))
         dao.insert(insertData)
 
         timetableArray = dao.findAll()
@@ -42,10 +44,12 @@ class SqliteTimetableRepositoryTest : ATestParent() {
         assertEquals(13L, timetableArray[12].mTimetableDisplayOrder.dbValue)
 
         // update
-        val updateData = SqliteTimetable(insertData.mTimetableId)
-        updateData.mTimetableName = TimetableNameType("服用時間名-2")
-        updateData.mTimetableTime = TimetableTimeType(4, 30)
-        updateData.mTimetableDisplayOrder = TimetableDisplayOrderType(14L)
+        val updateData = setSqliteTimetable(Timetable(
+                mTimetableId = insertData.mTimetableId,
+                mTimetableName = TimetableNameType("服用時間名-2"),
+                mTimetableTime = TimetableTimeType(4, 30),
+                mTimetableDisplayOrder = TimetableDisplayOrderType(14L)
+        ))
         dao.insert(updateData)
 
         timetableArray = dao.findAll()
@@ -55,10 +59,12 @@ class SqliteTimetableRepositoryTest : ATestParent() {
         assertEquals(14L, timetableArray[12].mTimetableDisplayOrder.dbValue)
 
         // delete
-        val deleteData = SqliteTimetable(insertData.mTimetableId)
-        updateData.mTimetableName = TimetableNameType("服用時間名-3")
-        updateData.mTimetableTime = TimetableTimeType(16, 0)
-        updateData.mTimetableDisplayOrder = TimetableDisplayOrderType(15L)
+        val deleteData = setSqliteTimetable(Timetable(
+                mTimetableId = insertData.mTimetableId,
+                mTimetableName = TimetableNameType("服用時間名-3"),
+                mTimetableTime = TimetableTimeType(16, 0),
+                mTimetableDisplayOrder = TimetableDisplayOrderType(15L)
+        ))
         dao.delete(deleteData)
 
         timetableArray = dao.findAll()
@@ -165,4 +171,7 @@ class SqliteTimetableRepositoryTest : ATestParent() {
         // findById - not exists
         assertNull(dao.findById("unknown id"))
     }
+
+    private fun setSqliteTimetable(entity: Timetable) =
+            SqliteTimetable.build { mTimetable = entity }
 }

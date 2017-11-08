@@ -28,7 +28,7 @@ import com.studiojozu.medicheck.infrastructure.persistence.entity.*
         SqliteTimetableConverters::class,
         SqlitePersonConverters::class,
         SqliteSettingConverters::class)
-internal abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun medicineDao(): SqliteMedicineRepository
     abstract fun medicineUnitDao(): SqliteMedicineUnitRepository

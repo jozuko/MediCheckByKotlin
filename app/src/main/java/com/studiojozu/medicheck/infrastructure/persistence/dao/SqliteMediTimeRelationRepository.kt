@@ -21,4 +21,7 @@ interface SqliteMediTimeRelationRepository {
 
     @Delete
     fun delete(sqliteMediTimeRelation: SqliteMediTimeRelation)
+
+    @Query("delete from medi_time_relation where medi_time_relation.medicine_id=:medicineId")
+    fun deleteByMedicineId(medicineId: String)
 }

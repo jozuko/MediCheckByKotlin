@@ -7,11 +7,11 @@ import android.content.ContentValues
 import android.content.Context
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitIdType
-import com.studiojozu.medicheck.domain.model.person.PersonIdType
 import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
 import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.domain.model.setting.TimetableTimeType
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqlitePerson
 
 class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() {
 
@@ -36,7 +36,7 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
 
     private fun initPerson(db: SupportSQLiteDatabase) {
         val contentValues = ContentValues()
-        contentValues.put("person_id", PersonIdType().dbValue)
+        contentValues.put("person_id", SqlitePerson.DEFAULT_PERSON_ID)
         contentValues.put("person_name", mContext.resources.getString(R.string.person_self))
         contentValues.put("person_photo", "")
         contentValues.put("person_display_order", 1)
@@ -50,7 +50,7 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
         contentValues.put("remind_interval", RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5).dbValue)
         contentValues.put("remind_timeout", RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24).dbValue)
 
-        db.insert("setting", OnConflictStrategy.IGNORE, contentValues)
+        db.insert("mSchedule", OnConflictStrategy.IGNORE, contentValues)
     }
 
     private fun initTimetable(db: SupportSQLiteDatabase) {

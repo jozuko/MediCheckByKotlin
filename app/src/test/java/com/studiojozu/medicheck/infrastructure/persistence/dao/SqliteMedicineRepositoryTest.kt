@@ -1,5 +1,6 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
+import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineNameType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
@@ -72,21 +73,8 @@ class SqliteMedicineRepositoryTest : ATestParent() {
         dao.delete(setSqliteMedicine(deleteMedicineEntity))
     }
 
-    private fun setSqliteMedicine(medicineEntity: com.studiojozu.medicheck.domain.model.medicine.Medicine): SqliteMedicine {
-        val medicine = SqliteMedicine(medicineId = medicineEntity.mMedicineId)
-        medicine.mMedicineName = medicineEntity.mMedicineName
-        medicine.mMedicineTakeNumber = medicineEntity.mMedicineTakeNumber
-        medicine.mMedicineUnitId = medicineEntity.mMedicineUnit.mMedicineUnitId
-        medicine.mMedicineDateNumber = medicineEntity.mMedicineDateNumber
-        medicine.mMedicineStartDatetime = medicineEntity.mMedicineStartDatetime
-        medicine.mMedicineInterval = medicineEntity.mMedicineInterval
-        medicine.mMedicineIntervalMode = medicineEntity.mMedicineIntervalMode
-        medicine.mMedicinePhoto = medicineEntity.mMedicinePhoto
-        medicine.mMedicineNeedAlarm = medicineEntity.mMedicineNeedAlarm
-        medicine.mMedicineDeleteFlag = medicineEntity.mMedicineDeleteFlag
-
-        return medicine
-    }
+    private fun setSqliteMedicine(entity: Medicine) =
+            SqliteMedicine.build { mMedicine = entity }
 
     private fun assert(expect: com.studiojozu.medicheck.domain.model.medicine.Medicine, actual: SqliteMedicine) {
         assertEquals(expect.mMedicineId, actual.mMedicineId)
