@@ -15,11 +15,9 @@ class MedicineUnitRepository(private val sqliteMedicineUnitRepository: SqliteMed
         return sqliteMedicineUnit.toMedicineUnit()
     }
 
-    fun insert(medicineUnit: MedicineUnit) {
-        sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
-    }
+    fun insert(medicineUnit: MedicineUnit) =
+            sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
 
-    fun delete(medicineUnit: MedicineUnit) {
-        sqliteMedicineUnitRepository.delete(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
-    }
+    fun delete(medicineUnit: MedicineUnit) =
+            sqliteMedicineUnitRepository.delete(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
 }

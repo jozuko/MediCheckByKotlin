@@ -76,13 +76,11 @@ class ATimeTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun constructor_Unknown() {
-        try {
-            TestTimeType("test")
-            fail()
-        } catch (e: IllegalArgumentException) {
-            assertEquals("unknown type.", e.message)
-        }
+    fun constructor_Unknown() = try {
+        TestTimeType("test")
+        fail()
+    } catch (e: IllegalArgumentException) {
+        assertEquals("unknown type.", e.message)
     }
 
     @Test

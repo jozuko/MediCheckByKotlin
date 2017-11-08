@@ -54,11 +54,9 @@ class PersonRepository(
     fun existPersonById(personIdType: PersonIdType): Boolean =
             sqlitePersonRepository.findById(personId = personIdType.dbValue) != null
 
-    fun insert(person: Person) {
-        sqlitePersonRepository.insert(SqlitePerson.build { mPerson = person })
-    }
+    fun insert(person: Person) =
+            sqlitePersonRepository.insert(SqlitePerson.build { mPerson = person })
 
-    fun delete(person: Person) {
-        sqlitePersonRepository.delete(SqlitePerson.build { mPerson = person })
-    }
+    fun delete(person: Person) =
+            sqlitePersonRepository.delete(SqlitePerson.build { mPerson = person })
 }

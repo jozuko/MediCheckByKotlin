@@ -12,25 +12,22 @@ class MediTimeRelationRepository(private var sqliteMediTimeRelationRepository: S
     fun findTimetableByMedicineId(medicineIdType: MedicineIdType) =
             sqliteMediTimeRelationRepository.findTimetableByMedicineId(medicineId = medicineIdType.dbValue).map { it.toTimetable() }
 
-    fun deleteByMedicineId(medicineIdType: MedicineIdType) {
-        sqliteMediTimeRelationRepository.deleteByMedicineId(medicineId = medicineIdType.dbValue)
-    }
+    fun deleteByMedicineId(medicineIdType: MedicineIdType) =
+            sqliteMediTimeRelationRepository.deleteByMedicineId(medicineId = medicineIdType.dbValue)
 
-    fun insertTimetable(medicineId: MedicineIdType, timetableList: MedicineTimetableList) {
-        timetableList.forEach { it ->
+    fun insertTimetable(medicineId: MedicineIdType, timetableList: MedicineTimetableList) =
+            timetableList.forEach { it ->
+                sqliteMediTimeRelationRepository.insert(SqliteMediTimeRelation.build {
+                    mMedicineId = medicineId
+                    mTimetableId = it.mTimetableId
+                    mIsOneShot = IsOneShotType(false)
+                })
+            }
+
+    fun insertOneShot(medicineId: MedicineIdType) =
             sqliteMediTimeRelationRepository.insert(SqliteMediTimeRelation.build {
                 mMedicineId = medicineId
-                mTimetableId = it.mTimetableId
-                mIsOneShot = IsOneShotType(false)
+                mTimetableId = TimetableIdType("")
+                mIsOneShot = IsOneShotType(true)
             })
-        }
-    }
-
-    fun insertOneShot(medicineId: MedicineIdType) {
-        sqliteMediTimeRelationRepository.insert(SqliteMediTimeRelation.build {
-            mMedicineId = medicineId
-            mTimetableId = TimetableIdType("")
-            mIsOneShot = IsOneShotType(true)
-        })
-    }
 }

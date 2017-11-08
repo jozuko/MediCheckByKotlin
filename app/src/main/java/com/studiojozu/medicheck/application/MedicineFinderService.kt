@@ -10,7 +10,7 @@ import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.repository.TimetableRepository
 import javax.inject.Inject
 
-class MedicineFinderService {
+class MedicineFinderService(application: MediCheckApplication) {
     @Inject
     lateinit var medicineViewRepository: MedicineViewRepository
     @Inject
@@ -18,7 +18,7 @@ class MedicineFinderService {
     @Inject
     lateinit var timetableRepository: TimetableRepository
 
-    constructor(application: MediCheckApplication) {
+    init {
         application.mComponent.inject(this)
     }
 

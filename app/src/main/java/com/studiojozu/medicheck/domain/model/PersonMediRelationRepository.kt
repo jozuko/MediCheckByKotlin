@@ -21,14 +21,12 @@ class PersonMediRelationRepository(private val sqlitePersonMediRelationRepositor
         return person.mPersonId == personIdType
     }
 
-    fun deleteByMedicineId(medicineIdType: MedicineIdType) {
-        sqlitePersonMediRelationRepository.deleteByMedicineId(medicineId = medicineIdType.dbValue)
-    }
+    fun deleteByMedicineId(medicineIdType: MedicineIdType) =
+            sqlitePersonMediRelationRepository.deleteByMedicineId(medicineId = medicineIdType.dbValue)
 
-    fun insert(personId: PersonIdType, medicineIdType: MedicineIdType) {
-        sqlitePersonMediRelationRepository.insert(SqlitePersonMediRelation.build {
-            mMedicineId = medicineIdType
-            mPersonId = personId
-        })
-    }
+    fun insert(personId: PersonIdType, medicineIdType: MedicineIdType) =
+            sqlitePersonMediRelationRepository.insert(SqlitePersonMediRelation.build {
+                mMedicineId = medicineIdType
+                mPersonId = personId
+            })
 }

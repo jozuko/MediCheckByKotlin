@@ -19,6 +19,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
 import java.util.*
 
+@Suppress("LocalVariableName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")

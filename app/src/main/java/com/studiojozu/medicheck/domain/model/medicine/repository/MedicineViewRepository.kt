@@ -25,7 +25,6 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
         sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicine.mMedicineUnit })
     }
 
-    fun delete(medicine: Medicine) {
-        sqliteMedicineRepository.delete(SqliteMedicine.build { mMedicine = medicine })
-    }
+    fun delete(medicine: Medicine) =
+            sqliteMedicineRepository.delete(SqliteMedicine.build { mMedicine = medicine })
 }
