@@ -6,7 +6,7 @@ import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.schedule.*
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 
-@Entity(tableName = "schedule", primaryKeys = arrayOf("medicine_id", "schedule_plan_date", "schedule_need_alarm"))
+@Entity(tableName = "schedule", primaryKeys = arrayOf("medicine_id", "schedule_plan_date", "timetable_id"))
 class SqliteSchedule(medicineId: MedicineIdType, schedulePlanDate: SchedulePlanDateType, timetableId: TimetableIdType) {
     class Builder {
         lateinit var mSchedule: Schedule
