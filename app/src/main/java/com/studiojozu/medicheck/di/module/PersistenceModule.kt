@@ -52,8 +52,8 @@ class PersistenceModule {
 
     @Singleton
     @Provides
-    fun providePersonRepository(application: Application, database: AppDatabase, preferencePersonRepository: PreferencePersonRepository): PersonRepository =
-            PersonRepository(application, database.personDao(), preferencePersonRepository)
+    fun providePersonRepository(database: AppDatabase): PersonRepository =
+            PersonRepository(database.personDao())
 
     @Singleton
     @Provides
