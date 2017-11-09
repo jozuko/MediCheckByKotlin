@@ -3,6 +3,7 @@ package com.studiojozu.medicheck.di
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
 import com.studiojozu.medicheck.di.module.ServiceModule
+import com.studiojozu.medicheck.domain.model.medicine.repository.MediTimeRelationRepositoryTest
 import com.studiojozu.medicheck.domain.model.medicine.repository.MedicineUnitRepositoryTest
 import com.studiojozu.medicheck.domain.model.medicine.repository.MedicineViewRepositoryTest
 import com.studiojozu.medicheck.domain.model.person.repository.PersonRepositoryTest
@@ -20,4 +21,5 @@ interface AppTestComponent : AppComponent {
     fun inject(personRepositoryTest: PersonRepositoryTest)
     fun inject(medicineUnitRepositoryTest: MedicineUnitRepositoryTest)
     fun inject(medicineViewRepositoryTest: MedicineViewRepositoryTest)
+    fun inject(mediTimeRelationRepositoryTest: MediTimeRelationRepositoryTest)
 }

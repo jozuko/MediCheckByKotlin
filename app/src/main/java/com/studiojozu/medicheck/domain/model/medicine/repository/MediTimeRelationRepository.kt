@@ -1,4 +1,4 @@
-package com.studiojozu.medicheck.domain.model
+package com.studiojozu.medicheck.domain.model.medicine.repository
 
 import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType

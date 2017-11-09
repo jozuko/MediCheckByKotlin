@@ -3,10 +3,10 @@ package com.studiojozu.medicheck.di.module
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import com.studiojozu.medicheck.domain.model.MediTimeRelationRepository
-import com.studiojozu.medicheck.domain.model.PersonMediRelationRepository
+import com.studiojozu.medicheck.domain.model.medicine.repository.MediTimeRelationRepository
 import com.studiojozu.medicheck.domain.model.medicine.repository.MedicineUnitRepository
 import com.studiojozu.medicheck.domain.model.medicine.repository.MedicineViewRepository
+import com.studiojozu.medicheck.domain.model.person.repository.PersonMediRelationRepository
 import com.studiojozu.medicheck.domain.model.person.repository.PersonRepository
 import com.studiojozu.medicheck.domain.model.schedule.repository.ScheduleRepository
 import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepository
