@@ -5,7 +5,7 @@ import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
 import com.studiojozu.medicheck.di.module.ServiceModule
 
-class MediCheckApplication : Application() {
+open class MediCheckApplication : Application() {
 
     lateinit var mComponent: AppComponent
         private set
@@ -15,7 +15,7 @@ class MediCheckApplication : Application() {
         initComponent()
     }
 
-    private fun initComponent() {
+    open fun initComponent() {
         mComponent = DaggerAppComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .persistenceModule(PersistenceModule())

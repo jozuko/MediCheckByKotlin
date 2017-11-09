@@ -1,11 +1,10 @@
 package com.studiojozu.medicheck.di
 
-import android.app.Application
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
 import com.studiojozu.medicheck.di.module.ServiceModule
 
-class MediCheckTestApplication : Application() {
+class MediCheckTestApplication : MediCheckApplication() {
 
     lateinit var mAppTestComponent: AppTestComponent
         private set
@@ -15,7 +14,8 @@ class MediCheckTestApplication : Application() {
         initComponent()
     }
 
-    fun initComponent() {
+    override fun initComponent() {
+        super.initComponent()
         mAppTestComponent = DaggerAppTestComponent.builder()
                 .applicationModule(ApplicationModule(this))
                 .persistenceModule(PersistenceModule())

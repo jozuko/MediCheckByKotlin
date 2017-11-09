@@ -30,7 +30,7 @@ class MedicineFinderService(application: MediCheckApplication) {
     fun findByMedicineId(medicineId: MedicineIdType): Medicine =
             medicineViewRepository.findByMedicineId(medicineId) ?: Medicine(mMedicineId = medicineId)
 
-    val defaultMedicineUnit: MedicineUnit?
+    val defaultMedicineUnit: MedicineUnit
         get() {
             val medicineUnits = medicineUnitRepository.findAll()
             return if (medicineUnits.isEmpty()) MedicineUnit() else medicineUnits[0]
