@@ -1,4 +1,4 @@
-package com.studiojozu.medicheck.domain.model
+package com.studiojozu.medicheck.domain.model.person.repository
 
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.person.Person
