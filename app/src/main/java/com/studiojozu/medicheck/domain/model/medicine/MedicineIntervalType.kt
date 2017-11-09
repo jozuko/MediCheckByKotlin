@@ -1,6 +1,7 @@
 package com.studiojozu.medicheck.domain.model.medicine
 
 import android.content.res.Resources
+import com.studiojozu.common.domain.model.CalendarNoSecond
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.common.domain.model.general.ALongType
 import com.studiojozu.medicheck.R
@@ -55,8 +56,7 @@ class MedicineIntervalType : ALongType<MedicineIntervalType> {
             return datetime.addDay(dbValue.toInt() + 1)
         }
 
-        val calculateCalendar = Calendar.getInstance()
-        calculateCalendar.timeInMillis = datetime.dbValue
+        val calculateCalendar = CalendarNoSecond(datetime.dbValue).calendar
         calculateCalendar.add(Calendar.MONTH, 1)
         val maxDay = calculateCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
         if (maxDay < dbValue)

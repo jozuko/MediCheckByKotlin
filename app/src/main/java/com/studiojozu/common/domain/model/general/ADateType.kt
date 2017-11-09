@@ -1,6 +1,7 @@
 package com.studiojozu.common.domain.model.general
 
 import com.studiojozu.common.domain.model.AValueObject
+import com.studiojozu.common.domain.model.CalendarNoSecond
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -30,18 +31,13 @@ abstract class ADateType<out C : ADateType<C>> : AValueObject<Long, C>, Comparab
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = Calendar.getInstance()
-        mValue.timeInMillis = timeInMillis
+        mValue = CalendarNoSecond(timeInMillis).calendar
         mValue.set(Calendar.HOUR_OF_DAY, 0)
         mValue.set(Calendar.MINUTE, 0)
-        mValue.set(Calendar.SECOND, 0)
-        mValue.set(Calendar.MILLISECOND, 0)
     }
 
     protected constructor(year: Int, month: Int, day: Int) {
-        mValue = Calendar.getInstance()
-        mValue.set(year, month - 1, day, 0, 0, 0)
-        mValue.set(Calendar.MILLISECOND, 0)
+        mValue = CalendarNoSecond(year, month - 1, day, 0, 0).calendar
     }
 
     override fun compareTo(other: ADateType<*>): Int = dbValue.compareTo(other.dbValue)

@@ -1,6 +1,7 @@
 package com.studiojozu.common.domain.model.general
 
 import com.studiojozu.common.domain.model.AValueObject
+import com.studiojozu.common.domain.model.CalendarNoSecond
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -44,10 +45,7 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = Calendar.getInstance()
-        mValue.timeInMillis = timeInMillis
-        mValue.set(Calendar.SECOND, 0)
-        mValue.set(Calendar.MILLISECOND, 0)
+        mValue = CalendarNoSecond(timeInMillis).calendar
     }
 
     /**
@@ -58,21 +56,19 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
      * @param minute 分(0-59)
      */
     protected constructor(year: Int, month: Int, day: Int, hourOfDay: Int, minute: Int) {
-        mValue = Calendar.getInstance()
-        mValue.set(year, month - 1, day, hourOfDay, minute, 0)
-        mValue.set(Calendar.MILLISECOND, 0)
+        mValue = CalendarNoSecond(year, month - 1, day, hourOfDay, minute).calendar
     }
 
     protected constructor(dateModel: ADateType<*>, timeModel: ATimeType<*>) {
-        val dateCalendar = Calendar.getInstance()
-        dateCalendar.timeInMillis = dateModel.dbValue
+        val dateCalendar = CalendarNoSecond(dateModel.dbValue).calendar
+        val timeCalendar = CalendarNoSecond(timeModel.dbValue).calendar
 
-        val timeCalendar = Calendar.getInstance()
-        timeCalendar.timeInMillis = timeModel.dbValue
-
-        mValue = Calendar.getInstance()
-        mValue.set(dateCalendar.get(Calendar.YEAR), dateCalendar.get(Calendar.MONTH), dateCalendar.get(Calendar.DAY_OF_MONTH), timeCalendar.get(Calendar.HOUR_OF_DAY), timeCalendar.get(Calendar.MINUTE), 0)
-        mValue.set(Calendar.MILLISECOND, 0)
+        mValue = CalendarNoSecond(
+                year = dateCalendar.get(Calendar.YEAR),
+                month = dateCalendar.get(Calendar.MONTH),
+                dayOfMonth = dateCalendar.get(Calendar.DAY_OF_MONTH),
+                hourOfDay = timeCalendar.get(Calendar.HOUR_OF_DAY),
+                minute = timeCalendar.get(Calendar.MINUTE)).calendar
     }
 
     override fun compareTo(other: ADatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
@@ -87,9 +83,6 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
      * @return 差分
      */
     fun diffMinutes(other: ADatetimeType<*>): Long {
-        val targetCalendar = Calendar.getInstance()
-        targetCalendar.timeInMillis = other.dbValue
-
         val diff = dbValue - other.dbValue
         return diff / (60 * 1000)
     }

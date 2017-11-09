@@ -1,5 +1,6 @@
 package com.studiojozu.medicheck.domain.model.schedule
 
+import com.studiojozu.common.domain.model.CalendarNoSecond
 import com.studiojozu.common.domain.model.general.ADatetimeType
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineDateNumberType
@@ -93,8 +94,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻の場合はIntervalを加算する
         val afterIntervalDateTime = medicine.mMedicineInterval.addInterval(planDate.mPlanDatetime, medicine.mMedicineIntervalMode)
-        val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = afterIntervalDateTime.dbValue
+        val nextDay = CalendarNoSecond(afterIntervalDateTime.dbValue).calendar
         nextDay.set(Calendar.HOUR_OF_DAY, 0)
         nextDay.set(Calendar.MINUTE, 0)
         return MedicineStartDatetimeType(nextDay)
@@ -104,8 +104,7 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
         if (medicine.mMedicineIntervalMode.isDays)
             return medicine.mMedicineStartDatetime
 
-        val nextDay = Calendar.getInstance()
-        nextDay.timeInMillis = medicine.mMedicineStartDatetime.dbValue
+        val nextDay = CalendarNoSecond(medicine.mMedicineStartDatetime.dbValue).calendar
         nextDay.set(Calendar.DAY_OF_MONTH, medicine.mMedicineInterval.dbValue.toInt())
 
         if (nextDay.timeInMillis < medicine.mMedicineStartDatetime.dbValue)
