@@ -11,6 +11,7 @@ import com.studiojozu.medicheck.domain.model.person.repository.PersonRepositoryT
 import com.studiojozu.medicheck.domain.model.schedule.repository.ScheduleRepositoryTest
 import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepositoryTest
 import com.studiojozu.medicheck.domain.model.setting.repository.TimetableRepositoryTest
+import com.studiojozu.medicheck.infrastructure.persistence.preference.PreferencePersonRepositoryTest
 import javax.inject.Singleton
 
 @Singleton
@@ -24,4 +25,5 @@ interface AppTestComponent : AppComponent {
     fun inject(medicineViewRepositoryTest: MedicineViewRepositoryTest)
     fun inject(mediTimeRelationRepositoryTest: MediTimeRelationRepositoryTest)
     fun inject(personMediRelationRepositoryTest: PersonMediRelationRepositoryTest)
+    fun inject(preferencePersonRepositoryTest: PreferencePersonRepositoryTest)
 }
