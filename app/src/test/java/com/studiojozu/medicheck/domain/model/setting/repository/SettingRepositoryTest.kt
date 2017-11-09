@@ -1,10 +1,7 @@
 package com.studiojozu.medicheck.domain.model.setting.repository
 
 import com.studiojozu.medicheck.di.MediCheckTestApplication
-import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
-import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
-import com.studiojozu.medicheck.domain.model.setting.Setting
-import com.studiojozu.medicheck.domain.model.setting.UseReminderType
+import com.studiojozu.medicheck.domain.model.setting.*
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +15,7 @@ import javax.inject.Inject
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml", application = MediCheckTestApplication::class)
 @PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
-class SettingRepositoryTest {
+class SettingRepositoryTest : ATestParent() {
 
     @Inject
     lateinit var settingRepository: SettingRepository
