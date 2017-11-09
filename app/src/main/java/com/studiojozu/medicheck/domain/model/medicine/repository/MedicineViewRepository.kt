@@ -15,7 +15,7 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
     fun findAllNoTimetable(): List<Medicine> =
             sqliteMedicineMedicineUnitRepository.findAll().map { it.toMedicine() }
 
-    fun findById(medicineId: MedicineIdType): Medicine? {
+    fun findByMedicineId(medicineId: MedicineIdType): Medicine? {
         val sqliteMedicine = sqliteMedicineMedicineUnitRepository.findByMedicineId(medicineId.dbValue) ?: return null
         return sqliteMedicine.toMedicine()
     }
