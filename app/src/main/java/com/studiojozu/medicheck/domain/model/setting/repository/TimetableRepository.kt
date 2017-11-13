@@ -15,6 +15,9 @@ class TimetableRepository(private val sqliteTimetableRepository: SqliteTimetable
         return sqliteTimetable.toTimetable()
     }
 
+    fun maxDisplayOrder() =
+            sqliteTimetableRepository.maxDisplayOrder()
+
     fun insert(timetable: Timetable) =
             sqliteTimetableRepository.insert(SqliteTimetable.build { mTimetable = timetable })
 

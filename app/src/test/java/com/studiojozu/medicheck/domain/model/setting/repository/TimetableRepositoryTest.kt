@@ -2,7 +2,8 @@ package com.studiojozu.medicheck.domain.model.setting.repository
 
 import com.studiojozu.medicheck.di.MediCheckTestApplication
 import com.studiojozu.medicheck.domain.model.setting.*
-import org.junit.Assert
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +30,7 @@ class TimetableRepositoryTest : ATestParent() {
     fun crud() {
         // select init data
         var timetableArray = timetableRepository.findAll()
-        Assert.assertEquals(12, timetableArray.size)
+        assertEquals(12, timetableArray.size)
 
         // insert
         val insertData = Timetable(
@@ -41,10 +42,10 @@ class TimetableRepositoryTest : ATestParent() {
         timetableRepository.insert(insertData)
 
         timetableArray = timetableRepository.findAll()
-        Assert.assertEquals(13, timetableArray.size)
-        Assert.assertEquals("服用時間名-1", timetableArray[12].mTimetableName.dbValue)
-        Assert.assertEquals("15:00", timetableArray[12].mTimetableTime.displayValue)
-        Assert.assertEquals(13L, timetableArray[12].mTimetableDisplayOrder.dbValue)
+        assertEquals(13, timetableArray.size)
+        assertEquals("服用時間名-1", timetableArray[12].mTimetableName.dbValue)
+        assertEquals("15:00", timetableArray[12].mTimetableTime.displayValue)
+        assertEquals(13L, timetableArray[12].mTimetableDisplayOrder.dbValue)
 
         // update
         val updateData = Timetable(
@@ -56,10 +57,10 @@ class TimetableRepositoryTest : ATestParent() {
         timetableRepository.insert(updateData)
 
         timetableArray = timetableRepository.findAll()
-        Assert.assertEquals(13, timetableArray.size)
-        Assert.assertEquals("服用時間名-2", timetableArray[12].mTimetableName.dbValue)
-        Assert.assertEquals("4:30", timetableArray[12].mTimetableTime.displayValue)
-        Assert.assertEquals(14L, timetableArray[12].mTimetableDisplayOrder.dbValue)
+        assertEquals(13, timetableArray.size)
+        assertEquals("服用時間名-2", timetableArray[12].mTimetableName.dbValue)
+        assertEquals("4:30", timetableArray[12].mTimetableTime.displayValue)
+        assertEquals(14L, timetableArray[12].mTimetableDisplayOrder.dbValue)
 
         // delete
         val deleteData = Timetable(
@@ -71,7 +72,7 @@ class TimetableRepositoryTest : ATestParent() {
         timetableRepository.delete(deleteData)
 
         timetableArray = timetableRepository.findAll()
-        Assert.assertEquals(12, timetableArray.size)
+        assertEquals(12, timetableArray.size)
     }
 
     @Test
@@ -80,67 +81,67 @@ class TimetableRepositoryTest : ATestParent() {
     fun initRecords() {
         // select init data
         val timetableArray = timetableRepository.findAll()
-        Assert.assertEquals(12, timetableArray.size)
+        assertEquals(12, timetableArray.size)
 
         var index = 0
-        Assert.assertEquals("朝", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("7:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("朝", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("7:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 1
-        Assert.assertEquals("昼", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("12:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("昼", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("12:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 2
-        Assert.assertEquals("夜", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("19:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("夜", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("19:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 3
-        Assert.assertEquals("就寝前", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("22:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("就寝前", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("22:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 4
-        Assert.assertEquals("朝食前", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("6:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("朝食前", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("6:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 5
-        Assert.assertEquals("昼食前", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("11:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("昼食前", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("11:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 6
-        Assert.assertEquals("夕食前", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("18:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("夕食前", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("18:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 7
-        Assert.assertEquals("朝食後", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("7:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("朝食後", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("7:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 8
-        Assert.assertEquals("昼食後", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("12:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("昼食後", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("12:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 9
-        Assert.assertEquals("夕食後", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("19:30", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("夕食後", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("19:30", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 10
-        Assert.assertEquals("食間(朝食 - 昼食)", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("10:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("食間(朝食 - 昼食)", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("10:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
 
         index = 11
-        Assert.assertEquals("食間(昼食 - 夕食)", timetableArray[index].mTimetableName.dbValue)
-        Assert.assertEquals("16:00", timetableArray[index].mTimetableTime.displayValue)
-        Assert.assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("食間(昼食 - 夕食)", timetableArray[index].mTimetableName.dbValue)
+        assertEquals("16:00", timetableArray[index].mTimetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
     }
 
     @Test
@@ -154,18 +155,35 @@ class TimetableRepositoryTest : ATestParent() {
 
         // findById
         var timetable = timetableRepository.findById(timetable1.mTimetableId)!!
-        Assert.assertEquals(timetable1.mTimetableId, timetable.mTimetableId)
-        Assert.assertEquals(timetable1.mTimetableName, timetable.mTimetableName)
-        Assert.assertEquals(timetable1.mTimetableTime, timetable.mTimetableTime)
-        Assert.assertEquals(timetable1.mTimetableDisplayOrder, timetable.mTimetableDisplayOrder)
+        assertEquals(timetable1.mTimetableId, timetable.mTimetableId)
+        assertEquals(timetable1.mTimetableName, timetable.mTimetableName)
+        assertEquals(timetable1.mTimetableTime, timetable.mTimetableTime)
+        assertEquals(timetable1.mTimetableDisplayOrder, timetable.mTimetableDisplayOrder)
 
         timetable = timetableRepository.findById(timetable2.mTimetableId)!!
-        Assert.assertEquals(timetable2.mTimetableId, timetable.mTimetableId)
-        Assert.assertEquals(timetable2.mTimetableName, timetable.mTimetableName)
-        Assert.assertEquals(timetable2.mTimetableTime, timetable.mTimetableTime)
-        Assert.assertEquals(timetable2.mTimetableDisplayOrder, timetable.mTimetableDisplayOrder)
+        assertEquals(timetable2.mTimetableId, timetable.mTimetableId)
+        assertEquals(timetable2.mTimetableName, timetable.mTimetableName)
+        assertEquals(timetable2.mTimetableTime, timetable.mTimetableTime)
+        assertEquals(timetable2.mTimetableDisplayOrder, timetable.mTimetableDisplayOrder)
 
         // findById - not exists
-        Assert.assertNull(timetableRepository.findById(TimetableIdType("unknown id")))
+        assertNull(timetableRepository.findById(TimetableIdType("unknown id")))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun maxDisplayOrder() {
+        assertEquals(12L, timetableRepository.maxDisplayOrder())
+
+        // insert
+        val insertData = Timetable(
+                mTimetableId = TimetableIdType(),
+                mTimetableName = TimetableNameType("服用時間名-1"),
+                mTimetableTime = TimetableTimeType(15, 0),
+                mTimetableDisplayOrder = TimetableDisplayOrderType(20L)
+        )
+        timetableRepository.insert(insertData)
+
+        assertEquals(20L, timetableRepository.maxDisplayOrder())
     }
 }

@@ -11,6 +11,9 @@ interface SqliteMedicineUnitRepository {
     @Query("select * from medicine_unit where medicine_unit_id = :medicineUnitId")
     fun findById(medicineUnitId: String): SqliteMedicineUnit?
 
+    @Query("select max(medicine_unit_display_order) from medicine_unit")
+    fun maxDisplayOrder(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteMedicineUnit: SqliteMedicineUnit)
 

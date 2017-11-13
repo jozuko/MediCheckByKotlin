@@ -8,6 +8,7 @@ import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineUnit
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -83,6 +84,24 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
         // delete
         val deleteMedicineEntity = insertMedicineUnit.copy()
         dao.delete(setSqliteMedicineUnit(deleteMedicineEntity))
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun maxDisplayOrder() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.medicineUnitDao()
+
+        assertEquals(1L, dao.maxDisplayOrder())
+
+        // insert
+        val insertMedicineUnit = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("12345678"),
+                mMedicineUnitValue = MedicineUnitValueType("錠"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
+        dao.insert(setSqliteMedicineUnit(insertMedicineUnit))
+
+        assertEquals(3L, dao.maxDisplayOrder())
     }
 
     private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =

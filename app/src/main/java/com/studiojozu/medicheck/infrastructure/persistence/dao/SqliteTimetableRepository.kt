@@ -12,6 +12,9 @@ interface SqliteTimetableRepository {
     @Query("select * from timetable where timetable_id=:timetableId")
     fun findById(timetableId: String): SqliteTimetable?
 
+    @Query("select max(timetable_display_order) from timetable")
+    fun maxDisplayOrder(): Long
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteTimetable: SqliteTimetable)
 

@@ -172,6 +172,26 @@ class SqliteTimetableRepositoryTest : ATestParent() {
         assertNull(dao.findById("unknown id"))
     }
 
+    @Test
+    @Throws(Exception::class)
+    fun maxDisplayOrder() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.timetableDao()
+
+        assertEquals(12L, dao.maxDisplayOrder())
+
+        // insert
+        val insertData = setSqliteTimetable(Timetable(
+                mTimetableId = TimetableIdType(),
+                mTimetableName = TimetableNameType("服用時間名-1"),
+                mTimetableTime = TimetableTimeType(15, 0),
+                mTimetableDisplayOrder = TimetableDisplayOrderType(20)
+        ))
+        dao.insert(insertData)
+
+        assertEquals(20L, dao.maxDisplayOrder())
+    }
+
     private fun setSqliteTimetable(entity: Timetable) =
             SqliteTimetable.build { mTimetable = entity }
 }

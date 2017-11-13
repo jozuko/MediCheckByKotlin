@@ -15,6 +15,9 @@ class MedicineUnitRepository(private val sqliteMedicineUnitRepository: SqliteMed
         return sqliteMedicineUnit.toMedicineUnit()
     }
 
+    fun maxDisplayOrder() =
+            sqliteMedicineUnitRepository.maxDisplayOrder()
+
     fun insert(medicineUnit: MedicineUnit) =
             sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
 

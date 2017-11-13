@@ -7,6 +7,7 @@ import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitIdType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitValueType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -84,6 +85,21 @@ class MedicineUnitRepositoryTest : ATestParent() {
         // delete
         val deleteMedicineEntity = insertMedicineUnit.copy()
         medicineUnitRepository.delete(deleteMedicineEntity)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun maxDisplayOrder() {
+        assertEquals(1L, medicineUnitRepository.maxDisplayOrder())
+
+        // insert
+        val insertMedicineUnit = MedicineUnit(
+                mMedicineUnitId = MedicineUnitIdType("12345678"),
+                mMedicineUnitValue = MedicineUnitValueType("錠"),
+                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
+        medicineUnitRepository.insert(insertMedicineUnit)
+
+        assertEquals(3L, medicineUnitRepository.maxDisplayOrder())
     }
 
     private fun assert(expect: MedicineUnit, actual: MedicineUnit) {
