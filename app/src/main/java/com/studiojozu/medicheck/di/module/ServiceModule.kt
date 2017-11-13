@@ -1,6 +1,7 @@
 package com.studiojozu.medicheck.di.module
 
 import android.app.Application
+import com.studiojozu.medicheck.application.AlarmScheduleService
 import com.studiojozu.medicheck.application.MedicineFinderService
 import com.studiojozu.medicheck.di.MediCheckApplication
 import dagger.Module
@@ -14,4 +15,10 @@ class ServiceModule {
     @Provides
     fun providerMedicineFinderService(application: Application) =
             MedicineFinderService(application as MediCheckApplication)
+
+    @Singleton
+    @Provides
+    fun providerAlarmScheduleService(application: Application) =
+            AlarmScheduleService(application as MediCheckApplication)
+
 }

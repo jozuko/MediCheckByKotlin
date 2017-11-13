@@ -1,5 +1,6 @@
 package com.studiojozu.medicheck.di
 
+import com.studiojozu.medicheck.application.AlarmScheduleServiceTest
 import com.studiojozu.medicheck.application.MedicineFinderServiceTest
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
@@ -28,4 +29,5 @@ interface AppTestComponent : AppComponent {
     fun inject(personMediRelationRepositoryTest: PersonMediRelationRepositoryTest)
     fun inject(preferencePersonRepositoryTest: PreferencePersonRepositoryTest)
     fun inject(medicineFinderServiceTest: MedicineFinderServiceTest)
+    fun inject(alarmScheduleServiceTest: AlarmScheduleServiceTest)
 }

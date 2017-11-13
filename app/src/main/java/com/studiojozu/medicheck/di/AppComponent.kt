@@ -1,5 +1,6 @@
 package com.studiojozu.medicheck.di
 
+import com.studiojozu.medicheck.application.AlarmScheduleService
 import com.studiojozu.medicheck.application.MedicineFinderService
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
@@ -12,4 +13,5 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(medicineFinderService: MedicineFinderService)
+    fun inject(alarmScheduleService: AlarmScheduleService)
 }
