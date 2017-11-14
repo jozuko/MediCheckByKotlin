@@ -5,7 +5,6 @@ import com.studiojozu.common.domain.model.general.TestTimeType
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -14,7 +13,6 @@ import java.util.*
 @Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
-@PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
 class SettingTest : ATestParent() {
 
     private val mUseReminderProperty = findProperty(Setting::class, "mUseReminder")

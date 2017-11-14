@@ -9,7 +9,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -18,7 +17,6 @@ import java.util.*
 @Suppress("LocalVariableName", "FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
-@PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
 class SqliteScheduleRepositoryTest : ATestParent() {
     private val calendar1 = Calendar.getInstance()
     private val calendar2: Calendar

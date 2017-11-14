@@ -3,7 +3,6 @@ package com.studiojozu.medicheck.domain.model.setting
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import java.util.*
@@ -11,7 +10,6 @@ import java.util.*
 @Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
-@PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
 class TimetableComparatorTest : ATestParent() {
     private val entity1 = Timetable(
             mTimetableId = TimetableIdType("1111"),

@@ -10,7 +10,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -19,7 +18,6 @@ import javax.inject.Inject
 @Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml", application = MediCheckTestApplication::class)
-@PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
 class PersonRepositoryTest : ATestParent() {
 
     @Inject

@@ -4,7 +4,6 @@ import com.studiojozu.medicheck.BuildConfig
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.powermock.core.classloader.annotations.PowerMockIgnore
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowLog
@@ -13,7 +12,6 @@ import android.util.Log as AndroidLog
 @Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(constants = BuildConfig::class)
-@PowerMockIgnore("org.mockito.*", "org.robolectric.*", "android.*")
 class LogTest {
 
     @Test
