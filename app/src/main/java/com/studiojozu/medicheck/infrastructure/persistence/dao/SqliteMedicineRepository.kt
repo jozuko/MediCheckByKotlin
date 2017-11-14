@@ -5,16 +5,29 @@ import android.arch.persistence.room.*
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
 
 @Dao
-interface SqliteMedicineRepository {
+abstract class SqliteMedicineRepository {
     @Query("select * from medicine")
-    fun findAll(): Array<SqliteMedicine>
+    abstract fun findAll(): Array<SqliteMedicine>
 
     @Query("select * from medicine where medicine_id = :medicineId")
-    fun findById(medicineId: String): SqliteMedicine?
+    abstract fun findById(medicineId: String): SqliteMedicine?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(sqliteMedicine: SqliteMedicine)
+    abstract fun insert(sqliteMedicine: SqliteMedicine)
 
     @Delete
-    fun delete(sqliteMedicine: SqliteMedicine)
+    abstract fun delete(sqliteMedicine: SqliteMedicine)
+
+    @Transaction
+    open fun deleteMedicine(sqliteMedicine: SqliteMedicine,
+                            sqlitePersonMediRelationRepository: SqlitePersonMediRelationRepository,
+                            sqliteMediTimeRelationRepository: SqliteMediTimeRelationRepository,
+                            sqliteScheduleRepository: SqliteScheduleRepository) {
+        val medicineId = sqliteMedicine.mMedicineId.dbValue
+
+        delete(sqliteMedicine)
+        sqlitePersonMediRelationRepository.deleteByMedicineId(medicineId)
+        sqliteMediTimeRelationRepository.deleteByMedicineId(medicineId)
+        sqliteScheduleRepository.deleteAllByMedicineId(medicineId)
+    }
 }

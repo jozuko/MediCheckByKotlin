@@ -2,15 +2,16 @@ package com.studiojozu.medicheck.domain.model.medicine.repository
 
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
-import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineMedicineUnitRepository
-import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineRepository
-import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineUnitRepository
+import com.studiojozu.medicheck.infrastructure.persistence.dao.*
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineUnit
 
 class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicineRepository,
                              private val sqliteMedicineUnitRepository: SqliteMedicineUnitRepository,
-                             private val sqliteMedicineMedicineUnitRepository: SqliteMedicineMedicineUnitRepository) {
+                             private val sqliteMedicineMedicineUnitRepository: SqliteMedicineMedicineUnitRepository,
+                             private val sqlitePersonMediRelationRepository: SqlitePersonMediRelationRepository,
+                             private val sqliteMediTimeRelationRepository: SqliteMediTimeRelationRepository,
+                             private val sqliteScheduleRepository: SqliteScheduleRepository) {
 
     fun findAllNoTimetable(): List<Medicine> =
             sqliteMedicineMedicineUnitRepository.findAll().map { it.toMedicine() }
@@ -26,5 +27,9 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
     }
 
     fun delete(medicine: Medicine) =
-            sqliteMedicineRepository.delete(SqliteMedicine.build { mMedicine = medicine })
+            sqliteMedicineRepository.deleteMedicine(
+                    sqliteMedicine = SqliteMedicine.build { mMedicine = medicine },
+                    sqlitePersonMediRelationRepository = sqlitePersonMediRelationRepository,
+                    sqliteMediTimeRelationRepository = sqliteMediTimeRelationRepository,
+                    sqliteScheduleRepository = sqliteScheduleRepository)
 }

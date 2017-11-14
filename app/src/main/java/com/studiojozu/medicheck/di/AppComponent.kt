@@ -1,6 +1,7 @@
 package com.studiojozu.medicheck.di
 
 import com.studiojozu.medicheck.application.AlarmScheduleService
+import com.studiojozu.medicheck.application.MedicineDeleteService
 import com.studiojozu.medicheck.application.MedicineFinderService
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
@@ -18,4 +19,5 @@ interface AppComponent {
     fun inject(medicineFinderService: MedicineFinderService)
     fun inject(alarmScheduleService: AlarmScheduleService)
     fun inject(medicineAlarm: MedicineAlarm)
+    fun inject(medicineDeleteService: MedicineDeleteService)
 }

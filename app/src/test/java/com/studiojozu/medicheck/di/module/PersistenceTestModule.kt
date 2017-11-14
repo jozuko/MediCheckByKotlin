@@ -13,7 +13,6 @@ import com.studiojozu.medicheck.domain.model.setting.repository.TimetableReposit
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.preference.PreferencePersonRepository
 
-@Suppress("UnUsed")
 class PersistenceTestModule : PersistenceModule() {
 
     @Suppress("MemberVisibilityCanPrivate")
