@@ -1,6 +1,7 @@
 package com.studiojozu.medicheck.di
 
 import com.studiojozu.medicheck.application.AlarmScheduleServiceTest
+import com.studiojozu.medicheck.application.AlarmServiceTest
 import com.studiojozu.medicheck.application.MedicineFinderServiceTest
 import com.studiojozu.medicheck.di.module.ApplicationModule
 import com.studiojozu.medicheck.di.module.PersistenceModule
@@ -14,6 +15,7 @@ import com.studiojozu.medicheck.domain.model.schedule.repository.ScheduleReposit
 import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepositoryTest
 import com.studiojozu.medicheck.domain.model.setting.repository.TimetableRepositoryTest
 import com.studiojozu.medicheck.infrastructure.persistence.preference.PreferencePersonRepositoryTest
+import com.studiojozu.medicheck.resource.alarm.MedicineAlarmTest
 import javax.inject.Singleton
 
 @Singleton
@@ -30,4 +32,6 @@ interface AppTestComponent : AppComponent {
     fun inject(preferencePersonRepositoryTest: PreferencePersonRepositoryTest)
     fun inject(medicineFinderServiceTest: MedicineFinderServiceTest)
     fun inject(alarmScheduleServiceTest: AlarmScheduleServiceTest)
+    fun inject(alarmServiceTest: AlarmServiceTest)
+    fun inject(medicineAlarmTest: MedicineAlarmTest)
 }

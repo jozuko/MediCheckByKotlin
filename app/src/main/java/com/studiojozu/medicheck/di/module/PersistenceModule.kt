@@ -18,60 +18,60 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PersistenceModule {
+open class PersistenceModule {
 
     @Singleton
     @Provides
-    fun provideSharedPreferences(application: Application): SharedPreferences =
+    open fun provideSharedPreferences(application: Application): SharedPreferences =
             application.getSharedPreferences("medicheck", Context.MODE_PRIVATE)
 
     @Singleton
     @Provides
-    fun providePersonPreference(sharedPreferences: SharedPreferences): PreferencePersonRepository =
+    open fun providePersonPreference(sharedPreferences: SharedPreferences): PreferencePersonRepository =
             PreferencePersonRepository(sharedPreferences)
 
     @Singleton
     @Provides
-    fun provideDatabase(application: Application): AppDatabase =
+    open fun provideDatabase(application: Application): AppDatabase =
             AppDatabase.getAppDatabase(application)
 
     @Singleton
     @Provides
-    fun provideMedicineViewRepository(database: AppDatabase): MedicineViewRepository =
+    open fun provideMedicineViewRepository(database: AppDatabase): MedicineViewRepository =
             MedicineViewRepository(database.medicineDao(), database.medicineUnitDao(), database.medicineViewDao())
 
     @Singleton
     @Provides
-    fun provideMedicineUnitRepository(database: AppDatabase): MedicineUnitRepository =
+    open fun provideMedicineUnitRepository(database: AppDatabase): MedicineUnitRepository =
             MedicineUnitRepository(database.medicineUnitDao())
 
     @Singleton
     @Provides
-    fun provideTimetableRepository(database: AppDatabase): TimetableRepository =
+    open fun provideTimetableRepository(database: AppDatabase): TimetableRepository =
             TimetableRepository(database.timetableDao())
 
     @Singleton
     @Provides
-    fun providePersonRepository(database: AppDatabase): PersonRepository =
+    open fun providePersonRepository(database: AppDatabase): PersonRepository =
             PersonRepository(database.personDao())
 
     @Singleton
     @Provides
-    fun provideScheduleRepository(database: AppDatabase): ScheduleRepository =
+    open fun provideScheduleRepository(database: AppDatabase): ScheduleRepository =
             ScheduleRepository(database.scheduleDao())
 
     @Singleton
     @Provides
-    fun provideSettingRepository(database: AppDatabase): SettingRepository =
+    open fun provideSettingRepository(database: AppDatabase): SettingRepository =
             SettingRepository(database.settingDao())
 
     @Singleton
     @Provides
-    fun provideMediTimeRelationRepository(database: AppDatabase): MediTimeRelationRepository =
+    open fun provideMediTimeRelationRepository(database: AppDatabase): MediTimeRelationRepository =
             MediTimeRelationRepository(database.mediTimeRelationDao())
 
     @Singleton
     @Provides
-    fun providePersonMediRelationRepository(database: AppDatabase): PersonMediRelationRepository =
+    open fun providePersonMediRelationRepository(database: AppDatabase): PersonMediRelationRepository =
             PersonMediRelationRepository(database.personMediRelationDao())
 }

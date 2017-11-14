@@ -17,9 +17,13 @@ open class MediCheckApplication : Application() {
 
     open fun initComponent() {
         mComponent = DaggerAppComponent.builder()
-                .applicationModule(ApplicationModule(this))
-                .persistenceModule(PersistenceModule())
-                .serviceModule(ServiceModule())
+                .applicationModule(getApplicationModule())
+                .persistenceModule(getPersistenceModule())
+                .serviceModule(getServiceModule())
                 .build()
     }
+
+    open fun getApplicationModule() = ApplicationModule(this)
+    open fun getPersistenceModule() = PersistenceModule()
+    open fun getServiceModule() = ServiceModule()
 }
