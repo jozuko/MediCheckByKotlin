@@ -70,4 +70,8 @@
     <string name="calendar_sat">sta</string>
 
     <string name="medicine_unit_1">shot</string>
+
+    <string name="setting_item_title_use_reminder">Use reminder</string>
+    <string name="setting_item_title_reminder_interval">Reminder interval</string>
+    <string name="setting_item_title_reminder_timeout">Reminder timeout</string>
 </resources>

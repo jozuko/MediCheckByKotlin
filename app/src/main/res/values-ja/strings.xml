@@ -70,4 +70,8 @@
     <string name="calendar_sat">土</string>
 
     <string name="medicine_unit_1">つ</string>
+
+    <string name="setting_item_title_use_reminder">繰り返し通知する</string>
+    <string name="setting_item_title_reminder_interval">繰り返し通知の間隔</string>
+    <string name="setting_item_title_reminder_timeout">繰り返し通知の終了時間</string>
 </resources>
