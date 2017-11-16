@@ -32,6 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".resource.activity.SettingActivity"
+            android:icon="@mipmap/ic_setting"
+            android:label="@string/button_setting">
+        </activity>
     </application>
 
 </manifest>

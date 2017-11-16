@@ -3,13 +3,12 @@ package com.studiojozu.medicheck.resource.custom
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.OnClick
+import butterknife.Unbinder
 import com.studiojozu.medicheck.R
 
 /**
@@ -17,7 +16,9 @@ import com.studiojozu.medicheck.R
  */
 class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomView<DescriptionButtonView>(context, attrs) {
 
-    private var mClientClickListener: View.OnClickListener? = null
+    private var mClientClickListener: OnClickListener? = null
+
+    private var mUnBinder: Unbinder = ButterKnife.bind(this, currentView)
 
     @BindView(R.id.description_button_layout)
     lateinit var layoutGroup: RelativeLayout
@@ -32,8 +33,6 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
     lateinit var messageInstance: TextView
 
     init {
-        ButterKnife.bind(this)
-
         val styledAttributes = getStyledAttributes(attrs)
         try {
             setButtonText(styledAttributes)
@@ -41,6 +40,12 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
             setDescriptionText(styledAttributes)
         } finally {
             styledAttributes?.recycle()
+        }
+
+        // ButterKnifeでonClickをbindすると、同時に2つのViewが発火したと判定されて、
+        // 結果、発火しないことになるので、自力で作成する
+        layoutGroup.setOnClickListener {
+            mClientClickListener?.onClick(this)
         }
     }
 
@@ -63,12 +68,12 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
 
     override fun styleableResources(): IntArray? = R.styleable.description_button_view
 
-    override fun setOnClickListener(listener: View.OnClickListener?) {
-        mClientClickListener = listener
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        mUnBinder.unbind()
     }
 
-    @OnClick(R.id.description_button_layout)
-    fun onClickLayoutGroup() {
-        mClientClickListener?.onClick(this)
+    override fun setOnClickListener(listener: OnClickListener?) {
+        mClientClickListener = listener
     }
 }
