@@ -2,9 +2,7 @@ package com.studiojozu.medicheck.application
 
 import com.studiojozu.common.domain.model.CalendarNoSecond
 import com.studiojozu.medicheck.di.MediCheckTestApplication
-import com.studiojozu.medicheck.di.module.PersistenceTestModule
 import com.studiojozu.medicheck.domain.model.medicine.*
-import com.studiojozu.medicheck.domain.model.medicine.repository.MedicineViewRepository
 import com.studiojozu.medicheck.domain.model.person.Person
 import com.studiojozu.medicheck.domain.model.person.PersonDisplayOrderType
 import com.studiojozu.medicheck.domain.model.person.PersonIdType
@@ -14,16 +12,13 @@ import com.studiojozu.medicheck.domain.model.schedule.ScheduleIsTakeType
 import com.studiojozu.medicheck.domain.model.schedule.ScheduleNeedAlarmType
 import com.studiojozu.medicheck.domain.model.schedule.SchedulePlanDateType
 import com.studiojozu.medicheck.domain.model.setting.*
-import com.studiojozu.medicheck.infrastructure.persistence.dao.SqlitePersonMediRelationRepository
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.*
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -209,21 +204,7 @@ class MedicineDeleteServiceTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun deleteMedicineRollback() {
-        // create mock
-        val application = RuntimeEnvironment.application as MediCheckTestApplication
-        val persistenceModule = PersistenceTestModule()
-        val sqlitePersonMediRelationRepositoryMock = Mockito.mock(SqlitePersonMediRelationRepository::class.java)
-        Mockito.`when`(sqlitePersonMediRelationRepositoryMock.deleteByMedicineId(medicine1.mMedicineId.dbValue)).thenThrow(RuntimeException("error!!"))
-        persistenceModule.mMedicineViewRepository = MedicineViewRepository(
-                sqliteMedicineRepository = database.medicineDao(),
-                sqliteMedicineUnitRepository = database.medicineUnitDao(),
-                sqliteMedicineMedicineUnitRepository = database.medicineViewDao(),
-                sqlitePersonMediRelationRepository = sqlitePersonMediRelationRepositoryMock,
-                sqliteMediTimeRelationRepository = database.mediTimeRelationDao(),
-                sqliteScheduleRepository = database.scheduleDao())
-        application.mPersistenceModule = persistenceModule
-
+    fun deleteMedicine() {
         // before method call
         assertEquals(2, database.medicineDao().findAll().size)
         assertEquals(2, database.medicineUnitDao().findAll().size)
@@ -234,38 +215,7 @@ class MedicineDeleteServiceTest : ATestParent() {
         assertEquals(4, database.scheduleDao().findAll().size)
 
         // call target method
-        try {
-            val medicineDeleteService = MedicineDeleteService(application)
-            medicineDeleteService.deleteMedicine(medicine1.mMedicineId)
-            fail("don't work exception mock...")
-        } catch (exception: Exception) {
-            assertEquals("error!!", exception.message)
-        }
-
-        // after method call
-        assertEquals(2, database.medicineDao().findAll().size)
-        assertEquals(2, database.medicineUnitDao().findAll().size)
-        assertEquals(2, database.personDao().findAll().size)
-        assertEquals(2, database.personMediRelationDao().findAll().size)
-        assertEquals(15, database.timetableDao().findAll().size)
-        assertEquals(4, database.mediTimeRelationDao().findAll().size)
-        assertEquals(4, database.scheduleDao().findAll().size)
-    }
-
-    @Test
-    @Throws(Exception::class)
-    fun deleteMedicineCommit() {
-        // before method call
-        assertEquals(2, database.medicineDao().findAll().size)
-        assertEquals(2, database.medicineUnitDao().findAll().size)
-        assertEquals(2, database.personDao().findAll().size)
-        assertEquals(2, database.personMediRelationDao().findAll().size)
-        assertEquals(15, database.timetableDao().findAll().size)
-        assertEquals(4, database.mediTimeRelationDao().findAll().size)
-        assertEquals(4, database.scheduleDao().findAll().size)
-
-        // call target method
-        medicineDeleteService.deleteMedicine(medicine1.mMedicineId)
+        medicineDeleteService.deleteMedicine(medicine1)
 
         // after method call
         assertEquals(1, database.medicineDao().findAll().size)

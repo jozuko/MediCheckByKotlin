@@ -8,6 +8,9 @@ interface SqliteScheduleRepository {
     @Query("select * from schedule")
     fun findAll(): Array<SqliteSchedule>
 
+    @Query("select * from schedule where medicine_id=:medicineId")
+    fun findByMedicineId(medicineId: String): Array<SqliteSchedule>
+
     @Query("select * from schedule where schedule_need_alarm=1 and schedule_is_take=0")
     fun findAlarmAll(): Array<SqliteSchedule>
 

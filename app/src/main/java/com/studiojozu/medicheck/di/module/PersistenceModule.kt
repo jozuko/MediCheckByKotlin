@@ -41,10 +41,7 @@ open class PersistenceModule {
             MedicineViewRepository(
                     sqliteMedicineRepository = database.medicineDao(),
                     sqliteMedicineUnitRepository = database.medicineUnitDao(),
-                    sqliteMedicineMedicineUnitRepository = database.medicineViewDao(),
-                    sqlitePersonMediRelationRepository = database.personMediRelationDao(),
-                    sqliteMediTimeRelationRepository = database.mediTimeRelationDao(),
-                    sqliteScheduleRepository = database.scheduleDao())
+                    sqliteMedicineMedicineUnitRepository = database.medicineViewDao())
 
     @Singleton
     @Provides

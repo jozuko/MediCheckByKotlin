@@ -5,8 +5,7 @@ import com.studiojozu.medicheck.domain.model.schedule.*
 import com.studiojozu.medicheck.domain.model.setting.*
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSchedule
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
+import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
@@ -127,6 +126,40 @@ class SqliteScheduleRepositoryTest : ATestParent() {
         dao.delete(setSqliteSchedule(schedule4))
         schedules = dao.findAll()
         assertEquals(0, schedules.size)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun findByMedicineId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.scheduleDao()
+
+        // insert
+        dao.insert(setSqliteSchedule(schedule6)) // already taken
+        dao.insert(setSqliteSchedule(schedule2)) // deference date
+        dao.insert(setSqliteSchedule(schedule3)) // deference time
+        dao.insert(setSqliteSchedule(schedule4)) // deference id
+
+        // findByMedicineId
+        val sqliteScheduleArray = dao.findByMedicineId(schedule1.mMedicineId.dbValue)
+        assertTrue(sqliteScheduleArray.isNotEmpty())
+        assertEquals(schedule6.mMedicineId, sqliteScheduleArray[0].mMedicineId)
+        assertEquals(schedule6.mTimetableId, sqliteScheduleArray[0].mTimetableId)
+        assertEquals(schedule6.mSchedulePlanDate, sqliteScheduleArray[0].mSchedulePlanDate)
+
+        assertEquals(schedule3.mMedicineId, sqliteScheduleArray[1].mMedicineId)
+        assertEquals(schedule3.mTimetableId, sqliteScheduleArray[1].mTimetableId)
+        assertEquals(schedule3.mSchedulePlanDate, sqliteScheduleArray[1].mSchedulePlanDate)
+
+        assertEquals(schedule2.mMedicineId, sqliteScheduleArray[2].mMedicineId)
+        assertEquals(schedule2.mTimetableId, sqliteScheduleArray[2].mTimetableId)
+        assertEquals(schedule2.mSchedulePlanDate, sqliteScheduleArray[2].mSchedulePlanDate)
+
+        // delete
+        dao.delete(setSqliteSchedule(schedule6))
+        dao.delete(setSqliteSchedule(schedule2))
+        dao.delete(setSqliteSchedule(schedule3))
+        dao.delete(setSqliteSchedule(schedule4))
     }
 
     @Test

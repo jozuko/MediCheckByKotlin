@@ -3,14 +3,15 @@ package com.studiojozu.medicheck.domain.model.medicine.repository
 import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineTimetableList
+import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMediTimeRelationRepository
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
 
 class MediTimeRelationRepository(private var sqliteMediTimeRelationRepository: SqliteMediTimeRelationRepository) {
 
-    fun findTimetableByMedicineId(medicineIdType: MedicineIdType) =
-            sqliteMediTimeRelationRepository.findTimetableByMedicineId(medicineId = medicineIdType.dbValue).map { it.toTimetable() }
+    fun findTimetableByMedicineId(medicineIdType: MedicineIdType): Array<Timetable> =
+            sqliteMediTimeRelationRepository.findTimetableByMedicineId(medicineId = medicineIdType.dbValue).map { it.toTimetable() }.toTypedArray()
 
     fun deleteByMedicineId(medicineIdType: MedicineIdType) =
             sqliteMediTimeRelationRepository.deleteByMedicineId(medicineId = medicineIdType.dbValue)

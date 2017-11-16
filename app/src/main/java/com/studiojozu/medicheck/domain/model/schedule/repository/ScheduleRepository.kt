@@ -11,6 +11,9 @@ class ScheduleRepository(private val sqliteScheduleRepository: SqliteScheduleRep
     fun findAll() =
             sqliteScheduleRepository.findAll().map { it.toSchedule() }
 
+    fun findByMedicineId(medicineIdType: MedicineIdType): Array<Schedule> =
+            sqliteScheduleRepository.findByMedicineId(medicineIdType.dbValue).map { it.toSchedule() }.toTypedArray()
+
     fun findAlarmAll(): List<Schedule> =
             sqliteScheduleRepository.findAlarmAll().map { it.toSchedule() }
 

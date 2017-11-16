@@ -1,33 +1,28 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
 import android.arch.persistence.room.*
-
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqlitePersonMediRelation
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSchedule
 
 @Dao
-abstract class SqliteMedicineRepository {
+interface SqliteMedicineRepository {
     @Query("select * from medicine")
-    abstract fun findAll(): Array<SqliteMedicine>
+    fun findAll(): Array<SqliteMedicine>
 
     @Query("select * from medicine where medicine_id = :medicineId")
-    abstract fun findById(medicineId: String): SqliteMedicine?
+    fun findById(medicineId: String): SqliteMedicine?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    abstract fun insert(sqliteMedicine: SqliteMedicine)
+    fun insert(sqliteMedicine: SqliteMedicine)
 
     @Delete
-    abstract fun delete(sqliteMedicine: SqliteMedicine)
+    fun delete(sqliteMedicine: SqliteMedicine)
 
-    @Transaction
-    open fun deleteMedicine(sqliteMedicine: SqliteMedicine,
-                            sqlitePersonMediRelationRepository: SqlitePersonMediRelationRepository,
-                            sqliteMediTimeRelationRepository: SqliteMediTimeRelationRepository,
-                            sqliteScheduleRepository: SqliteScheduleRepository) {
-        val medicineId = sqliteMedicine.mMedicineId.dbValue
-
-        delete(sqliteMedicine)
-        sqlitePersonMediRelationRepository.deleteByMedicineId(medicineId)
-        sqliteMediTimeRelationRepository.deleteByMedicineId(medicineId)
-        sqliteScheduleRepository.deleteAllByMedicineId(medicineId)
-    }
+    @Delete
+    fun deleteMedicine(sqliteMedicine: SqliteMedicine,
+                       sqlitePersonMediRelation: Array<SqlitePersonMediRelation> = emptyArray(),
+                       sqliteMediTimeRelationArray: Array<SqliteMediTimeRelation> = emptyArray(),
+                       sqliteScheduleArray: Array<SqliteSchedule> = emptyArray())
 }

@@ -4,6 +4,7 @@ import com.studiojozu.medicheck.di.MediCheckTestApplication
 import com.studiojozu.medicheck.domain.model.medicine.*
 import com.studiojozu.medicheck.domain.model.schedule.*
 import com.studiojozu.medicheck.domain.model.setting.*
+import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -299,6 +300,37 @@ class ScheduleRepositoryTest : ATestParent() {
 
         // delete
         scheduleRepository.deleteAllByMedicineId(schedule1.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    fun findByMedicineId() {
+        // insert
+        scheduleRepository.insert(schedule6) // already taken
+        scheduleRepository.insert(schedule2) // deference date
+        scheduleRepository.insert(schedule3) // deference time
+        scheduleRepository.insert(schedule4) // deference id
+
+        // findByMedicineId
+        val scheduleArray = scheduleRepository.findByMedicineId(schedule1.mMedicineId)
+        Assert.assertTrue(scheduleArray.isNotEmpty())
+        assertEquals(schedule6.mMedicineId, scheduleArray[0].mMedicineId)
+        assertEquals(schedule6.mTimetableId, scheduleArray[0].mTimetableId)
+        assertEquals(schedule6.mSchedulePlanDate, scheduleArray[0].mSchedulePlanDate)
+
+        assertEquals(schedule3.mMedicineId, scheduleArray[1].mMedicineId)
+        assertEquals(schedule3.mTimetableId, scheduleArray[1].mTimetableId)
+        assertEquals(schedule3.mSchedulePlanDate, scheduleArray[1].mSchedulePlanDate)
+
+        assertEquals(schedule2.mMedicineId, scheduleArray[2].mMedicineId)
+        assertEquals(schedule2.mTimetableId, scheduleArray[2].mTimetableId)
+        assertEquals(schedule2.mSchedulePlanDate, scheduleArray[2].mSchedulePlanDate)
+
+        // delete
+        scheduleRepository.deleteAllByMedicineId(schedule6.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule2.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule3.mMedicineId)
         scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
     }
 
