@@ -8,11 +8,9 @@ import com.studiojozu.medicheck.domain.model.schedule.Schedule
 import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineMedicineUnitRepository
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineRepository
-import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMedicineUnitRepository
 import com.studiojozu.medicheck.infrastructure.persistence.entity.*
 
 class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicineRepository,
-                             private val sqliteMedicineUnitRepository: SqliteMedicineUnitRepository,
                              private val sqliteMedicineMedicineUnitRepository: SqliteMedicineMedicineUnitRepository) {
 
     fun findAllNoTimetable(): List<Medicine> =
@@ -23,9 +21,22 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
         return sqliteMedicine.toMedicine()
     }
 
-    fun insert(medicine: Medicine) {
-        sqliteMedicineRepository.insert(sqliteMedicine = SqliteMedicine.build { mMedicine = medicine })
-        sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicine.mMedicineUnit })
+    fun insert(medicine: Medicine,
+               person: Person? = null,
+               timetableArray: Array<Timetable> = emptyArray(),
+               scheduleArray: Array<Schedule> = emptyArray()) {
+
+        val sqliteMedicine = toSqliteMedicine(medicine)
+        val sqliteMedicineUnit = toSqliteMedicineUnit(medicine)
+        val sqlitePersonMediRelationArray = toSqlitePersonMediRelationArray(medicine, person)
+        val sqliteMediTimeRelationArray = toSqliteMediTimeRelationArray(medicine, timetableArray)
+        val sqliteScheduleArray = toSqliteScheduleArray(scheduleArray)
+
+        sqliteMedicineRepository.insertMedicine(sqliteMedicine,
+                sqliteMedicineUnit,
+                sqlitePersonMediRelationArray,
+                sqliteMediTimeRelationArray,
+                sqliteScheduleArray)
     }
 
     fun delete(medicine: Medicine,
@@ -33,29 +44,43 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
                timetableArray: Array<Timetable> = emptyArray(),
                scheduleArray: Array<Schedule> = emptyArray()) {
 
-        val sqliteMedicine = SqliteMedicine.build { mMedicine = medicine }
-
-        val sqlitePersonMediRelation = person?.let {
-            arrayOf(SqlitePersonMediRelation.build {
-                mMedicineId = medicine.mMedicineId
-                mPersonId = person.mPersonId
-            })
-        }
-
-        val sqliteMediTimeRelationArray = timetableArray.map {
-            SqliteMediTimeRelation.build {
-                mMedicineId = medicine.mMedicineId
-                mTimetableId = it.mTimetableId
-                mIsOneShot = IsOneShotType(false)
-            }
-        }
-
-        val sqliteScheduleArray = scheduleArray.map { SqliteSchedule.build { mSchedule = it } }
+        val sqliteMedicine = toSqliteMedicine(medicine)
+        val sqlitePersonMediRelationArray = toSqlitePersonMediRelationArray(medicine, person)
+        val sqliteMediTimeRelationArray = toSqliteMediTimeRelationArray(medicine, timetableArray)
+        val sqliteScheduleArray = toSqliteScheduleArray(scheduleArray)
 
         sqliteMedicineRepository.deleteMedicine(
                 sqliteMedicine,
-                sqlitePersonMediRelation ?: emptyArray(),
-                sqliteMediTimeRelationArray.toTypedArray(),
-                sqliteScheduleArray.toTypedArray())
+                sqlitePersonMediRelationArray,
+                sqliteMediTimeRelationArray,
+                sqliteScheduleArray)
     }
+
+    private fun toSqliteMedicine(medicine: Medicine) =
+            SqliteMedicine.build { mMedicine = medicine }
+
+    private fun toSqliteMedicineUnit(medicine: Medicine) =
+            SqliteMedicineUnit.build { mMedicineUnit = medicine.mMedicineUnit }
+
+    private fun toSqlitePersonMediRelationArray(medicine: Medicine, person: Person?): Array<SqlitePersonMediRelation> {
+        person ?: return emptyArray()
+
+        return arrayOf(SqlitePersonMediRelation.build {
+            mMedicineId = medicine.mMedicineId
+            mPersonId = person.mPersonId
+        })
+    }
+
+    private fun toSqliteMediTimeRelationArray(medicine: Medicine, timetableArray: Array<Timetable>): Array<SqliteMediTimeRelation> =
+            timetableArray.map {
+                SqliteMediTimeRelation.build {
+                    mMedicineId = medicine.mMedicineId
+                    mTimetableId = it.mTimetableId
+                    mIsOneShot = IsOneShotType(false)
+                }
+            }.toTypedArray()
+
+    private fun toSqliteScheduleArray(scheduleArray: Array<Schedule>): Array<SqliteSchedule> =
+            scheduleArray.map { SqliteSchedule.build { mSchedule = it } }.toTypedArray()
+
 }

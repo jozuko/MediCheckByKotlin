@@ -40,7 +40,6 @@ open class PersistenceModule {
     open fun provideMedicineViewRepository(database: AppDatabase): MedicineViewRepository =
             MedicineViewRepository(
                     sqliteMedicineRepository = database.medicineDao(),
-                    sqliteMedicineUnitRepository = database.medicineUnitDao(),
                     sqliteMedicineMedicineUnitRepository = database.medicineViewDao())
 
     @Singleton

@@ -1,10 +1,7 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
 import android.arch.persistence.room.*
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqlitePersonMediRelation
-import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSchedule
+import com.studiojozu.medicheck.infrastructure.persistence.entity.*
 
 @Dao
 interface SqliteMedicineRepository {
@@ -17,12 +14,19 @@ interface SqliteMedicineRepository {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteMedicine: SqliteMedicine)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMedicine(sqliteMedicine: SqliteMedicine,
+                       sqliteMedicineUnit: SqliteMedicineUnit,
+                       sqlitePersonMediRelationArray: Array<SqlitePersonMediRelation> = emptyArray(),
+                       sqliteMediTimeRelationArray: Array<SqliteMediTimeRelation> = emptyArray(),
+                       sqliteScheduleArray: Array<SqliteSchedule> = emptyArray())
+
     @Delete
     fun delete(sqliteMedicine: SqliteMedicine)
 
     @Delete
     fun deleteMedicine(sqliteMedicine: SqliteMedicine,
-                       sqlitePersonMediRelation: Array<SqlitePersonMediRelation> = emptyArray(),
+                       sqlitePersonMediRelationArray: Array<SqlitePersonMediRelation> = emptyArray(),
                        sqliteMediTimeRelationArray: Array<SqliteMediTimeRelation> = emptyArray(),
                        sqliteScheduleArray: Array<SqliteSchedule> = emptyArray())
 }

@@ -1,11 +1,9 @@
 package com.studiojozu.medicheck.di.module
 
 import android.app.Application
-import com.studiojozu.medicheck.application.AlarmScheduleService
-import com.studiojozu.medicheck.application.AlarmService
-import com.studiojozu.medicheck.application.MedicineDeleteService
-import com.studiojozu.medicheck.application.MedicineFinderService
+import com.studiojozu.medicheck.application.*
 import com.studiojozu.medicheck.di.MediCheckApplication
+import com.studiojozu.medicheck.domain.model.schedule.ScheduleService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -25,6 +23,11 @@ open class ServiceModule {
 
     @Singleton
     @Provides
+    open fun providerMedicineRegisterService(application: Application) =
+            MedicineRegisterService(application as MediCheckApplication)
+
+    @Singleton
+    @Provides
     open fun providerAlarmScheduleService(application: Application) =
             AlarmScheduleService(application as MediCheckApplication)
 
@@ -32,5 +35,10 @@ open class ServiceModule {
     @Provides
     open fun providerAlarmService(application: Application) =
             AlarmService(application as MediCheckApplication)
+
+    @Singleton
+    @Provides
+    open fun providerScheduleService() =
+            ScheduleService()
 
 }
