@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              style="@style/StandardViewStyle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:theme="@style/AppTheme">
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_today_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_description_today_medicine"
+        custom:drawableLeft="@mipmap/ic_take_person"
+        custom:text="@string/button_today_medicine"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_register_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_description_register_medicine"
+        custom:drawableLeft="@mipmap/ic_register_medicine"
+        custom:text="@string/button_register_medicine"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_history_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_description_history_medicine"
+        custom:drawableLeft="@mipmap/ic_history_medicine"
+        custom:text="@string/button_history_medicine"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_list_medicine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_description_list_medicine"
+        custom:drawableLeft="@mipmap/ic_list_medicine"
+        custom:text="@string/button_list_medicine"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_description_setting"
+        custom:drawableLeft="@mipmap/ic_setting"
+        custom:text="@string/button_setting"/>
+
+</LinearLayout>
