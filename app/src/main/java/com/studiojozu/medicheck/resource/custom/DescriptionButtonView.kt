@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
-
 import com.studiojozu.medicheck.R
 
 /**
@@ -21,7 +20,7 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
     private var mClientClickListener: View.OnClickListener? = null
 
     @BindView(R.id.description_button_layout)
-    lateinit var layoutGroup: ViewGroup
+    lateinit var layoutGroup: RelativeLayout
 
     @BindView(R.id.description_button_icon)
     lateinit var iconInstance: ImageView
@@ -33,6 +32,8 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
     lateinit var messageInstance: TextView
 
     init {
+        ButterKnife.bind(this)
+
         val styledAttributes = getStyledAttributes(attrs)
         try {
             setButtonText(styledAttributes)
@@ -41,7 +42,6 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
         } finally {
             styledAttributes?.recycle()
         }
-        ButterKnife.bind(this)
     }
 
     private fun setButtonText(styledAttributes: TypedArray?) {
