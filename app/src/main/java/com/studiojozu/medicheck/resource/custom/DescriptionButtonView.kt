@@ -7,30 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
 
 import com.studiojozu.medicheck.R
 
 /**
  * 説明文がついたボタンView
  */
-class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomView<DescriptionButtonView>(context, attrs), View.OnClickListener {
+class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomView<DescriptionButtonView>(context, attrs) {
 
     private var mClientClickListener: View.OnClickListener? = null
 
-    private val layoutGroup: ViewGroup
-        get() = currentView.findViewById<View>(R.id.description_button_layout) as ViewGroup
+    @BindView(R.id.description_button_layout)
+    lateinit var layoutGroup: ViewGroup
 
-    private val iconInstance: ImageView
-        get() = currentView.findViewById<View>(R.id.description_button_icon) as ImageView
+    @BindView(R.id.description_button_icon)
+    lateinit var iconInstance: ImageView
 
-    private val textInstance: TextView
-        get() = currentView.findViewById<View>(R.id.description_button_text) as TextView
+    @BindView(R.id.description_button_text)
+    lateinit var textInstance: TextView
 
-    private val messageInstance: TextView
-        get() = currentView.findViewById<View>(R.id.description_button_message) as TextView
+    @BindView(R.id.description_button_message)
+    lateinit var messageInstance: TextView
 
     init {
-
         val styledAttributes = getStyledAttributes(attrs)
         try {
             setButtonText(styledAttributes)
@@ -39,8 +41,22 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
         } finally {
             styledAttributes?.recycle()
         }
+        ButterKnife.bind(this)
+    }
 
-        layoutGroup.setOnClickListener(this)
+    private fun setButtonText(styledAttributes: TypedArray?) {
+        textInstance.text = getAttributeString(styledAttributes, R.styleable.description_button_view_text)
+    }
+
+    private fun setButtonIcon(styledAttributes: TypedArray?) {
+        val drawableLeftResourceId = getAttributeDrawableResourceId(styledAttributes, R.styleable.description_button_view_drawableLeft)
+        if (drawableLeftResourceId == UNKNOWN_RESOURCE_ID) return
+
+        iconInstance.setImageResource(drawableLeftResourceId)
+    }
+
+    private fun setDescriptionText(styledAttributes: TypedArray?) {
+        messageInstance.text = getAttributeString(styledAttributes, R.styleable.description_button_view_description)
     }
 
     override fun layoutResource(): Int = R.layout.description_button
@@ -51,25 +67,8 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
         mClientClickListener = listener
     }
 
-    private fun setButtonText(typedArray: TypedArray?) {
-        val text = getAttributeString(typedArray, R.styleable.description_button_view_text)
-        textInstance.text = text
-    }
-
-    private fun setButtonIcon(typedArray: TypedArray?) {
-        val drawableLeftResourceId = getAttributeDrawableResourceId(typedArray, R.styleable.description_button_view_drawableLeft)
-        if (drawableLeftResourceId == UNKNOWN_RESOURCE_ID) return
-
-        iconInstance.setImageResource(drawableLeftResourceId)
-    }
-
-    private fun setDescriptionText(typedArray: TypedArray?) {
-        val text = getAttributeString(typedArray, R.styleable.description_button_view_description)
-        messageInstance.text = text
-    }
-
-    override fun onClick(view: View) {
-        if (mClientClickListener != null)
-            mClientClickListener!!.onClick(this)
+    @OnClick(R.id.description_button_layout)
+    fun onClickLayoutGroup() {
+        mClientClickListener?.onClick(this)
     }
 }

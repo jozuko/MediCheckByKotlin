@@ -20,15 +20,17 @@ abstract class ACustomView<out T>(private val mContext: Context, attrs: Attribut
     }
 
     private val mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
-    private var mCustomView: T? = null
+    private var mCustomView: T
     private var mActivity: Activity? = null
 
-    @Suppress("UNCHECKED_CAST")
+    init {
+        @Suppress("UNCHECKED_CAST")
+        @Suppress("LeakingThis")
+        mCustomView = mLayoutInflater.inflate(layoutResource(), this)!! as T
+    }
+
     protected val currentView: T
-        get() {
-            mCustomView = mCustomView ?: mLayoutInflater.inflate(layoutResource(), this)!! as T
-            return mCustomView!!
-        }
+        get() = mCustomView
 
     @LayoutRes
     protected abstract fun layoutResource(): Int
@@ -50,8 +52,8 @@ abstract class ACustomView<out T>(private val mContext: Context, attrs: Attribut
             styledAttributes?.getInt(styleableId, RESOURCE_DEFAULT_INTEGER) ?: RESOURCE_DEFAULT_INTEGER
 
     @DrawableRes
-    protected fun getAttributeDrawableResourceId(typedArray: TypedArray?, @StyleableRes styleableId: Int): Int =
-            typedArray?.getResourceId(styleableId, UNKNOWN_RESOURCE_ID) ?: UNKNOWN_RESOURCE_ID
+    protected fun getAttributeDrawableResourceId(styledAttributes: TypedArray?, @StyleableRes styleableId: Int): Int =
+            styledAttributes?.getResourceId(styleableId, UNKNOWN_RESOURCE_ID) ?: UNKNOWN_RESOURCE_ID
 
     fun setParentActivity(parentActivity: Activity) {
         mActivity = parentActivity
