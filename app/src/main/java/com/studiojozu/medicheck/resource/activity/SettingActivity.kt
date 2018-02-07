@@ -1,7 +1,6 @@
 package com.studiojozu.medicheck.resource.activity
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.Spinner
 import android.widget.Switch
 import butterknife.BindView
@@ -11,7 +10,7 @@ import com.studiojozu.medicheck.di.MediCheckApplication
 import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepository
 import javax.inject.Inject
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : ABaseActivity() {
 
     @Inject
     lateinit var mSettingRepository: SettingRepository
