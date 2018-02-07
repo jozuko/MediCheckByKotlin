@@ -58,7 +58,7 @@
     <string name="button_setting_menu_alarm">Alarm Setting</string>
     <string name="button_setting_menu_alarm_description">When you\'d like to start or stop alarm, click.</string>
 
-    <string name="button_menu">menu</string>
+    <string name="button_back">BACK</string>
     <string name="button_previous_day">prev day</string>
     <string name="button_next_day">next day</string>
     <string name="button_calendar">calendar1</string>

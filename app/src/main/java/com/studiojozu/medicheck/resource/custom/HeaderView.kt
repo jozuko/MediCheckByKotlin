@@ -10,14 +10,13 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.studiojozu.medicheck.R
-import com.studiojozu.medicheck.resource.activity.ABaseActivity
 
 class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderView>(context, attrs) {
-    interface OnFinishingListener {
-        fun onFinishing(): Boolean
+    interface OnClickBackListener {
+        fun onClickedHeaderBack()
     }
 
-    private var clientOnFinishingListener: OnFinishingListener? = null
+    private var mClientOnClickBackListener: OnClickBackListener? = null
 
     private var parentActivity: Activity? = null
 
@@ -54,8 +53,8 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderVie
     }
 
     @Suppress("unused")
-    fun setOnFinishingListener(listener: OnFinishingListener?) {
-        clientOnFinishingListener = listener
+    fun setOnClickBackListener(listener: OnClickBackListener?) {
+        mClientOnClickBackListener = listener
     }
 
     fun setParentActivity(activity: Activity) {
@@ -65,11 +64,8 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderVie
     /**
      * 設定ボタン Clickイベント処理
      */
-    @OnClick(R.id.button_menu)
+    @OnClick(R.id.button_back)
     fun onClickMenuButton() {
-        if (clientOnFinishingListener != null && !clientOnFinishingListener!!.onFinishing()) return
-
-        parentActivity?.setResult(ABaseActivity.RESULT_BACK_TO_MENU)
-        parentActivity?.finish()
+        mClientOnClickBackListener?.onClickedHeaderBack()
     }
 }
