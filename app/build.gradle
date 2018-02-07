@@ -40,6 +40,8 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterknife_version"
     kapt "com.jakewharton:butterknife-compiler:$butterknife_version"
 
+    compile 'uk.co.chrisjenx:calligraphy:2.3.0'
+
     testCompile "com.google.dagger:dagger:$dagger_version"
     kaptTest "com.google.dagger:dagger-compiler:$dagger_version"
     testCompile "android.arch.persistence.room:testing:$room_version"
