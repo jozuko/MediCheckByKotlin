@@ -1,44 +1,48 @@
 package com.studiojozu.medicheck.resource.activity
 
 import android.os.Bundle
-import android.widget.Spinner
-import android.widget.Switch
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.studiojozu.medicheck.R
-import com.studiojozu.medicheck.di.MediCheckApplication
-import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepository
-import javax.inject.Inject
+import com.studiojozu.medicheck.resource.custom.HeaderView
+import com.studiojozu.medicheck.resource.fragment.setting.SettingFragmentListener
 
-class SettingActivity : ABaseActivity() {
+class SettingActivity : ABaseActivity(), SettingFragmentListener {
+    companion object {
+        const val TAG_CONTENTS = "tag_contents"
+    }
 
-    @Inject
-    lateinit var mSettingRepository: SettingRepository
+    private var currentFragmentType = SettingFragmentListener.SettingFragmentType.MENU
 
-    @BindView(R.id.setting_item_use_reminder_switch)
-    lateinit var mUseReminderSwitch: Switch
-
-    @BindView(R.id.setting_item_reminder_interval_spinner)
-    lateinit var mReminderIntervalSpinner: Spinner
-
-    @BindView(R.id.setting_item_reminder_timeout_spinner)
-    lateinit var mReminderTimeoutSpinner: Spinner
+    @BindView(R.id.header_view)
+    lateinit var headerView: HeaderView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (application as MediCheckApplication).mComponent.inject(this)
 
         setContentView(R.layout.activity_setting)
         ButterKnife.bind(this)
 
-        setInitialData()
+        headerView.setParentActivity(this)
+        showChildFragment(currentFragmentType)
     }
 
-    private fun setInitialData() {
-        val setting = mSettingRepository.find()
-        mUseReminderSwitch.isChecked = setting.useReminder()
+    override fun goNext(fragmentType: SettingFragmentListener.SettingFragmentType) {
+        currentFragmentType = fragmentType
+        showChildFragment(fragmentType)
     }
 
+    override fun goBack() =
+            supportFragmentManager.popBackStack()
 
+    private fun showChildFragment(nextFragmentType: SettingFragmentListener.SettingFragmentType) {
+        val fragment = nextFragmentType.getFragment()
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.child_fragment, fragment, TAG_CONTENTS)
 
+        if (currentFragmentType != SettingFragmentListener.SettingFragmentType.MENU)
+            fragmentTransaction.addToBackStack(null)
+
+        fragmentTransaction.commit()
+    }
 }

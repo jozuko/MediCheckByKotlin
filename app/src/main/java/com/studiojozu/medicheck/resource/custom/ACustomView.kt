@@ -15,6 +15,7 @@ abstract class ACustomView<out T>(private val mContext: Context, attrs: Attribut
 
     companion object {
         internal const val RESOURCE_DEFAULT_INTEGER = Integer.MIN_VALUE
+        internal const val RESOURCE_DEFAULT_FLOAT = java.lang.Float.MIN_VALUE
         internal const val RESOURCE_DEFAULT_STRING = ""
         internal const val UNKNOWN_RESOURCE_ID = -1
     }
@@ -51,11 +52,10 @@ abstract class ACustomView<out T>(private val mContext: Context, attrs: Attribut
     protected fun getAttributeInteger(styledAttributes: TypedArray?, @StyleableRes styleableId: Int): Int =
             styledAttributes?.getInt(styleableId, RESOURCE_DEFAULT_INTEGER) ?: RESOURCE_DEFAULT_INTEGER
 
+    protected fun getAttributeFloat(styledAttributes: TypedArray?, @StyleableRes styleableId: Int): Float =
+            styledAttributes?.getFloat(styleableId, RESOURCE_DEFAULT_FLOAT) ?: RESOURCE_DEFAULT_FLOAT
+
     @DrawableRes
     protected fun getAttributeDrawableResourceId(styledAttributes: TypedArray?, @StyleableRes styleableId: Int): Int =
             styledAttributes?.getResourceId(styleableId, UNKNOWN_RESOURCE_ID) ?: UNKNOWN_RESOURCE_ID
-
-    fun setParentActivity(parentActivity: Activity) {
-        mActivity = parentActivity
-    }
 }

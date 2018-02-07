@@ -11,7 +11,7 @@
         android:id="@+id/menu_button_today_medicine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:description="@string/button_description_today_medicine"
+        custom:description="@string/button_today_medicine_description"
         custom:drawableLeft="@mipmap/ic_take_person"
         custom:text="@string/button_today_medicine"/>
 
@@ -19,7 +19,7 @@
         android:id="@+id/menu_button_register_medicine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:description="@string/button_description_register_medicine"
+        custom:description="@string/button_register_medicine_description"
         custom:drawableLeft="@mipmap/ic_register_medicine"
         custom:text="@string/button_register_medicine"/>
 
@@ -27,7 +27,7 @@
         android:id="@+id/menu_button_history_medicine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:description="@string/button_description_history_medicine"
+        custom:description="@string/button_history_medicine_description"
         custom:drawableLeft="@mipmap/ic_history_medicine"
         custom:text="@string/button_history_medicine"/>
 
@@ -35,7 +35,7 @@
         android:id="@+id/menu_button_list_medicine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:description="@string/button_description_list_medicine"
+        custom:description="@string/button_list_medicine_description"
         custom:drawableLeft="@mipmap/ic_list_medicine"
         custom:text="@string/button_list_medicine"/>
 
@@ -43,7 +43,7 @@
         android:id="@+id/menu_button_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:description="@string/button_description_setting"
+        custom:description="@string/button_setting_description"
         custom:drawableLeft="@mipmap/ic_setting"
         custom:text="@string/button_setting"/>
 
