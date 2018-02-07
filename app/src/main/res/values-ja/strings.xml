@@ -58,7 +58,7 @@
     <string name="button_setting_menu_alarm">アラームを設定</string>
     <string name="button_setting_menu_alarm_description">アラームの開始・停止はココ</string>
 
-    <string name="button_menu">メニュー</string>
+    <string name="button_back">戻る</string>
     <string name="button_previous_day">前の日</string>
     <string name="button_next_day">次の日</string>
     <string name="button_calendar">カレンダー</string>

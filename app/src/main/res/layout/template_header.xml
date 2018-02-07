@@ -5,13 +5,12 @@
     android:layout_height="wrap_content">
 
     <com.studiojozu.medicheck.resource.custom.ShrinkButton
-        android:id="@+id/button_menu"
+        android:id="@+id/button_back"
         style="@style/SmallButtonLeftStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_arrow_left"
-        android:drawableStart="@mipmap/ic_arrow_left"
-        android:text="@string/button_menu"/>
+        android:layout_alignParentLeft="true"
+        android:drawableLeft="@mipmap/ic_arrow_left"/>
 
     <TextView
         android:id="@+id/header_text"
