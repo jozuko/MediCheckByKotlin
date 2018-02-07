@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
+              style="@style/StandardFragmentStyle"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:theme="@style/AppTheme">
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_person"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_setting_menu_person_description"
+        custom:text="@string/button_setting_menu_person"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_take_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_setting_menu_take_time_description"
+        custom:text="@string/button_setting_menu_take_time"/>
+
+    <com.studiojozu.medicheck.resource.custom.DescriptionButtonView
+        android:id="@+id/menu_button_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        custom:description="@string/button_setting_menu_alarm_description"
+        custom:text="@string/button_setting_menu_alarm"/>
+</LinearLayout>

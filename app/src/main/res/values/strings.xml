@@ -19,7 +19,7 @@
 
     <string name="person_self">Myself</string>
 
-    <string name="notification_medicine_title">Time of the sqliteMedicine</string>
+    <string name="notification_medicine_title">Time of the medicine</string>
 
     <string name="label_minutes">minutes</string>
     <string name="label_hours">hours</string>
@@ -35,23 +35,30 @@
     <string name="label_add_short">Register newly</string>
 
     <string name="button_today_medicine">Today\'s Medicine</string>
-    <string name="button_description_today_medicine">When you took sqliteMedicine, click.</string>
+    <string name="button_today_medicine_description">When you took medicine, click.</string>
     <string name="button_register_medicine">Register Medicine</string>
-    <string name="button_description_register_medicine">When you got a sqliteMedicine, click.</string>
+    <string name="button_register_medicine_description">When you got a medicine, click.</string>
     <string name="button_list_medicine">Medicine List</string>
-    <string name="button_description_list_medicine">When you\'d like to remove a sqliteMedicine, click.</string>
+    <string name="button_list_medicine_description">When you\'d like to remove a medicine, click.</string>
     <string name="button_history_medicine">Medicine Log</string>
-    <string name="button_description_history_medicine">When you\'d like to see the history, click.</string>
+    <string name="button_history_medicine_description">When you\'d like to see the history, click.</string>
     <string name="button_setting">Setting</string>
-    <string name="button_description_setting">You\'d like to change the person,\n the timetable or the alarm setting, click.</string>
-    <string name="button_one_shot">one shot sqliteMedicine</string>
+    <string name="button_setting_description">You\'d like to change the person,\n the timetable or the alarm setting, click.</string>
+    <string name="button_one_shot">one shot medicine</string>
 
-    <string name="button_register_new_medicine">register NEW sqliteMedicine</string>
-    <string name="button_description_register_new_medicine">You\'d like to register a new sqliteMedicine, click.</string>
-    <string name="button_register_copy_medicine">register COPY sqliteMedicine</string>
-    <string name="button_description_register_copy_medicine">You\'d like to register the sqliteMedicine you received earlier, click.</string>
+    <string name="button_register_new_medicine">register NEW medicine</string>
+    <string name="button_register_new_medicine_description">You\'d like to register a new medicine, click.</string>
+    <string name="button_register_copy_medicine">register COPY medicine</string>
+    <string name="button_register_copy_medicine_description">You\'d like to register the medicine you received earlier, click.</string>
 
-    <string name="button_menu">back to menu</string>
+    <string name="button_setting_menu_person">Person Setting</string>
+    <string name="button_setting_menu_person_description">When you\'d like to add or edit or delete person, click.</string>
+    <string name="button_setting_menu_take_time">Take timing Setting</string>
+    <string name="button_setting_menu_take_time_description">When you\'d like to change the timing when you take medicine, click.</string>
+    <string name="button_setting_menu_alarm">Alarm Setting</string>
+    <string name="button_setting_menu_alarm_description">When you\'d like to start or stop alarm, click.</string>
+
+    <string name="button_menu">menu</string>
     <string name="button_previous_day">prev day</string>
     <string name="button_next_day">next day</string>
     <string name="button_calendar">calendar1</string>

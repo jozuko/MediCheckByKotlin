@@ -1,50 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StandardViewStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:shrinkColumns="0"
-    android:stretchColumns="0"
+    android:orientation="vertical"
     tools:context="com.studiojozu.medicheck.resource.activity.SettingActivity">
 
-    <TableRow>
+    <com.studiojozu.medicheck.resource.custom.HeaderView
+        android:id="@+id/header_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:header_icon="@mipmap/ic_setting"
+        app:header_title="@string/button_setting"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_item_title_use_reminder"/>
+    <com.studiojozu.medicheck.resource.custom.BorderView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-        <Switch
-            android:id="@+id/setting_item_use_reminder_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
+    <RelativeLayout
+        android:id="@+id/child_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <TableRow>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_item_title_reminder_interval"/>
-
-        <Spinner
-            android:id="@+id/setting_item_reminder_interval_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
-
-    <TableRow>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting_item_title_reminder_timeout"/>
-
-        <Spinner
-            android:id="@+id/setting_item_reminder_timeout_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
-
-</TableLayout>
+</LinearLayout>

@@ -54,16 +54,15 @@ class MenuActivity : ABaseActivity() {
      */
     @OnClick(R.id.menu_button_setting)
     fun onClickSettingButton() =
-            startNextActivity(nextActivityClass = SettingActivity::class.java, requestCode = R.id.menu_button_setting)
+            startNextActivity(nextActivityClass = SettingActivity::class.java)
 
     /**
      * 画面を遷移する。
      *
      * @param nextActivityClass 次画面のActivityクラス
-     * @param requestCode       リクエストコード
      */
-    private fun startNextActivity(nextActivityClass: Class<*>, requestCode: Int) {
+    private fun startNextActivity(nextActivityClass: Class<*>) {
         val intent = Intent(this, nextActivityClass)
-        startActivityForResult(intent, requestCode)
+        startActivityForResult(intent, 0)
     }
 }

@@ -1,7 +1,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- アプリのテーマ -->
-    <style name="AppTheme" parent="Base.Theme.AppCompat">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:buttonStyle">@style/StandardButtonTheme</item>
         <item name="android:imageButtonStyle">@style/StandardButtonTheme</item>
         <item name="android:textViewStyle">@style/StandardTextTheme</item>
@@ -29,6 +29,11 @@
     <style name="StandardViewStyle" parent="AppTheme">
         <item name="android:background">@color/background</item>
         <item name="android:padding">@dimen/view_padding</item>
+    </style>
+
+    <!-- Style - MainLayout -->
+    <style name="StandardFragmentStyle">
+        <item name="android:background">@color/background</item>
     </style>
 
     <!-- Style - DialogLayout -->
@@ -97,6 +102,7 @@
         <item name="android:padding">@dimen/menu_button_padding</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="fontPath">fonts/rounded-mgenplus-1pp-medium.ttf</item>
     </style>
 
     <!-- Style - SmallButton position left -->
@@ -119,14 +125,6 @@
         <item name="android:textSize">10sp</item>
     </style>
 
-    <!-- Style - MenuLayout -->
-    <style name="MenuLayoutStyle" parent="SmallButtonStyle">
-        <item name="android:background">@drawable/border_background</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">10dp</item>
-    </style>
-
     <!-- Style - TableRow -->
     <style name="StandardTableRowStyle" parent="android:Widget">
         <item name="android:layout_width">match_parent</item>
@@ -146,23 +144,6 @@
         <item name="android:layout_marginBottom">@dimen/border_margin</item>
     </style>
 
-    <!-- Style - View title icon -->
-    <style name="MenuIconStyle" parent="android:Widget">
-        <item name="android:layout_width">@dimen/menu_icon_size</item>
-        <item name="android:layout_height">@dimen/menu_icon_size</item>
-        <item name="android:layout_gravity">center_vertical</item>
-    </style>
-
-    <!-- Style - View title text -->
-    <style name="MenuTextStyle" parent="android:Widget">
-        <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/menu_text_size</item>
-        <item name="android:textColor">@android:color/black</item>
-    </style>
-
     <style name="MgenFontBlack">
         <item name="fontPath">fonts/rounded-mgenplus-1pp-black.ttf</item>
     </style>
@@ -173,5 +154,9 @@
 
     <style name="MgenFontRegular">
         <item name="fontPath">fonts/rounded-mgenplus-1pp-regular.ttf</item>
+    </style>
+
+    <style name="MgenFontMedium">
+        <item name="fontPath">fonts/rounded-mgenplus-1pp-medium.ttf</item>
     </style>
 </resources>

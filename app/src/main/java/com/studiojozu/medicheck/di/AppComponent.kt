@@ -11,6 +11,7 @@ import com.studiojozu.medicheck.resource.MainActivity
 import com.studiojozu.medicheck.resource.activity.SettingActivity
 import com.studiojozu.medicheck.resource.alarm.AlarmBroadcastReceiver
 import com.studiojozu.medicheck.resource.alarm.MedicineAlarm
+import com.studiojozu.medicheck.resource.fragment.setting.AlarmFragment
 import javax.inject.Singleton
 
 @Singleton
@@ -18,6 +19,7 @@ import javax.inject.Singleton
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(settingActivity: SettingActivity)
+    fun inject(alarmFragment: AlarmFragment)
     fun inject(alarmBroadcastReceiver: AlarmBroadcastReceiver)
     fun inject(medicineFinderService: MedicineFinderService)
     fun inject(alarmScheduleService: AlarmScheduleService)

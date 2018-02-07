@@ -35,23 +35,30 @@
     <string name="label_add_short">新規追加</string>
 
     <string name="button_today_medicine">今日のお薬</string>
-    <string name="button_description_today_medicine">薬を飲んだらココ</string>
+    <string name="button_today_medicine_description">薬を飲んだらココ</string>
     <string name="button_register_medicine">お薬の登録</string>
-    <string name="button_description_register_medicine">お薬をもらったらココ</string>
+    <string name="button_register_medicine_description">お薬をもらったらココ</string>
     <string name="button_list_medicine">お薬の一覧</string>
-    <string name="button_description_list_medicine">お薬の削除はココ</string>
+    <string name="button_list_medicine_description">お薬の削除はココ</string>
     <string name="button_history_medicine">服用履歴</string>
-    <string name="button_description_history_medicine">飲んだお薬の履歴を見るにはココ</string>
+    <string name="button_history_medicine_description">飲んだお薬の履歴を見るにはココ</string>
     <string name="button_setting">設定</string>
-    <string name="button_description_setting">人・服用時刻・アラームの変更はココ</string>
+    <string name="button_setting_description">人・服用時刻・アラームの変更はココ</string>
     <string name="button_one_shot">頓服薬</string>
 
     <string name="button_register_new_medicine">新しい薬を登録</string>
-    <string name="button_description_register_new_medicine">新しい薬をもらったらココ</string>
+    <string name="button_register_new_medicine_description">新しい薬をもらったらココ</string>
     <string name="button_register_copy_medicine">前の薬をコピー</string>
-    <string name="button_description_register_copy_medicine">前と同じ薬をもらったらココ</string>
+    <string name="button_register_copy_medicine_description">前と同じ薬をもらったらココ</string>
 
-    <string name="button_menu">メニューへ戻る</string>
+    <string name="button_setting_menu_person">飲む人を設定</string>
+    <string name="button_setting_menu_person_description">飲む人の追加・編集・削除はココ</string>
+    <string name="button_setting_menu_take_time">服用時間を設定</string>
+    <string name="button_setting_menu_take_time_description">食後、食前の時間変更はココ</string>
+    <string name="button_setting_menu_alarm">アラームを設定</string>
+    <string name="button_setting_menu_alarm_description">アラームの開始・停止はココ</string>
+
+    <string name="button_menu">メニュー</string>
     <string name="button_previous_day">前の日</string>
     <string name="button_next_day">次の日</string>
     <string name="button_calendar">カレンダー</string>
