@@ -20,7 +20,7 @@ class SqlitePersonRepositoryTest : ATestParent() {
     fun crud() {
         val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
         val dao = database.personDao()
-        val defaultPerson = Person(mPersonName = PersonNameType("Myself"), mPersonPhoto = PersonPhotoType(""), mPersonDisplayOrder = PersonDisplayOrderType(1))
+        val defaultPerson = Person(personName = PersonNameType("Myself"), personPhoto = PersonPhotoType(""), personDisplayOrder = PersonDisplayOrderType(1))
 
         // select no data
         var persons = dao.findAll()
@@ -29,7 +29,7 @@ class SqlitePersonRepositoryTest : ATestParent() {
         assertIgnoreId(defaultPerson, persons[0])
 
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         dao.insert(setSqlitePerson(insertEntity))
         persons = dao.findAll()
         assertEquals(2, persons.size)
@@ -37,7 +37,7 @@ class SqlitePersonRepositoryTest : ATestParent() {
         assert(insertEntity, persons[1])
 
         // update
-        val updateEntity = insertEntity.copy(mPersonName = PersonNameType("Jozuko Dev"))
+        val updateEntity = insertEntity.copy(personName = PersonNameType("Jozuko Dev"))
         dao.insert(setSqlitePerson(updateEntity))
         persons = dao.findAll()
         assertEquals(2, persons.size)
@@ -59,11 +59,11 @@ class SqlitePersonRepositoryTest : ATestParent() {
         val dao = database.personDao()
 
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         dao.insert(setSqlitePerson(insertEntity))
 
         // findById
-        val medicine1 = dao.findById(insertEntity.mPersonId.dbValue)
+        val medicine1 = dao.findById(insertEntity.personId.dbValue)
         assert(insertEntity, medicine1!!)
 
         // findById
@@ -81,13 +81,13 @@ class SqlitePersonRepositoryTest : ATestParent() {
         val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
         val dao = database.personDao()
 
-        dao.delete(SqlitePerson.build { mPerson = Person(mPersonId = PersonIdType(SqlitePerson.DEFAULT_PERSON_ID)) })
+        dao.delete(SqlitePerson.build { person = Person(personId = PersonIdType(SqlitePerson.DEFAULT_PERSON_ID)) })
 
         // maxDisplayOrder
         assertEquals(0L, dao.maxDisplayOrder())
 
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         dao.insert(setSqlitePerson(insertEntity))
 
         // maxDisplayOrder
@@ -99,18 +99,18 @@ class SqlitePersonRepositoryTest : ATestParent() {
     }
 
     private fun setSqlitePerson(entity: Person): SqlitePerson =
-            SqlitePerson.build { mPerson = entity }
+            SqlitePerson.build { person = entity }
 
     private fun assert(expect: Person, actual: SqlitePerson) {
-        assertEquals(expect.mPersonId, actual.mPersonId)
-        assertEquals(expect.mPersonName, actual.mPersonName)
-        assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
-        assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
+        assertEquals(expect.personId, actual.personId)
+        assertEquals(expect.personName, actual.personName)
+        assertEquals(expect.personPhoto, actual.personPhoto)
+        assertEquals(expect.personDisplayOrder, actual.personDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: Person, actual: SqlitePerson) {
-        assertEquals(expect.mPersonName, actual.mPersonName)
-        assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
-        assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
+        assertEquals(expect.personName, actual.personName)
+        assertEquals(expect.personPhoto, actual.personPhoto)
+        assertEquals(expect.personDisplayOrder, actual.personDisplayOrder)
     }
 }

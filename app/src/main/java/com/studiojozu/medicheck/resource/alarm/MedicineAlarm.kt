@@ -19,29 +19,29 @@ class MedicineAlarm(context: Context) {
         private val NOTIFICATION_MEDICINE = 1
     }
 
-    private val mContext: Context = context.applicationContext
+    private val context: Context = context.applicationContext
 
-    private val mNotificationManager: NotificationManager
+    private val notificationManager: NotificationManager
 
     @Inject
-    lateinit var mAlarmScheduleService: AlarmScheduleService
+    lateinit var alarmScheduleService: AlarmScheduleService
 
     init {
-        mNotificationManager = mContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        (mContext as MediCheckApplication).mComponent.inject(this)
+        notificationManager = this.context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        (this.context as MediCheckApplication).component.inject(this)
     }
 
     /**
      * データベースに登録されているスケジュールから、アラームが必要なスケジュールを抽出し、スケジュール設定する。
      */
     fun showNotification() {
-        val alarmTargetSchedules = mAlarmScheduleService.getNeedAlarmSchedules()
+        val alarmTargetSchedules = alarmScheduleService.getNeedAlarmSchedules()
         if (alarmTargetSchedules.isEmpty()) return
 
         // 通知を生成する
         val notification = createNotification(alarmTargetSchedules)
-        mNotificationManager.cancelAll()
-        mNotificationManager.notify(NOTIFICATION_MEDICINE, notification)
+        notificationManager.cancelAll()
+        notificationManager.notify(NOTIFICATION_MEDICINE, notification)
     }
 
     /**
@@ -55,14 +55,14 @@ class MedicineAlarm(context: Context) {
         val notificationMessage = getNotificationMessage(targetSchedules)
         if (notificationMessage.isEmpty()) return null
 
-        val largeIcon = BitmapFactory.decodeResource(mContext.resources, R.mipmap.notification_action_icon)
+        val largeIcon = BitmapFactory.decodeResource(context.resources, R.mipmap.notification_action_icon)
 
         @Suppress("DEPRECATION")
-        with(Notification.Builder(mContext)) {
+        with(Notification.Builder(context)) {
             setSmallIcon(R.mipmap.notification_icon)
             setLargeIcon(largeIcon)
-            setTicker(mContext.resources.getString(R.string.notification_medicine_title))
-            setContentTitle(mContext.resources.getString(R.string.notification_medicine_title))
+            setTicker(context.resources.getString(R.string.notification_medicine_title))
+            setContentTitle(context.resources.getString(R.string.notification_medicine_title))
             setContentText(notificationMessage)
             setWhen(System.currentTimeMillis())
             setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND or Notification.DEFAULT_VIBRATE)

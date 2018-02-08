@@ -3,7 +3,7 @@ package com.studiojozu.medicheck.domain.model.medicine.validator
 import com.studiojozu.common.domain.model.validator.ANumericValidator
 
 class DateNumberValidator : ANumericValidator(
-        mMin = 1,
-        mMax = 365,
-        mAllowMinValue = true,
-        mAllowMaxValue = true)
+        min = 1,
+        max = 365,
+        allowMinValue = true,
+        allowMaxValue = true)

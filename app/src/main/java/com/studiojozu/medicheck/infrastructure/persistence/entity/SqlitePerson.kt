@@ -9,13 +9,13 @@ import com.studiojozu.medicheck.domain.model.person.*
 @Entity(tableName = "person")
 open class SqlitePerson(personId: PersonIdType) {
     class Builder {
-        lateinit var mPerson: Person
+        lateinit var person: Person
 
         fun build(): SqlitePerson {
-            val sqlitePerson = SqlitePerson(personId = mPerson.mPersonId)
-            sqlitePerson.mPersonName = mPerson.mPersonName
-            sqlitePerson.mPersonPhoto = mPerson.mPersonPhoto
-            sqlitePerson.mPersonDisplayOrder = mPerson.mPersonDisplayOrder
+            val sqlitePerson = SqlitePerson(personId = person.personId)
+            sqlitePerson.personName = person.personName
+            sqlitePerson.personPhoto = person.personPhoto
+            sqlitePerson.personDisplayOrder = person.personDisplayOrder
 
             return sqlitePerson
         }
@@ -31,27 +31,28 @@ open class SqlitePerson(personId: PersonIdType) {
     }
 
     /** 飲む人ID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @PrimaryKey
     @ColumnInfo(name = "person_id")
-    var mPersonId: PersonIdType = personId
+    var personId: PersonIdType = personId
 
     /** 名前 */
     @ColumnInfo(name = "person_name")
-    var mPersonName: PersonNameType = PersonNameType()
+    var personName: PersonNameType = PersonNameType()
 
     /** 写真 */
     @ColumnInfo(name = "person_photo")
-    var mPersonPhoto: PersonPhotoType = PersonPhotoType()
+    var personPhoto: PersonPhotoType = PersonPhotoType()
 
     /** 表示順 */
     @ColumnInfo(name = "person_display_order")
-    var mPersonDisplayOrder: PersonDisplayOrderType = PersonDisplayOrderType()
+    var personDisplayOrder: PersonDisplayOrderType = PersonDisplayOrderType()
 
     @Ignore
     fun toPerson() =
             Person(
-                    mPersonId = mPersonId,
-                    mPersonName = mPersonName,
-                    mPersonPhoto = mPersonPhoto,
-                    mPersonDisplayOrder = mPersonDisplayOrder)
+                    personId = personId,
+                    personName = personName,
+                    personPhoto = personPhoto,
+                    personDisplayOrder = personDisplayOrder)
 }

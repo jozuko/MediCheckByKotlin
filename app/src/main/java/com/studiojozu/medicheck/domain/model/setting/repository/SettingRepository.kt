@@ -12,7 +12,7 @@ class SettingRepository(private val sqliteSettingRepository: SqliteSettingReposi
     }
 
     fun insert(setting: Setting) =
-            sqliteSettingRepository.insert(SqliteSetting.build { mSetting = setting })
+            sqliteSettingRepository.insert(SqliteSetting.build { this.setting = setting })
 
     fun delete() = sqliteSettingRepository.delete()
 }

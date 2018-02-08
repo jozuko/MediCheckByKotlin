@@ -27,22 +27,22 @@ class ScheduleRepositoryTest : ATestParent() {
     fun setUp() = (RuntimeEnvironment.application as MediCheckTestApplication).mAppTestComponent.inject(this)
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("time0001"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(7, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(1))
+            timetableId = TimetableIdType("time0001"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(7, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(1))
 
     private val timetable2 = Timetable(
-            mTimetableId = TimetableIdType("time0002"),
-            mTimetableName = TimetableNameType("昼"),
-            mTimetableTime = TimetableTimeType(12, 30),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(2))
+            timetableId = TimetableIdType("time0002"),
+            timetableName = TimetableNameType("昼"),
+            timetableTime = TimetableTimeType(12, 30),
+            timetableDisplayOrder = TimetableDisplayOrderType(2))
 
     private val timetable3 = Timetable(
-            mTimetableId = TimetableIdType("time0003"),
-            mTimetableName = TimetableNameType("夜"),
-            mTimetableTime = TimetableTimeType(19, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(3))
+            timetableId = TimetableIdType("time0003"),
+            timetableName = TimetableNameType("夜"),
+            timetableTime = TimetableTimeType(19, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(3))
     private val calendar1 = Calendar.getInstance()
     private val calendar2: Calendar
 
@@ -61,21 +61,21 @@ class ScheduleRepositoryTest : ATestParent() {
         calendar2.add(Calendar.DAY_OF_MONTH, 1)
 
         schedule1 = Schedule(
-                mMedicineId = MedicineIdType("medicine01"),
-                mTimetableId = TimetableIdType("time01"),
-                mSchedulePlanDate = SchedulePlanDateType(calendar1),
-                mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-                mScheduleIsTake = ScheduleIsTakeType(false))
+                medicineId = MedicineIdType("medicine01"),
+                timetableId = TimetableIdType("time01"),
+                schedulePlanDate = SchedulePlanDateType(calendar1),
+                scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+                scheduleIsTake = ScheduleIsTakeType(false))
 
-        schedule2 = schedule1.copy(mSchedulePlanDate = SchedulePlanDateType(calendar2))
+        schedule2 = schedule1.copy(schedulePlanDate = SchedulePlanDateType(calendar2))
 
-        schedule3 = schedule1.copy(mTimetableId = TimetableIdType("time02"))
+        schedule3 = schedule1.copy(timetableId = TimetableIdType("time02"))
 
-        schedule4 = schedule1.copy(mMedicineId = MedicineIdType("medicine02"))
+        schedule4 = schedule1.copy(medicineId = MedicineIdType("medicine02"))
 
-        schedule5 = schedule1.copy(mScheduleNeedAlarm = ScheduleNeedAlarmType(false))
+        schedule5 = schedule1.copy(scheduleNeedAlarm = ScheduleNeedAlarmType(false))
 
-        schedule6 = schedule1.copy(mScheduleIsTake = ScheduleIsTakeType(true))
+        schedule6 = schedule1.copy(scheduleIsTake = ScheduleIsTakeType(true))
     }
 
     @Test
@@ -92,15 +92,15 @@ class ScheduleRepositoryTest : ATestParent() {
         assertEquals(4, scheduleArray1.size)
 
         // deleteExceptHistoryByMedicineId
-        scheduleRepository.deleteExceptHistoryByMedicineId(schedule1.mMedicineId)
+        scheduleRepository.deleteExceptHistoryByMedicineId(schedule1.medicineId)
 
         // findAll
         val scheduleArray2 = scheduleRepository.findAll()
         assertEquals(2, scheduleArray2.size)
 
         // delete
-        scheduleRepository.deleteAllByMedicineId(schedule1.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule1.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule4.medicineId)
     }
 
     @Test
@@ -117,24 +117,24 @@ class ScheduleRepositoryTest : ATestParent() {
         assertEquals(4, scheduleArray1.size)
 
         // deleteAllByMedicineId
-        scheduleRepository.deleteAllByMedicineId(schedule1.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule1.medicineId)
 
         // findAll
         val scheduleArray2 = scheduleRepository.findAll()
         assertEquals(1, scheduleArray2.size)
 
         // delete
-        scheduleRepository.deleteAllByMedicineId(schedule1.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule1.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule4.medicineId)
     }
 
     @Test
     @Throws(Exception::class)
     fun insertAll_OneShot() {
         val medicine = Medicine(
-                mMedicineStartDatetime = MedicineStartDatetimeType(2020, 1, 2, 3, 4),
-                mTimetableList = MedicineTimetableList(),
-                mMedicineDateNumber = MedicineDateNumberType(7)
+                medicineStartDatetime = MedicineStartDatetimeType(2020, 1, 2, 3, 4),
+                timetableList = MedicineTimetableList(),
+                medicineDateNumber = MedicineDateNumberType(7)
         )
         medicine.setOneShotMedicine(true)
         val scheduleList = ScheduleList()
@@ -150,11 +150,11 @@ class ScheduleRepositoryTest : ATestParent() {
     @Throws(Exception::class)
     fun insertAll_ThreeTimesInDay() {
         val medicine = Medicine(
-                mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
-                mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
-                mMedicineDateNumber = MedicineDateNumberType(7),
-                mMedicineInterval = MedicineIntervalType(0),
-                mMedicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.DAYS)
+                medicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
+                timetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)),
+                medicineDateNumber = MedicineDateNumberType(7),
+                medicineInterval = MedicineIntervalType(0),
+                medicineIntervalMode = MedicineIntervalModeType(MedicineIntervalModeType.DateIntervalPattern.DAYS)
         )
         val scheduleList = ScheduleList()
         scheduleList.createScheduleList(medicine)
@@ -165,109 +165,109 @@ class ScheduleRepositoryTest : ATestParent() {
         assertEquals(21, schedules.size)
 
         var index = 0
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/02", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/02", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 1
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/02", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/02", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 2
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/02", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/02", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 3
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/03", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/03", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 4
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/03", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/03", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 5
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/03", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/03", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 6
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/04", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/04", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 7
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/04", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/04", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 8
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/04", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/04", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 9
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/05", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/05", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 10
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/05", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/05", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 11
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/05", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/05", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 12
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/06", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/06", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 13
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/06", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/06", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 14
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/06", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/06", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 15
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/07", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/07", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 16
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/07", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/07", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 17
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/07", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/07", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 18
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/08", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable1.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/08", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable1.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 19
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/08", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable2.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/08", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable2.timetableId.dbValue, schedules[index].timetableId.dbValue)
 
         index = 20
-        assertEquals(medicine.mMedicineId, schedules[index].mMedicineId)
-        assertEquals("17/01/08", schedules[index].mSchedulePlanDate.displayValue)
-        assertEquals(timetable3.mTimetableId.dbValue, schedules[index].mTimetableId.dbValue)
+        assertEquals(medicine.medicineId, schedules[index].medicineId)
+        assertEquals("17/01/08", schedules[index].schedulePlanDate.displayValue)
+        assertEquals(timetable3.timetableId.dbValue, schedules[index].timetableId.dbValue)
     }
 
     @Test
@@ -299,8 +299,8 @@ class ScheduleRepositoryTest : ATestParent() {
         assertEquals(3, scheduleArray.size)
 
         // delete
-        scheduleRepository.deleteAllByMedicineId(schedule1.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule1.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule4.medicineId)
     }
 
     @Test
@@ -313,25 +313,25 @@ class ScheduleRepositoryTest : ATestParent() {
         scheduleRepository.insert(schedule4) // deference id
 
         // findByMedicineId
-        val scheduleArray = scheduleRepository.findByMedicineId(schedule1.mMedicineId)
+        val scheduleArray = scheduleRepository.findByMedicineId(schedule1.medicineId)
         Assert.assertTrue(scheduleArray.isNotEmpty())
-        assertEquals(schedule6.mMedicineId, scheduleArray[0].mMedicineId)
-        assertEquals(schedule6.mTimetableId, scheduleArray[0].mTimetableId)
-        assertEquals(schedule6.mSchedulePlanDate, scheduleArray[0].mSchedulePlanDate)
+        assertEquals(schedule6.medicineId, scheduleArray[0].medicineId)
+        assertEquals(schedule6.timetableId, scheduleArray[0].timetableId)
+        assertEquals(schedule6.schedulePlanDate, scheduleArray[0].schedulePlanDate)
 
-        assertEquals(schedule3.mMedicineId, scheduleArray[1].mMedicineId)
-        assertEquals(schedule3.mTimetableId, scheduleArray[1].mTimetableId)
-        assertEquals(schedule3.mSchedulePlanDate, scheduleArray[1].mSchedulePlanDate)
+        assertEquals(schedule3.medicineId, scheduleArray[1].medicineId)
+        assertEquals(schedule3.timetableId, scheduleArray[1].timetableId)
+        assertEquals(schedule3.schedulePlanDate, scheduleArray[1].schedulePlanDate)
 
-        assertEquals(schedule2.mMedicineId, scheduleArray[2].mMedicineId)
-        assertEquals(schedule2.mTimetableId, scheduleArray[2].mTimetableId)
-        assertEquals(schedule2.mSchedulePlanDate, scheduleArray[2].mSchedulePlanDate)
+        assertEquals(schedule2.medicineId, scheduleArray[2].medicineId)
+        assertEquals(schedule2.timetableId, scheduleArray[2].timetableId)
+        assertEquals(schedule2.schedulePlanDate, scheduleArray[2].schedulePlanDate)
 
         // delete
-        scheduleRepository.deleteAllByMedicineId(schedule6.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule2.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule3.mMedicineId)
-        scheduleRepository.deleteAllByMedicineId(schedule4.mMedicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule6.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule2.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule3.medicineId)
+        scheduleRepository.deleteAllByMedicineId(schedule4.medicineId)
     }
 
 }

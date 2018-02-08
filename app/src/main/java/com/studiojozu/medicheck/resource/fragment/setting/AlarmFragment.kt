@@ -26,7 +26,7 @@ class AlarmFragment : ABaseFragment() {
     lateinit var mReminderTimeoutSpinner: Spinner
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        application.mComponent.inject(this)
+        application.component.inject(this)
 
         val view = getView(inflater, container)
         ButterKnife.bind(this, view)

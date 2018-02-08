@@ -41,36 +41,36 @@ class MedicineFinderServiceTest : ATestParent() {
         assertFalse(medicineFinderService.existMedicine())
 
         // insert
-        medicineViewRepository.insert(medicine = Medicine(mMedicineId = MedicineIdType("12345678")))
+        medicineViewRepository.insert(medicine = Medicine(medicineId = MedicineIdType("12345678")))
 
         // existMedicine - exists
         assertTrue(medicineFinderService.existMedicine())
 
         // delete
-        medicineViewRepository.delete(medicine = Medicine(mMedicineId = MedicineIdType("12345678")))
+        medicineViewRepository.delete(medicine = Medicine(medicineId = MedicineIdType("12345678")))
     }
 
     @Test
     @Throws(Exception::class)
     fun findByMedicineId() {
         val medicine = Medicine(
-                mMedicineId = MedicineIdType("12345678"),
-                mMedicineName = MedicineNameType("メルカゾール"))
+                medicineId = MedicineIdType("12345678"),
+                medicineName = MedicineNameType("メルカゾール"))
 
         // findByMedicineId - not found
-        var entity = medicineFinderService.findByMedicineId(medicine.mMedicineId)
+        var entity = medicineFinderService.findByMedicineId(medicine.medicineId)
         assertNotNull(entity)
-        assertEquals(medicine.mMedicineId, entity.mMedicineId)
-        assertEquals(MedicineNameType(""), entity.mMedicineName)
+        assertEquals(medicine.medicineId, entity.medicineId)
+        assertEquals(MedicineNameType(""), entity.medicineName)
 
         // insert
         medicineViewRepository.insert(medicine = medicine)
 
         // findByMedicineId - found
-        entity = medicineFinderService.findByMedicineId(medicine.mMedicineId)
+        entity = medicineFinderService.findByMedicineId(medicine.medicineId)
         assertNotNull(entity)
-        assertEquals(medicine.mMedicineId, entity.mMedicineId)
-        assertEquals(medicine.mMedicineName, entity.mMedicineName)
+        assertEquals(medicine.medicineId, entity.medicineId)
+        assertEquals(medicine.medicineName, entity.medicineName)
 
         // delete
         medicineViewRepository.delete(medicine = medicine)
@@ -95,9 +95,9 @@ class MedicineFinderServiceTest : ATestParent() {
 
         // insert
         medicineUnitRepository.insert(medicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType(),
-                mMedicineUnitValue = MedicineUnitValueType(defaultUnitValue),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+                medicineUnitId = MedicineUnitIdType(),
+                medicineUnitValue = MedicineUnitValueType(defaultUnitValue),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
         )
     }
 
@@ -109,10 +109,10 @@ class MedicineFinderServiceTest : ATestParent() {
 
         // existMedicine - not exist
         val entity = medicineFinderService.defaultTimetable!!
-        assertEquals(timetables[0].mTimetableId, entity.mTimetableId)
-        assertEquals(timetables[0].mTimetableName, entity.mTimetableName)
-        assertEquals(timetables[0].mTimetableTime, entity.mTimetableTime)
-        assertEquals(timetables[0].mTimetableDisplayOrder, entity.mTimetableDisplayOrder)
+        assertEquals(timetables[0].timetableId, entity.timetableId)
+        assertEquals(timetables[0].timetableName, entity.timetableName)
+        assertEquals(timetables[0].timetableTime, entity.timetableTime)
+        assertEquals(timetables[0].timetableDisplayOrder, entity.timetableDisplayOrder)
 
         // delete
         timetables.forEach { it ->

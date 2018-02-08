@@ -13,7 +13,7 @@ import java.util.*
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 class RemindIntervalTypeTest : ATestParent() {
-    private val mValueProperty = findProperty(RemindIntervalType::class, "mValue")
+    private val mValueProperty = findProperty(RemindIntervalType::class, "value")
 
     @Test
     @Throws(Exception::class)

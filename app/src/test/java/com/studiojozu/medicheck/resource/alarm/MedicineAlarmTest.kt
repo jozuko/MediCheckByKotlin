@@ -131,52 +131,52 @@ class MedicineAlarmTest : ATestParent() {
     }
 
     private val person1 = Person(
-            mPersonId = PersonIdType("person01"),
-            mPersonName = PersonNameType("自分"),
-            mPersonDisplayOrder = PersonDisplayOrderType(10))
+            personId = PersonIdType("person01"),
+            personName = PersonNameType("自分"),
+            personDisplayOrder = PersonDisplayOrderType(10))
 
     private val medicineUnit1 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("unit01"),
-            mMedicineUnitValue = MedicineUnitValueType(),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+            medicineUnitId = MedicineUnitIdType("unit01"),
+            medicineUnitValue = MedicineUnitValueType(),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
 
     private val medicine1 = Medicine(
-            mMedicineId = MedicineIdType("medicine01"),
-            mMedicineName = MedicineNameType("メルカゾール"),
-            mMedicineUnit = medicineUnit1)
+            medicineId = MedicineIdType("medicine01"),
+            medicineName = MedicineNameType("メルカゾール"),
+            medicineUnit = medicineUnit1)
 
     private val medicine2 = Medicine(
-            mMedicineId = MedicineIdType("medicine02"),
-            mMedicineName = MedicineNameType("チラーヂン"),
-            mMedicineUnit = medicineUnit1)
+            medicineId = MedicineIdType("medicine02"),
+            medicineName = MedicineNameType("チラーヂン"),
+            medicineUnit = medicineUnit1)
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("timetable01"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable01"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val schedule1 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable1.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable1.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 
-    private val schedule4 = schedule1.copy(mMedicineId = medicine2.mMedicineId)
+    private val schedule4 = schedule1.copy(medicineId = medicine2.medicineId)
 
     private fun createNeedAlarmScheduleList(): List<AlarmSchedule> {
         val alarmSchedule1 = AlarmSchedule(
-                mSchedule = schedule1,
-                mTimetable = timetable1,
-                mMedicine = medicine1,
-                mPerson = person1)
+                schedule = schedule1,
+                timetable = timetable1,
+                medicine = medicine1,
+                person = person1)
 
         val alarmSchedule2 = AlarmSchedule(
-                mSchedule = schedule4,
-                mTimetable = timetable1,
-                mMedicine = medicine2,
-                mPerson = person1)
+                schedule = schedule4,
+                timetable = timetable1,
+                medicine = medicine2,
+                person = person1)
 
         return listOf(alarmSchedule1, alarmSchedule2)
     }

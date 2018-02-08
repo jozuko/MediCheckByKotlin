@@ -13,26 +13,26 @@ import org.robolectric.annotation.Config
 @Config(manifest = "src/main/AndroidManifest.xml")
 class MedicineTimetableListTest : ATestParent() {
 
-    private val mTimetableListProperty = findProperty(MedicineTimetableList::class, "mTimetableList")
+    private val mTimetableListProperty = findProperty(MedicineTimetableList::class, "timetableList")
     private fun getTimetableList(entity: MedicineTimetableList): MutableList<Timetable> = mTimetableListProperty.call(entity) as MutableList<Timetable>
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("time0001"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(7, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(3))
+            timetableId = TimetableIdType("time0001"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(7, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(3))
 
     private val timetable2 = Timetable(
-            mTimetableId = TimetableIdType("time0002"),
-            mTimetableName = TimetableNameType("昼"),
-            mTimetableTime = TimetableTimeType(12, 30),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(2))
+            timetableId = TimetableIdType("time0002"),
+            timetableName = TimetableNameType("昼"),
+            timetableTime = TimetableTimeType(12, 30),
+            timetableDisplayOrder = TimetableDisplayOrderType(2))
 
     private val timetable3 = Timetable(
-            mTimetableId = TimetableIdType("time0003"),
-            mTimetableName = TimetableNameType("夜"),
-            mTimetableTime = TimetableTimeType(19, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(1))
+            timetableId = TimetableIdType("time0003"),
+            timetableName = TimetableNameType("夜"),
+            timetableTime = TimetableTimeType(19, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(1))
 
     @Test
     @Throws(Exception::class)
@@ -163,22 +163,22 @@ class MedicineTimetableListTest : ATestParent() {
         val listValueObject = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3))
 
         var startDatetime = TestDatetimeType(2017, 1, 1, 0, 0)
-        assertEquals("17/01/01 7:00", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/01 7:00", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
 
         startDatetime = TestDatetimeType(2017, 1, 1, 6, 59)
-        assertEquals("17/01/01 7:00", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/01 7:00", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
 
         startDatetime = TestDatetimeType(2017, 1, 1, 7, 0)
-        assertEquals("17/01/01 12:30", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/01 12:30", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
 
         startDatetime = TestDatetimeType(2017, 1, 1, 12, 0)
-        assertEquals("17/01/01 12:30", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/01 12:30", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
 
         startDatetime = TestDatetimeType(2017, 1, 1, 12, 30)
-        assertEquals("17/01/01 19:00", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/01 19:00", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
 
         startDatetime = TestDatetimeType(2017, 1, 1, 19, 0)
-        assertEquals("17/01/02 7:00", listValueObject.getPlanDate(startDatetime).mPlanDatetime.displayValue)
+        assertEquals("17/01/02 7:00", listValueObject.getPlanDate(startDatetime).planDatetime.displayValue)
     }
 
     @Test
@@ -202,17 +202,17 @@ class MedicineTimetableListTest : ATestParent() {
         val listValueObject = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3))
 
         var timetable = Timetable(
-                mTimetableId = TimetableIdType("time0001"),
-                mTimetableName = TimetableNameType("朝"),
-                mTimetableTime = TimetableTimeType(7, 0),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(3))
+                timetableId = TimetableIdType("time0001"),
+                timetableName = TimetableNameType("朝"),
+                timetableTime = TimetableTimeType(7, 0),
+                timetableDisplayOrder = TimetableDisplayOrderType(3))
         assertTrue(listValueObject.contain(timetable))
 
         timetable = Timetable(
-                mTimetableId = TimetableIdType("time0001"),
-                mTimetableName = TimetableNameType("昼"),
-                mTimetableTime = TimetableTimeType(12, 30),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(2))
+                timetableId = TimetableIdType("time0001"),
+                timetableName = TimetableNameType("昼"),
+                timetableTime = TimetableTimeType(12, 30),
+                timetableDisplayOrder = TimetableDisplayOrderType(2))
         assertFalse(listValueObject.contain(timetable))
 
         assertFalse(listValueObject.contain(null))

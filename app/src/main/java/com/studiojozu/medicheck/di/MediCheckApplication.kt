@@ -8,7 +8,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 open class MediCheckApplication : Application() {
 
-    lateinit var mComponent: AppComponent
+    lateinit var component: AppComponent
         private set
 
     override fun onCreate() {
@@ -18,7 +18,7 @@ open class MediCheckApplication : Application() {
     }
 
     open fun initComponent() {
-        mComponent = DaggerAppComponent.builder()
+        component = DaggerAppComponent.builder()
                 .applicationModule(getApplicationModule())
                 .persistenceModule(getPersistenceModule())
                 .serviceModule(getServiceModule())

@@ -15,7 +15,7 @@ import java.util.*
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 class RemindTimeoutTypeTest : ATestParent() {
-    private val mValueProperty = findProperty(RemindTimeoutType::class, "mValue")
+    private val mValueProperty = findProperty(RemindTimeoutType::class, "value")
 
     @Test
     @Throws(Exception::class)

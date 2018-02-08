@@ -17,23 +17,23 @@ import kotlin.collections.ArrayList
 class AlarmScheduleService(application: MediCheckApplication) {
 
     @Inject
-    internal lateinit var mTimetableRepository: TimetableRepository
+    internal lateinit var timetableRepository: TimetableRepository
     @Inject
-    internal lateinit var mSettingRepository: SettingRepository
+    internal lateinit var settingRepository: SettingRepository
     @Inject
-    internal lateinit var mScheduleRepository: ScheduleRepository
+    internal lateinit var scheduleRepository: ScheduleRepository
     @Inject
-    internal lateinit var mPersonMediRelationRepository: PersonMediRelationRepository
+    internal lateinit var personMediRelationRepository: PersonMediRelationRepository
     @Inject
-    internal lateinit var mMedicineViewRepository: MedicineViewRepository
+    internal lateinit var medicineViewRepository: MedicineViewRepository
 
     init {
-        application.mComponent.inject(this)
+        application.component.inject(this)
     }
 
     fun getNeedAlarmSchedules(): List<AlarmSchedule> {
-        val needAlarmSchedules = ArrayList(mScheduleRepository.findAlarmAll())
-        val setting = mSettingRepository.find()
+        val needAlarmSchedules = ArrayList(scheduleRepository.findAlarmAll())
+        val setting = settingRepository.find()
         val now = CalendarNoSecond().calendar
 
         val alarmTargetSchedules = TreeSet(AlarmScheduleComparator())
@@ -44,9 +44,9 @@ class AlarmScheduleService(application: MediCheckApplication) {
     }
 
     private fun createAlarmSchedule(schedule: Schedule): AlarmSchedule? {
-        val timetable = mTimetableRepository.findById(schedule.mTimetableId) ?: return null
-        val medicine = mMedicineViewRepository.findByMedicineId(schedule.mMedicineId) ?: return null
-        val person = mPersonMediRelationRepository.findPersonByMedicineId(schedule.mMedicineId) ?: return null
+        val timetable = timetableRepository.findById(schedule.timetableId) ?: return null
+        val medicine = medicineViewRepository.findByMedicineId(schedule.medicineId) ?: return null
+        val person = personMediRelationRepository.findPersonByMedicineId(schedule.medicineId) ?: return null
 
         return AlarmSchedule(schedule, timetable, medicine, person)
     }

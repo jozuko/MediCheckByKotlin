@@ -81,14 +81,14 @@ class ANumericDecimalValidatorTest : ATestParent() {
     @Throws(Exception::class)
     fun compareToDisplayOrderPriority() {
         val entity1 = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("11111111"),
-                mMedicineUnitValue = MedicineUnitValueType("1111"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+                medicineUnitId = MedicineUnitIdType("11111111"),
+                medicineUnitValue = MedicineUnitValueType("1111"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
 
         val entity2 = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("11111111"),
-                mMedicineUnitValue = MedicineUnitValueType("1111"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+                medicineUnitId = MedicineUnitIdType("11111111"),
+                medicineUnitValue = MedicineUnitValueType("1111"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
 
         val entity3 = entity1.copy()
 
@@ -102,14 +102,14 @@ class ANumericDecimalValidatorTest : ATestParent() {
     @Throws(Exception::class)
     fun compareToDisplayValuePriority() {
         val entity1 = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("11111111"),
-                mMedicineUnitValue = MedicineUnitValueType("1111"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+                medicineUnitId = MedicineUnitIdType("11111111"),
+                medicineUnitValue = MedicineUnitValueType("1111"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
 
         val entity2 = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("11111111"),
-                mMedicineUnitValue = MedicineUnitValueType("2222"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+                medicineUnitId = MedicineUnitIdType("11111111"),
+                medicineUnitValue = MedicineUnitValueType("2222"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
 
         val entity3 = entity1.copy()
 

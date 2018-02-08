@@ -18,7 +18,7 @@ class PersonMediRelationRepository(private val sqlitePersonMediRelationRepositor
 
     fun existByPersonIdMedicineId(personIdType: PersonIdType, medicineIdType: MedicineIdType): Boolean {
         val person = findPersonByMedicineId(medicineIdType) ?: return false
-        return person.mPersonId == personIdType
+        return person.personId == personIdType
     }
 
     fun deleteByMedicineId(medicineIdType: MedicineIdType) =
@@ -26,7 +26,7 @@ class PersonMediRelationRepository(private val sqlitePersonMediRelationRepositor
 
     fun insert(personId: PersonIdType, medicineIdType: MedicineIdType) =
             sqlitePersonMediRelationRepository.insert(SqlitePersonMediRelation.build {
-                mMedicineId = medicineIdType
-                mPersonId = personId
+                medicineId = medicineIdType
+                this.personId = personId
             })
 }

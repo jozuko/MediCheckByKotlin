@@ -13,20 +13,20 @@ import java.util.*
 @Config(manifest = "src/main/AndroidManifest.xml")
 class TimetableTest : ATestParent() {
 
-    private val mTimetableNameProperty = findProperty(Timetable::class, "mTimetableName")
+    private val mTimetableNameProperty = findProperty(Timetable::class, "timetableName")
     private fun getTimetableName(entity: Timetable): TimetableNameType = mTimetableNameProperty.call(entity) as TimetableNameType
 
-    private val mTimetableTimeProperty = findProperty(Timetable::class, "mTimetableTime")
+    private val mTimetableTimeProperty = findProperty(Timetable::class, "timetableTime")
     private fun getTimetableTime(entity: Timetable): TimetableTimeType = mTimetableTimeProperty.call(entity) as TimetableTimeType
 
-    private val mTimetableDisplayOrderProperty = findProperty(Timetable::class, "mTimetableDisplayOrder")
+    private val mTimetableDisplayOrderProperty = findProperty(Timetable::class, "timetableDisplayOrder")
     private fun getTimetableDisplayOrder(entity: Timetable): TimetableDisplayOrderType = mTimetableDisplayOrderProperty.call(entity) as TimetableDisplayOrderType
 
     @Test
     @Throws(Exception::class)
     fun constructor_NoParameter() {
         val entity = Timetable()
-        assertNotNull(entity.mTimetableId.dbValue)
+        assertNotNull(entity.timetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
         assertTrue(0 < getTimetableTime(entity).dbValue)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
@@ -35,14 +35,14 @@ class TimetableTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor_WithParameter() {
-        var entity = Timetable(mTimetableId = TimetableIdType("12345678"))
-        assertEquals("12345678", entity.mTimetableId.dbValue)
+        var entity = Timetable(timetableId = TimetableIdType("12345678"))
+        assertEquals("12345678", entity.timetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
         assertTrue(0 < getTimetableTime(entity).dbValue)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
 
-        entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableName = TimetableNameType("sample name"))
-        assertEquals("12345678", entity.mTimetableId.dbValue)
+        entity = Timetable(timetableId = TimetableIdType("12345678"), timetableName = TimetableNameType("sample name"))
+        assertEquals("12345678", entity.timetableId.dbValue)
         assertEquals("sample name", getTimetableName(entity).dbValue)
         assertTrue(0 < getTimetableTime(entity).dbValue)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
@@ -51,15 +51,15 @@ class TimetableTest : ATestParent() {
         time.set(Calendar.HOUR_OF_DAY, 3)
         time.set(Calendar.MINUTE, 4)
         time.set(Calendar.MILLISECOND, 0)
-        entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableTime = TimetableTimeType(time))
+        entity = Timetable(timetableId = TimetableIdType("12345678"), timetableTime = TimetableTimeType(time))
         time.set(2000, 0, 1, 3, 4, 0)
-        assertEquals("12345678", entity.mTimetableId.dbValue)
+        assertEquals("12345678", entity.timetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
         assertEquals(time.timeInMillis, getTimetableTime(entity).dbValue)
         assertEquals(0L, getTimetableDisplayOrder(entity).dbValue)
 
-        entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableDisplayOrder = TimetableDisplayOrderType(Long.MAX_VALUE))
-        assertEquals("12345678", entity.mTimetableId.dbValue)
+        entity = Timetable(timetableId = TimetableIdType("12345678"), timetableDisplayOrder = TimetableDisplayOrderType(Long.MAX_VALUE))
+        assertEquals("12345678", entity.timetableId.dbValue)
         assertEquals("", getTimetableName(entity).dbValue)
         assertTrue(0 < getTimetableTime(entity).dbValue)
         assertEquals(Long.MAX_VALUE, getTimetableDisplayOrder(entity).dbValue)
@@ -72,19 +72,19 @@ class TimetableTest : ATestParent() {
         expect.set(2000, 0, 1, 3, 4, 0)
         expect.set(Calendar.MILLISECOND, 0)
 
-        var entity = Timetable(mTimetableTime = TimetableTimeType(3, 4))
-        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
+        var entity = Timetable(timetableTime = TimetableTimeType(3, 4))
+        assertEquals(expect.timeInMillis, entity.timetableTime.dbValue)
 
         expect.set(2000, 0, 1, 15, 4, 0)
-        entity = Timetable(mTimetableTime = TimetableTimeType(15, 4))
-        assertEquals(expect.timeInMillis, entity.getTimetableTime().dbValue)
+        entity = Timetable(timetableTime = TimetableTimeType(15, 4))
+        assertEquals(expect.timeInMillis, entity.timetableTime.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
     fun getTimetableName() {
         val value = "sample name"
-        val entity = Timetable(mTimetableName = TimetableNameType(value))
+        val entity = Timetable(timetableName = TimetableNameType(value))
         assertEquals(value, getTimetableName(entity).dbValue)
     }
 
@@ -93,10 +93,10 @@ class TimetableTest : ATestParent() {
     fun propertyTimetableNameWithTime() {
         val name = "sample name"
 
-        var entity = Timetable(mTimetableName = TimetableNameType(name), mTimetableTime = TimetableTimeType(0, 0))
+        var entity = Timetable(timetableName = TimetableNameType(name), timetableTime = TimetableTimeType(0, 0))
         assertEquals("sample name(0:00)", entity.timetableNameWithTime)
 
-        entity = Timetable(mTimetableName = TimetableNameType(name), mTimetableTime = TimetableTimeType(23, 59))
+        entity = Timetable(timetableName = TimetableNameType(name), timetableTime = TimetableTimeType(23, 59))
         assertEquals("sample name(23:59)", entity.timetableNameWithTime)
     }
 
@@ -117,12 +117,12 @@ class TimetableTest : ATestParent() {
 
         val dateTimeType = TestDatetimeType(day)
 
-        val entity = Timetable(mTimetableId = TimetableIdType("12345678"), mTimetableTime = TimetableTimeType(3, 4))
+        val entity = Timetable(timetableId = TimetableIdType("12345678"), timetableTime = TimetableTimeType(3, 4))
 
         val actualResult = entity.getPlanDateTime(dateTimeType)
-        assertEquals("12345678", actualResult.mTimetableId.dbValue)
-        assertEquals(planDateTime.timeInMillis, actualResult.mPlanDatetime.dbValue)
-        assertEquals(day.timeInMillis, actualResult.mSchedulePlanDate.dbValue)
+        assertEquals("12345678", actualResult.timetableId.dbValue)
+        assertEquals(planDateTime.timeInMillis, actualResult.planDatetime.dbValue)
+        assertEquals(day.timeInMillis, actualResult.schedulePlanDate.dbValue)
     }
 
     @Test
@@ -137,16 +137,16 @@ class TimetableTest : ATestParent() {
         time2.set(Calendar.MILLISECOND, 0)
 
         val entity1 = Timetable(
-                mTimetableId = TimetableIdType("1111"),
-                mTimetableName = TimetableNameType("sample name"),
-                mTimetableTime = TimetableTimeType(time1),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(2L))
+                timetableId = TimetableIdType("1111"),
+                timetableName = TimetableNameType("sample name"),
+                timetableTime = TimetableTimeType(time1),
+                timetableDisplayOrder = TimetableDisplayOrderType(2L))
 
         val entity2 = Timetable(
-                mTimetableId = TimetableIdType("1111"),
-                mTimetableName = TimetableNameType("sample name"),
-                mTimetableTime = TimetableTimeType(time2),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(1L))
+                timetableId = TimetableIdType("1111"),
+                timetableName = TimetableNameType("sample name"),
+                timetableTime = TimetableTimeType(time2),
+                timetableDisplayOrder = TimetableDisplayOrderType(1L))
 
         val entity3 = entity1.copy()
 
@@ -168,16 +168,16 @@ class TimetableTest : ATestParent() {
         time2.set(Calendar.MILLISECOND, 0)
 
         val entity1 = Timetable(
-                mTimetableId = TimetableIdType("1111"),
-                mTimetableName = TimetableNameType("sample name"),
-                mTimetableTime = TimetableTimeType(time1),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(2L))
+                timetableId = TimetableIdType("1111"),
+                timetableName = TimetableNameType("sample name"),
+                timetableTime = TimetableTimeType(time1),
+                timetableDisplayOrder = TimetableDisplayOrderType(2L))
 
         val entity2 = Timetable(
-                mTimetableId = TimetableIdType("1111"),
-                mTimetableName = TimetableNameType("sample name"),
-                mTimetableTime = TimetableTimeType(time2),
-                mTimetableDisplayOrder = TimetableDisplayOrderType(1L))
+                timetableId = TimetableIdType("1111"),
+                timetableName = TimetableNameType("sample name"),
+                timetableTime = TimetableTimeType(time2),
+                timetableDisplayOrder = TimetableDisplayOrderType(1L))
 
         val entity3 = entity1.copy()
 

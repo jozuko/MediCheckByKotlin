@@ -20,7 +20,7 @@ class MedicineRegisterService(application: MediCheckApplication) {
     lateinit var scheduleService: ScheduleService
 
     init {
-        application.mComponent.inject(this)
+        application.component.inject(this)
     }
 
     fun registerMedicine(medicine: Medicine, personIdType: PersonIdType) {
@@ -29,7 +29,7 @@ class MedicineRegisterService(application: MediCheckApplication) {
 
         medicineViewRepository.insert(medicine = medicine,
                 person = person,
-                timetableArray = medicine.mTimetableList.toList().toTypedArray(),
+                timetableArray = medicine.timetableList.toList().toTypedArray(),
                 scheduleArray = scheduleList.toList().toTypedArray())
     }
 

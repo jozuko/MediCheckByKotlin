@@ -11,31 +11,31 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
         const val serialVersionUID = 3758376193729504494L
     }
 
-    protected val mValue: Calendar
+    protected val value: Calendar
 
     override val dbValue: Long
-        get() = mValue.timeInMillis
+        get() = value.timeInMillis
 
     override val displayValue: String
         get() {
             val format = SimpleDateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT)
-            return format.format(mValue.time)
+            return format.format(value.time)
         }
 
     val year: Int
-        get() = mValue.get(Calendar.YEAR)
+        get() = value.get(Calendar.YEAR)
 
     val month: Int
-        get() = mValue.get(Calendar.MONTH)
+        get() = value.get(Calendar.MONTH)
 
     val dayOfMonth: Int
-        get() = mValue.get(Calendar.DAY_OF_MONTH)
+        get() = value.get(Calendar.DAY_OF_MONTH)
 
     val hourOfDay: Int
-        get() = mValue.get(Calendar.HOUR_OF_DAY)
+        get() = value.get(Calendar.HOUR_OF_DAY)
 
     val minute: Int
-        get() = mValue.get(Calendar.MINUTE)
+        get() = value.get(Calendar.MINUTE)
 
     protected constructor(millisecond: Any) {
         val timeInMillis: Long = when (millisecond) {
@@ -45,7 +45,7 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = CalendarNoSecond(timeInMillis).calendar
+        value = CalendarNoSecond(timeInMillis).calendar
     }
 
     /**
@@ -56,14 +56,14 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
      * @param minute 分(0-59)
      */
     protected constructor(year: Int, month: Int, day: Int, hourOfDay: Int, minute: Int) {
-        mValue = CalendarNoSecond(year, month - 1, day, hourOfDay, minute).calendar
+        value = CalendarNoSecond(year, month - 1, day, hourOfDay, minute).calendar
     }
 
     protected constructor(dateModel: ADateType<*>, timeModel: ATimeType<*>) {
         val dateCalendar = CalendarNoSecond(dateModel.dbValue).calendar
         val timeCalendar = CalendarNoSecond(timeModel.dbValue).calendar
 
-        mValue = CalendarNoSecond(
+        value = CalendarNoSecond(
                 year = dateCalendar.get(Calendar.YEAR),
                 month = dateCalendar.get(Calendar.MONTH),
                 dayOfMonth = dateCalendar.get(Calendar.DAY_OF_MONTH),
@@ -74,7 +74,7 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
     override fun compareTo(other: ADatetimeType<*>): Int = dbValue.compareTo(other.dbValue)
 
     @Suppress("UNCHECKED_CAST")
-    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
+    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(value.clone()) as C
 
     /**
      * フィールドが保持する日時とパラメータの示す日時の差分を分単位で返却する
@@ -96,29 +96,29 @@ abstract class ADatetimeType<out C : ADatetimeType<C>> : AValueObject<Long, C>, 
      */
     fun setHourMinute(hourOfDay: Int, minute: Int): ADatetimeType<*> {
         val datetimeType = clone()
-        datetimeType.mValue.set(Calendar.HOUR_OF_DAY, hourOfDay)
-        datetimeType.mValue.set(Calendar.MINUTE, minute)
+        datetimeType.value.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        datetimeType.value.set(Calendar.MINUTE, minute)
 
         return datetimeType
     }
 
     fun addMinute(minutes: Int): C {
         val datetimeType = clone()
-        datetimeType.mValue.add(Calendar.MINUTE, minutes)
+        datetimeType.value.add(Calendar.MINUTE, minutes)
 
         return datetimeType
     }
 
     fun addDay(days: Int): C {
         val datetimeType = clone()
-        datetimeType.mValue.add(Calendar.DAY_OF_MONTH, days)
+        datetimeType.value.add(Calendar.DAY_OF_MONTH, days)
 
         return datetimeType
     }
 
     fun addMonth(months: Int): C {
         val datetimeType = clone()
-        datetimeType.mValue.add(Calendar.MONTH, months)
+        datetimeType.value.add(Calendar.MONTH, months)
 
         return datetimeType
     }

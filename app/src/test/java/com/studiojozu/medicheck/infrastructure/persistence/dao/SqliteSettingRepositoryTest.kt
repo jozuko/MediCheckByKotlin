@@ -23,21 +23,21 @@ class SqliteSettingRepositoryTest : ATestParent() {
 
         // select no data
         var sqliteSetting = dao.find()!!
-        assertEquals(true, sqliteSetting.mUseReminder.isTrue)
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), sqliteSetting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), sqliteSetting.mRemindTimeout)
+        assertEquals(true, sqliteSetting.useReminder.isTrue)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), sqliteSetting.remindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), sqliteSetting.remindTimeout)
 
         // update
         val updateSetting = setSqliteSetting(Setting(
-                mUseReminder = UseReminderType(false),
-                mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30),
-                mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12)
+                useReminder = UseReminderType(false),
+                remindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30),
+                remindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12)
         ))
         dao.insert(updateSetting)
         sqliteSetting = dao.find()!!
-        assertEquals(false, sqliteSetting.mUseReminder.isTrue)
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30), sqliteSetting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12), sqliteSetting.mRemindTimeout)
+        assertEquals(false, sqliteSetting.useReminder.isTrue)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30), sqliteSetting.remindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_12), sqliteSetting.remindTimeout)
 
         // delete
         dao.delete()
@@ -46,6 +46,6 @@ class SqliteSettingRepositoryTest : ATestParent() {
 
     private fun setSqliteSetting(entity: Setting) =
             SqliteSetting.build {
-                mSetting = entity
+                setting = entity
             }
 }

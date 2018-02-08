@@ -14,7 +14,7 @@ import java.util.*
 @Config(manifest = "src/main/AndroidManifest.xml")
 class ATimeTypeTest : ATestParent() {
 
-    private val mValueProperty = findProperty(TestTimeType::class, "mValue")
+    private val mValueProperty = findProperty(TestTimeType::class, "value")
 
     @Test
     @Throws(Exception::class)

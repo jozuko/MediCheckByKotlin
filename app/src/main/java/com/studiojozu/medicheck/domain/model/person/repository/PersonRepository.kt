@@ -22,8 +22,8 @@ class PersonRepository(private val sqlitePersonRepository: SqlitePersonRepositor
             sqlitePersonRepository.maxDisplayOrder()
 
     fun insert(person: Person) =
-            sqlitePersonRepository.insert(SqlitePerson.build { mPerson = person })
+            sqlitePersonRepository.insert(SqlitePerson.build { this.person = person })
 
     fun delete(person: Person) =
-            sqlitePersonRepository.delete(SqlitePerson.build { mPerson = person })
+            sqlitePersonRepository.delete(SqlitePerson.build { this.person = person })
 }

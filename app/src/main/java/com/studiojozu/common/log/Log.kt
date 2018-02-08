@@ -5,7 +5,7 @@ import android.util.Log as AndroidLog
 /**
  * ログ出力クラス
  */
-class Log(private val mSourceClass: Class<*>) {
+class Log(private val sourceClass: Class<*>) {
     companion object {
         private val BASE_TAG = "MediCheck."
     }
@@ -16,7 +16,7 @@ class Log(private val mSourceClass: Class<*>) {
      * @return ログ出力用TAG
      */
     private val tag: String
-        get() = BASE_TAG + mSourceClass.simpleName
+        get() = BASE_TAG + sourceClass.simpleName
 
     /**
      * android.util.Log.dを実行する

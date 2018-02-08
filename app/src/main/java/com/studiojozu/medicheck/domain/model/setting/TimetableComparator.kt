@@ -2,15 +2,15 @@ package com.studiojozu.medicheck.domain.model.setting
 
 import java.util.*
 
-class TimetableComparator(private val mComparePattern: ComparePattern) : Comparator<Timetable> {
+class TimetableComparator(private val comparePattern: ComparePattern) : Comparator<Timetable> {
 
-    override fun compare(timetable1: Timetable, timetable2: Timetable): Int = when (mComparePattern) {
-        ComparePattern.Time -> timetable1.compareToTimePriority(timetable2)
-        ComparePattern.DisplayOrder -> timetable1.compareToDisplayOrderPriority(timetable2)
+    override fun compare(timetable1: Timetable, timetable2: Timetable): Int = when (comparePattern) {
+        ComparePattern.TIME -> timetable1.compareToTimePriority(timetable2)
+        ComparePattern.DISPLAY_ORDER -> timetable1.compareToDisplayOrderPriority(timetable2)
     }
 
     enum class ComparePattern {
-        Time,
-        DisplayOrder
+        TIME,
+        DISPLAY_ORDER
     }
 }

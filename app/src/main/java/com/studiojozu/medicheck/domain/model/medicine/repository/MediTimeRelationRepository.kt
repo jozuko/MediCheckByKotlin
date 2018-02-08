@@ -1,8 +1,8 @@
 package com.studiojozu.medicheck.domain.model.medicine.repository
 
-import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineTimetableList
+import com.studiojozu.medicheck.domain.model.medicine.OneShotType
 import com.studiojozu.medicheck.domain.model.setting.Timetable
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.infrastructure.persistence.dao.SqliteMediTimeRelationRepository
@@ -19,16 +19,16 @@ class MediTimeRelationRepository(private var sqliteMediTimeRelationRepository: S
     fun insertTimetable(medicineId: MedicineIdType, timetableList: MedicineTimetableList) =
             timetableList.forEach { it ->
                 sqliteMediTimeRelationRepository.insert(SqliteMediTimeRelation.build {
-                    mMedicineId = medicineId
-                    mTimetableId = it.mTimetableId
-                    mIsOneShot = IsOneShotType(false)
+                    this.medicineId = medicineId
+                    timetableId = it.timetableId
+                    oneShot = OneShotType(false)
                 })
             }
 
     fun insertOneShot(medicineId: MedicineIdType) =
             sqliteMediTimeRelationRepository.insert(SqliteMediTimeRelation.build {
-                mMedicineId = medicineId
-                mTimetableId = TimetableIdType("")
-                mIsOneShot = IsOneShotType(true)
+                this.medicineId = medicineId
+                timetableId = TimetableIdType("")
+                oneShot = OneShotType(true)
             })
 }

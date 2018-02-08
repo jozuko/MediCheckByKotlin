@@ -16,31 +16,31 @@ class MedicineUnitTest : ATestParent() {
     @Throws(Exception::class)
     fun constructor_NoParameter() {
         val entity = MedicineUnit()
-        assertNotNull(entity.mMedicineUnitId.dbValue)
-        assertNotSame("", entity.mMedicineUnitId.dbValue)
-        assertEquals("", entity.mMedicineUnitValue.dbValue)
-        assertEquals(0L, entity.mMedicineUnitDisplayOrder.dbValue)
+        assertNotNull(entity.medicineUnitId.dbValue)
+        assertNotSame("", entity.medicineUnitId.dbValue)
+        assertEquals("", entity.medicineUnitValue.dbValue)
+        assertEquals(0L, entity.medicineUnitDisplayOrder.dbValue)
     }
 
     @Test
     @Throws(Exception::class)
     fun constructor_WithParameter() {
-        var entity = MedicineUnit(mMedicineUnitId = MedicineUnitIdType("1234"))
-        assertEquals("1234", entity.mMedicineUnitId.dbValue)
-        assertEquals("", entity.mMedicineUnitValue.dbValue)
-        assertEquals(0L, entity.mMedicineUnitDisplayOrder.dbValue)
+        var entity = MedicineUnit(medicineUnitId = MedicineUnitIdType("1234"))
+        assertEquals("1234", entity.medicineUnitId.dbValue)
+        assertEquals("", entity.medicineUnitValue.dbValue)
+        assertEquals(0L, entity.medicineUnitDisplayOrder.dbValue)
 
-        entity = MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("錠"))
-        assertNotNull(entity.mMedicineUnitId.dbValue)
-        assertNotSame("", entity.mMedicineUnitId.dbValue)
-        assertEquals("錠", entity.mMedicineUnitValue.dbValue)
-        assertEquals(0L, entity.mMedicineUnitDisplayOrder.dbValue)
+        entity = MedicineUnit(medicineUnitValue = MedicineUnitValueType("錠"))
+        assertNotNull(entity.medicineUnitId.dbValue)
+        assertNotSame("", entity.medicineUnitId.dbValue)
+        assertEquals("錠", entity.medicineUnitValue.dbValue)
+        assertEquals(0L, entity.medicineUnitDisplayOrder.dbValue)
 
-        entity = MedicineUnit(mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(Long.MAX_VALUE))
-        assertNotNull(entity.mMedicineUnitId.dbValue)
-        assertNotSame("", entity.mMedicineUnitId.dbValue)
-        assertEquals("", entity.mMedicineUnitValue.dbValue)
-        assertEquals(Long.MAX_VALUE, entity.mMedicineUnitDisplayOrder.dbValue)
+        entity = MedicineUnit(medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(Long.MAX_VALUE))
+        assertNotNull(entity.medicineUnitId.dbValue)
+        assertNotSame("", entity.medicineUnitId.dbValue)
+        assertEquals("", entity.medicineUnitValue.dbValue)
+        assertEquals(Long.MAX_VALUE, entity.medicineUnitDisplayOrder.dbValue)
     }
 
     @Test
@@ -49,7 +49,7 @@ class MedicineUnitTest : ATestParent() {
         var entity = MedicineUnit()
         assertEquals("", entity.displayValue)
 
-        entity = MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("錠"))
+        entity = MedicineUnit(medicineUnitValue = MedicineUnitValueType("錠"))
         assertEquals("錠", entity.displayValue)
     }
 }

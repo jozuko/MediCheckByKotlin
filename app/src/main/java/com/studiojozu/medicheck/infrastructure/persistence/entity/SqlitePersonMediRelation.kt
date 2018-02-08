@@ -8,11 +8,11 @@ import com.studiojozu.medicheck.domain.model.person.PersonIdType
 @Entity(tableName = "person_medi_relation", primaryKeys = arrayOf("medicine_id", "person_id"))
 open class SqlitePersonMediRelation(medicineId: MedicineIdType, personId: PersonIdType) {
     class Builder {
-        lateinit var mMedicineId: MedicineIdType
-        lateinit var mPersonId: PersonIdType
+        lateinit var medicineId: MedicineIdType
+        lateinit var personId: PersonIdType
 
         fun build(): SqlitePersonMediRelation =
-                SqlitePersonMediRelation(medicineId = mMedicineId, personId = mPersonId)
+                SqlitePersonMediRelation(medicineId = medicineId, personId = personId)
 
     }
 
@@ -25,10 +25,12 @@ open class SqlitePersonMediRelation(medicineId: MedicineIdType, personId: Person
     }
 
     /** 薬ID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @ColumnInfo(name = "medicine_id")
-    var mMedicineId: MedicineIdType = medicineId
+    var medicineId: MedicineIdType = medicineId
 
     /** 飲む人ID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @ColumnInfo(name = "person_id")
-    var mPersonId: PersonIdType = personId
+    var personId: PersonIdType = personId
 }

@@ -14,5 +14,5 @@ class TimetableTimeType : ATimeType<TimetableTimeType> {
     constructor(millisecond: Any) : super(millisecond)
     constructor(hourOfDay: Int, minute: Int) : super(hourOfDay, minute)
 
-    fun replaceHourMinute(datetimeType: ADatetimeType<*>): ADatetimeType<*> = datetimeType.setHourMinute(mValue.get(Calendar.HOUR_OF_DAY), mValue.get(Calendar.MINUTE))
+    fun replaceHourMinute(datetimeType: ADatetimeType<*>): ADatetimeType<*> = datetimeType.setHourMinute(value.get(Calendar.HOUR_OF_DAY), value.get(Calendar.MINUTE))
 }

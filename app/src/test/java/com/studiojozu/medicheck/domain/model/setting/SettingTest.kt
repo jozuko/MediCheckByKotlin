@@ -15,13 +15,13 @@ import java.util.*
 @Config(manifest = "src/main/AndroidManifest.xml")
 class SettingTest : ATestParent() {
 
-    private val mUseReminderProperty = findProperty(Setting::class, "mUseReminder")
+    private val mUseReminderProperty = findProperty(Setting::class, "useReminder")
     private fun getUseReminder(entity: Setting): UseReminderType = mUseReminderProperty.call(entity) as UseReminderType
 
-    private val mRemindIntervalProperty = findProperty(Setting::class, "mRemindInterval")
+    private val mRemindIntervalProperty = findProperty(Setting::class, "remindInterval")
     private fun getRemindInterval(entity: Setting): RemindIntervalType = mRemindIntervalProperty.call(entity) as RemindIntervalType
 
-    private val mRemindTimeoutProperty = findProperty(Setting::class, "mRemindTimeout")
+    private val mRemindTimeoutProperty = findProperty(Setting::class, "remindTimeout")
     private fun getRemindTimeout(entity: Setting): RemindTimeoutType = mRemindTimeoutProperty.call(entity) as RemindTimeoutType
 
     @Test
@@ -36,17 +36,17 @@ class SettingTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor_WithParameter() {
-        var settingEntity = Setting(mUseReminder = UseReminderType(false))
+        var settingEntity = Setting(useReminder = UseReminderType(false))
         assertEquals(false, getUseReminder(settingEntity).isTrue)
         assertEquals(5, getRemindInterval(settingEntity).dbValue)
         assertEquals(60 * 24, getRemindTimeout(settingEntity).dbValue)
 
-        settingEntity = Setting(mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30))
+        settingEntity = Setting(remindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_30))
         assertEquals(true, getUseReminder(settingEntity).isTrue)
         assertEquals(30, getRemindInterval(settingEntity).dbValue)
         assertEquals(60 * 24, getRemindTimeout(settingEntity).dbValue)
 
-        settingEntity = Setting(mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_30))
+        settingEntity = Setting(remindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_30))
         assertEquals(true, getUseReminder(settingEntity).isTrue)
         assertEquals(5, getRemindInterval(settingEntity).dbValue)
         assertEquals(30, getRemindTimeout(settingEntity).dbValue)
@@ -55,7 +55,7 @@ class SettingTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun useReminder() {
-        val settingEntity = Setting(mUseReminder = UseReminderType(false))
+        val settingEntity = Setting(useReminder = UseReminderType(false))
         assertEquals(false, settingEntity.useReminder())
     }
 
@@ -68,7 +68,7 @@ class SettingTest : ATestParent() {
 
         val dateType = TestDateType(now)
         val timeType = TestTimeType(now)
-        val model = Setting(mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_1))
+        val model = Setting(remindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_1))
 
         // same time
         assertFalse(model.isRemindTimeout(now, dateType, timeType))
@@ -91,7 +91,7 @@ class SettingTest : ATestParent() {
 
         val dateType = TestDateType(now)
         val timeType = TestTimeType(now)
-        val model = Setting(mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5))
+        val model = Setting(remindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5))
 
         // -5 minute
         now.set(2017, 0, 2, 3, 0, 0)

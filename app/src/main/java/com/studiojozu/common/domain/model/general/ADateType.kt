@@ -11,15 +11,15 @@ abstract class ADateType<out C : ADateType<C>> : AValueObject<Long, C>, Comparab
         const val serialVersionUID = 5505479830648039872L
     }
 
-    protected val mValue: Calendar
+    protected val value: Calendar
 
     override val dbValue: Long
-        get() = mValue.timeInMillis
+        get() = value.timeInMillis
 
     override val displayValue: String
         get() {
             val format = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
-            return format.format(mValue.time)
+            return format.format(value.time)
         }
 
     protected constructor(millisecond: Any) {
@@ -31,19 +31,19 @@ abstract class ADateType<out C : ADateType<C>> : AValueObject<Long, C>, Comparab
             else -> throw IllegalArgumentException("unknown type.")
         }
 
-        mValue = CalendarNoSecond(timeInMillis).calendar
-        mValue.set(Calendar.HOUR_OF_DAY, 0)
-        mValue.set(Calendar.MINUTE, 0)
+        value = CalendarNoSecond(timeInMillis).calendar
+        value.set(Calendar.HOUR_OF_DAY, 0)
+        value.set(Calendar.MINUTE, 0)
     }
 
     protected constructor(year: Int, month: Int, day: Int) {
-        mValue = CalendarNoSecond(year, month - 1, day, 0, 0).calendar
+        value = CalendarNoSecond(year, month - 1, day, 0, 0).calendar
     }
 
     override fun compareTo(other: ADateType<*>): Int = dbValue.compareTo(other.dbValue)
 
     @Suppress("UNCHECKED_CAST")
-    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(mValue.clone()) as C
+    override fun clone(): C = this.javaClass.getConstructor(Any::class.java).newInstance(value.clone()) as C
 
     /**
      * フィールド値と引数の年月日を比較する。
@@ -52,15 +52,15 @@ abstract class ADateType<out C : ADateType<C>> : AValueObject<Long, C>, Comparab
      * @return 一致する場合はtrueを返却する
      */
     fun sameDate(other: Calendar): Boolean {
-        if (mValue.get(Calendar.YEAR) != other.get(Calendar.YEAR)) return false
-        if (mValue.get(Calendar.MONTH) != other.get(Calendar.MONTH)) return false
-        if (mValue.get(Calendar.DAY_OF_MONTH) != other.get(Calendar.DAY_OF_MONTH)) return false
+        if (value.get(Calendar.YEAR) != other.get(Calendar.YEAR)) return false
+        if (value.get(Calendar.MONTH) != other.get(Calendar.MONTH)) return false
+        if (value.get(Calendar.DAY_OF_MONTH) != other.get(Calendar.DAY_OF_MONTH)) return false
         return true
     }
 
     fun addDay(days: Int): C {
         val dateType = clone()
-        dateType.mValue.add(Calendar.DAY_OF_MONTH, days)
+        dateType.value.add(Calendar.DAY_OF_MONTH, days)
 
         return dateType
     }

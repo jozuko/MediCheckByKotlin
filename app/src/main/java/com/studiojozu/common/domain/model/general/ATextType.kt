@@ -7,23 +7,23 @@ abstract class ATextType<out C : ATextType<C>> : AValueObject<String, C>, Compar
         const val serialVersionUID = -4630676994700703038L
     }
 
-    protected val mValue: String
+    protected val value: String
 
     override val dbValue: String
-        get() = mValue
+        get() = value
 
     override val displayValue: String
-        get() = mValue
+        get() = value
 
     protected constructor() {
-        mValue = ""
+        value = ""
     }
 
     protected constructor(value: Any?) {
-        mValue = when (value) {
+        this.value = when (value) {
             null -> ""
             is String -> value
-            is ATextType<*> -> value.mValue
+            is ATextType<*> -> value.value
             else -> throw IllegalArgumentException("unknown type.")
         }
     }

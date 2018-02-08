@@ -16,26 +16,26 @@ import org.robolectric.annotation.Config
 @Config(manifest = "src/main/AndroidManifest.xml")
 class MedicineUnitComparatorTest : ATestParent() {
     private val entity1 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("11111111"),
-            mMedicineUnitValue = MedicineUnitValueType("1111"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+            medicineUnitId = MedicineUnitIdType("11111111"),
+            medicineUnitValue = MedicineUnitValueType("1111"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
     private val entity2 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("11111111"),
-            mMedicineUnitValue = MedicineUnitValueType("2222"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+            medicineUnitId = MedicineUnitIdType("11111111"),
+            medicineUnitValue = MedicineUnitValueType("2222"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
     private val entity3 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("11111111"),
-            mMedicineUnitValue = MedicineUnitValueType("1111"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+            medicineUnitId = MedicineUnitIdType("11111111"),
+            medicineUnitValue = MedicineUnitValueType("1111"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
     private val entity4 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("11111111"),
-            mMedicineUnitValue = MedicineUnitValueType("1111"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
+            medicineUnitId = MedicineUnitIdType("11111111"),
+            medicineUnitValue = MedicineUnitValueType("1111"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1))
 
     @Test
     @Throws(Exception::class)
     fun compareDisplayValue() {
-        val comparator = MedicineUnitComparator(MedicineUnitComparator.ComparePattern.DisplayValue)
+        val comparator = MedicineUnitComparator(MedicineUnitComparator.ComparePattern.DISPLAY_VALUE)
 
         assertTrue(comparator.compare(entity1, entity1) == 0)
         assertTrue(comparator.compare(entity1, entity4) == 0)
@@ -49,7 +49,7 @@ class MedicineUnitComparatorTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun compareDisplayOrder() {
-        val comparator = MedicineUnitComparator(MedicineUnitComparator.ComparePattern.DisplayOrder)
+        val comparator = MedicineUnitComparator(MedicineUnitComparator.ComparePattern.DISPLAY_ORDER)
 
         assertTrue(comparator.compare(entity1, entity1) == 0)
         assertTrue(comparator.compare(entity1, entity4) == 0)

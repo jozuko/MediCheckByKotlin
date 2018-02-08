@@ -72,10 +72,10 @@ class MediTimeRelationRepositoryTest : ATestParent() {
     }
 
     fun assert(expect: Timetable, actual: Timetable) {
-        assertEquals(expect.mTimetableId, actual.mTimetableId)
-        assertEquals(expect.mTimetableName, actual.mTimetableName)
-        assertEquals(expect.mTimetableTime, actual.mTimetableTime)
-        assertEquals(expect.mTimetableDisplayOrder, actual.mTimetableDisplayOrder)
+        assertEquals(expect.timetableId, actual.timetableId)
+        assertEquals(expect.timetableName, actual.timetableName)
+        assertEquals(expect.timetableTime, actual.timetableTime)
+        assertEquals(expect.timetableDisplayOrder, actual.timetableDisplayOrder)
     }
 
 }

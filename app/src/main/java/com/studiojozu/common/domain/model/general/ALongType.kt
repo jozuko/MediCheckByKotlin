@@ -7,15 +7,15 @@ abstract class ALongType<out C : ALongType<C>> @JvmOverloads protected construct
         const val serialVersionUID = 7610652992905703415L
     }
 
-    protected val mValue: Long = when (value) {
+    protected val value: Long = when (value) {
         is Long -> value
         is Int -> value.toLong()
-        is ALongType<*> -> value.mValue
+        is ALongType<*> -> value.value
         else -> -1L
     }
 
     override val dbValue: Long
-        get() = mValue
+        get() = value
 
     override val displayValue: String
         get() = dbValue.toString()

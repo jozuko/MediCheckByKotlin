@@ -18,32 +18,32 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
         private const val serialVersionUID = -4901152259481847837L
     }
 
-    private var mScheduleList: MutableList<Schedule> = mutableListOf()
-    private var mScheduleIterator: Iterator<Schedule>? = null
+    private var scheduleList: MutableList<Schedule> = mutableListOf()
+    private var scheduleIterator: Iterator<Schedule>? = null
 
     private fun copy(): ScheduleList {
         val copyTarget = ScheduleList()
-        copyTarget.mScheduleList.addAll(mScheduleList.map { it.copy() })
+        copyTarget.scheduleList.addAll(scheduleList.map { it.copy() })
 
         return copyTarget
     }
 
     override fun iterator(): Iterator<Schedule> {
         val scheduleList = copy()
-        scheduleList.mScheduleIterator = scheduleList.createScheduleIterator()
+        scheduleList.scheduleIterator = scheduleList.createScheduleIterator()
         return scheduleList
     }
 
-    override fun hasNext(): Boolean = mScheduleIterator!!.hasNext()
+    override fun hasNext(): Boolean = scheduleIterator!!.hasNext()
 
-    override fun next(): Schedule = mScheduleIterator!!.next()
+    override fun next(): Schedule = scheduleIterator!!.next()
 
-    private fun createScheduleIterator(): Iterator<Schedule> = mScheduleList.iterator()
+    private fun createScheduleIterator(): Iterator<Schedule> = scheduleList.iterator()
 
-    private fun clearScheduleList() = mScheduleList.clear()
+    private fun clearScheduleList() = scheduleList.clear()
 
     fun createScheduleList(medicine: Medicine) {
-        val medicineNumber = calculateMedicineNumber(medicine.mTimetableList, medicine.mMedicineDateNumber)
+        val medicineNumber = calculateMedicineNumber(medicine.timetableList, medicine.medicineDateNumber)
         createScheduleList(medicine, medicineNumber)
     }
 
@@ -73,11 +73,11 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             val standardDatetime = getNextStartDatetime(medicine, planDate)
 
             // 服用予定日時を取得する
-            planDate = medicine.mTimetableList.getPlanDate(standardDatetime)
+            planDate = medicine.timetableList.getPlanDate(standardDatetime)
 
             // 服用予定日時を一覧に追加する
-            val schedule = Schedule(medicine.mMedicineId, planDate.mSchedulePlanDate, planDate.mTimetableId, ScheduleNeedAlarmType(), ScheduleIsTakeType(), ScheduleTookDatetimeType())
-            mScheduleList.add(schedule)
+            val schedule = Schedule(medicine.medicineId, planDate.schedulePlanDate, planDate.timetableId, ScheduleNeedAlarmType(), ScheduleIsTakeType(), ScheduleTookDatetimeType())
+            scheduleList.add(schedule)
         }
     }
 
@@ -89,11 +89,11 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
             return getFirstDatetime(medicine)
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻ではなかった場合は予定日時を返却する
-        if (!medicine.mTimetableList.isFinalTime(planDate.mTimetableId))
-            return planDate.mPlanDatetime
+        if (!medicine.timetableList.isFinalTime(planDate.timetableId))
+            return planDate.planDatetime
 
         // 予定日時で使用しているTimetableIdがTimetableListの最終時刻の場合はIntervalを加算する
-        val afterIntervalDateTime = medicine.mMedicineInterval.addInterval(planDate.mPlanDatetime, medicine.mMedicineIntervalMode)
+        val afterIntervalDateTime = medicine.medicineInterval.addInterval(planDate.planDatetime, medicine.medicineIntervalMode)
         val nextDay = CalendarNoSecond(afterIntervalDateTime.dbValue).calendar
         nextDay.set(Calendar.HOUR_OF_DAY, 0)
         nextDay.set(Calendar.MINUTE, 0)
@@ -101,13 +101,13 @@ class ScheduleList : Iterator<Schedule>, Iterable<Schedule>, Serializable {
     }
 
     private fun getFirstDatetime(medicine: Medicine): ADatetimeType<*> {
-        if (medicine.mMedicineIntervalMode.isDays)
-            return medicine.mMedicineStartDatetime
+        if (medicine.medicineIntervalMode.isDays)
+            return medicine.medicineStartDatetime
 
-        val nextDay = CalendarNoSecond(medicine.mMedicineStartDatetime.dbValue).calendar
-        nextDay.set(Calendar.DAY_OF_MONTH, medicine.mMedicineInterval.dbValue.toInt())
+        val nextDay = CalendarNoSecond(medicine.medicineStartDatetime.dbValue).calendar
+        nextDay.set(Calendar.DAY_OF_MONTH, medicine.medicineInterval.dbValue.toInt())
 
-        if (nextDay.timeInMillis < medicine.mMedicineStartDatetime.dbValue)
+        if (nextDay.timeInMillis < medicine.medicineStartDatetime.dbValue)
             nextDay.add(Calendar.MONTH, 1)
 
         return MedicineStartDatetimeType(nextDay)

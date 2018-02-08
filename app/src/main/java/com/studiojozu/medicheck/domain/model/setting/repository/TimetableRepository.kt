@@ -19,8 +19,8 @@ class TimetableRepository(private val sqliteTimetableRepository: SqliteTimetable
             sqliteTimetableRepository.maxDisplayOrder()
 
     fun insert(timetable: Timetable) =
-            sqliteTimetableRepository.insert(SqliteTimetable.build { mTimetable = timetable })
+            sqliteTimetableRepository.insert(SqliteTimetable.build { this.timetable = timetable })
 
     fun delete(timetable: Timetable) =
-            sqliteTimetableRepository.delete(SqliteTimetable.build { mTimetable = timetable })
+            sqliteTimetableRepository.delete(SqliteTimetable.build { this.timetable = timetable })
 }

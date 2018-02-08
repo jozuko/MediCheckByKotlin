@@ -1,8 +1,8 @@
 package com.studiojozu.medicheck.domain.model.medicine.repository
 
-import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.Medicine
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
+import com.studiojozu.medicheck.domain.model.medicine.OneShotType
 import com.studiojozu.medicheck.domain.model.person.Person
 import com.studiojozu.medicheck.domain.model.schedule.Schedule
 import com.studiojozu.medicheck.domain.model.setting.Timetable
@@ -57,30 +57,30 @@ class MedicineViewRepository(private val sqliteMedicineRepository: SqliteMedicin
     }
 
     private fun toSqliteMedicine(medicine: Medicine) =
-            SqliteMedicine.build { mMedicine = medicine }
+            SqliteMedicine.build { this.medicine = medicine }
 
     private fun toSqliteMedicineUnit(medicine: Medicine) =
-            SqliteMedicineUnit.build { mMedicineUnit = medicine.mMedicineUnit }
+            SqliteMedicineUnit.build { medicineUnit = medicine.medicineUnit }
 
     private fun toSqlitePersonMediRelationArray(medicine: Medicine, person: Person?): Array<SqlitePersonMediRelation> {
         person ?: return emptyArray()
 
         return arrayOf(SqlitePersonMediRelation.build {
-            mMedicineId = medicine.mMedicineId
-            mPersonId = person.mPersonId
+            medicineId = medicine.medicineId
+            personId = person.personId
         })
     }
 
     private fun toSqliteMediTimeRelationArray(medicine: Medicine, timetableArray: Array<Timetable>): Array<SqliteMediTimeRelation> =
             timetableArray.map {
                 SqliteMediTimeRelation.build {
-                    mMedicineId = medicine.mMedicineId
-                    mTimetableId = it.mTimetableId
-                    mIsOneShot = IsOneShotType(false)
+                    medicineId = medicine.medicineId
+                    timetableId = it.timetableId
+                    oneShot = OneShotType(false)
                 }
             }.toTypedArray()
 
     private fun toSqliteScheduleArray(scheduleArray: Array<Schedule>): Array<SqliteSchedule> =
-            scheduleArray.map { SqliteSchedule.build { mSchedule = it } }.toTypedArray()
+            scheduleArray.map { SqliteSchedule.build { schedule = it } }.toTypedArray()
 
 }

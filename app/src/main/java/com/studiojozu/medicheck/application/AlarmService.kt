@@ -15,8 +15,8 @@ class AlarmService(application: Application) {
         private const val REQUEST_CODE_MEDICINE_ALARM = 1
     }
 
-    private val mContext: Context = application.applicationContext
-    private val mAlarmManager: AlarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    private val context: Context = application.applicationContext
+    private val alarmManager: AlarmManager = application.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
     fun resetAlarm() {
         clearAlarm()
@@ -26,7 +26,7 @@ class AlarmService(application: Application) {
     private fun clearAlarm() {
         val pendingIntent = createAlarmIntent()
         pendingIntent.cancel()
-        mAlarmManager.cancel(pendingIntent)
+        alarmManager.cancel(pendingIntent)
     }
 
     private fun setAlarm() {
@@ -34,15 +34,15 @@ class AlarmService(application: Application) {
         val triggerAtMillis = getNowPlusOneMinute().timeInMillis
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            mAlarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
             return
         }
-        mAlarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+        alarmManager.set(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
     }
 
     private fun createAlarmIntent(): PendingIntent {
-        val intent = Intent(mContext, AlarmBroadcastReceiver::class.java)
-        return PendingIntent.getBroadcast(mContext, REQUEST_CODE_MEDICINE_ALARM, intent, 0)
+        val intent = Intent(context, AlarmBroadcastReceiver::class.java)
+        return PendingIntent.getBroadcast(context, REQUEST_CODE_MEDICINE_ALARM, intent, 0)
     }
 
     private fun getNowPlusOneMinute(): Calendar {

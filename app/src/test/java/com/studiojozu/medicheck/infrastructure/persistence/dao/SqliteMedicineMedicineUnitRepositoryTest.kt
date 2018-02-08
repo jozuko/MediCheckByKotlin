@@ -26,7 +26,7 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
 
         // addData
         val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
-        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId.dbValue))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.medicineUnitId.dbValue))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
@@ -52,12 +52,12 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
 
         // addData
         val medicineUnit = setSqliteMedicineUnit(getMedicineUnit("錠"))
-        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.mMedicineUnitId.dbValue))
+        val medicine = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit.medicineUnitId.dbValue))
         database.medicineDao().insert(medicine)
         database.medicineUnitDao().insert(medicineUnit)
 
         // findByMedicineId
-        medicineView = dao.findByMedicineId(medicine.mMedicineId.dbValue)
+        medicineView = dao.findByMedicineId(medicine.medicineId.dbValue)
         assertNotNull(medicineView)
         assert(medicine, medicineUnit, medicineView!!)
 
@@ -71,31 +71,31 @@ class SqliteMedicineMedicineUnitRepositoryTest : ATestParent() {
     }
 
     private fun setSqliteMedicine(entity: Medicine) =
-            SqliteMedicine.build { mMedicine = entity }
+            SqliteMedicine.build { medicine = entity }
 
     private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
-            SqliteMedicineUnit.build { mMedicineUnit = entity }
+            SqliteMedicineUnit.build { medicineUnit = entity }
 
     private fun assert(expectMedicine: SqliteMedicine, expectMedicineUnit: SqliteMedicineUnit, actual: SqliteMedicineMedicineUnit) {
-        Assert.assertEquals(expectMedicine.mMedicineId, actual.mMedicineId)
-        Assert.assertEquals(expectMedicine.mMedicineName, actual.mMedicineName)
-        Assert.assertEquals(expectMedicine.mMedicineTakeNumber, actual.mMedicineTakeNumber)
-        Assert.assertEquals(expectMedicine.mMedicineUnitId, actual.mMedicineUnitId)
-        Assert.assertEquals(expectMedicine.mMedicineDateNumber, actual.mMedicineDateNumber)
-        Assert.assertEquals(expectMedicine.mMedicineStartDatetime, actual.mMedicineStartDatetime)
-        Assert.assertEquals(expectMedicine.mMedicineInterval, actual.mMedicineInterval)
-        Assert.assertEquals(expectMedicine.mMedicineIntervalMode, actual.mMedicineIntervalMode)
-        Assert.assertEquals(expectMedicine.mMedicinePhoto, actual.mMedicinePhoto)
-        Assert.assertEquals(expectMedicine.mMedicineNeedAlarm, actual.mMedicineNeedAlarm)
-        Assert.assertEquals(expectMedicine.mMedicineDeleteFlag, actual.mMedicineDeleteFlag)
-        Assert.assertEquals(expectMedicineUnit.mMedicineUnitValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expectMedicineUnit.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expectMedicine.medicineId, actual.medicineId)
+        Assert.assertEquals(expectMedicine.medicineName, actual.medicineName)
+        Assert.assertEquals(expectMedicine.medicineTakeNumber, actual.medicineTakeNumber)
+        Assert.assertEquals(expectMedicine.medicineUnitId, actual.medicineUnitId)
+        Assert.assertEquals(expectMedicine.medicineDateNumber, actual.medicineDateNumber)
+        Assert.assertEquals(expectMedicine.medicineStartDatetime, actual.medicineStartDatetime)
+        Assert.assertEquals(expectMedicine.medicineInterval, actual.medicineInterval)
+        Assert.assertEquals(expectMedicine.medicineIntervalMode, actual.medicineIntervalMode)
+        Assert.assertEquals(expectMedicine.medicinePhoto, actual.medicinePhoto)
+        Assert.assertEquals(expectMedicine.medicineNeedAlarm, actual.medicineNeedAlarm)
+        Assert.assertEquals(expectMedicine.medicineDeleteFlag, actual.medicineDeleteFlag)
+        Assert.assertEquals(expectMedicineUnit.medicineUnitValue, actual.medicineUnitValue)
+        Assert.assertEquals(expectMedicineUnit.medicineUnitDisplayOrder, actual.medicineUnitDisplayOrder)
     }
 
     private fun getMedicine(name: String = "", unitId: String = MedicineUnitIdType().dbValue): Medicine =
-            Medicine(mMedicineName = MedicineNameType(name),
-                    mMedicineUnit = MedicineUnit(mMedicineUnitId = MedicineUnitIdType(unitId)))
+            Medicine(medicineName = MedicineNameType(name),
+                    medicineUnit = MedicineUnit(medicineUnitId = MedicineUnitIdType(unitId)))
 
     private fun getMedicineUnit(value: String = ""): MedicineUnit =
-            MedicineUnit(mMedicineUnitValue = MedicineUnitValueType(value))
+            MedicineUnit(medicineUnitValue = MedicineUnitValueType(value))
 }

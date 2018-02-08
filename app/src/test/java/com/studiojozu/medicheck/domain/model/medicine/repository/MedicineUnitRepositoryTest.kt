@@ -37,21 +37,21 @@ class MedicineUnitRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
         medicineUnitRepository.insert(insertMedicineUnit)
         entities = medicineUnitRepository.findAll()
         Assert.assertEquals(2, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
         assert(insertMedicineUnit, entities[1])
 
         // update
-        val updateMedicineUnit = insertMedicineUnit.copy(mMedicineUnitValue = MedicineUnitValueType("個"))
+        val updateMedicineUnit = insertMedicineUnit.copy(medicineUnitValue = MedicineUnitValueType("個"))
         medicineUnitRepository.insert(updateMedicineUnit)
         entities = medicineUnitRepository.findAll()
         Assert.assertEquals(2, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
         assert(updateMedicineUnit, entities[1])
 
         // delete
@@ -59,7 +59,7 @@ class MedicineUnitRepositoryTest : ATestParent() {
         medicineUnitRepository.delete(deleteMedicineUnit)
         entities = medicineUnitRepository.findAll()
         Assert.assertEquals(1, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
     }
 
     @Test
@@ -67,13 +67,13 @@ class MedicineUnitRepositoryTest : ATestParent() {
     fun findById() {
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
         medicineUnitRepository.insert(insertMedicineUnit)
 
         // findById - exists
-        var entity = medicineUnitRepository.findById(insertMedicineUnit.mMedicineUnitId)
+        var entity = medicineUnitRepository.findById(insertMedicineUnit.medicineUnitId)
         assert(insertMedicineUnit, entity!!)
 
         // findById - not exists
@@ -92,22 +92,22 @@ class MedicineUnitRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
         medicineUnitRepository.insert(insertMedicineUnit)
 
         assertEquals(3L, medicineUnitRepository.maxDisplayOrder())
     }
 
     private fun assert(expect: MedicineUnit, actual: MedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitId, actual.mMedicineUnitId)
-        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.medicineUnitId, actual.medicineUnitId)
+        Assert.assertEquals(expect.medicineUnitValue, actual.medicineUnitValue)
+        Assert.assertEquals(expect.medicineUnitDisplayOrder, actual.medicineUnitDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: MedicineUnit, actual: MedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.medicineUnitValue, actual.medicineUnitValue)
+        Assert.assertEquals(expect.medicineUnitDisplayOrder, actual.medicineUnitDisplayOrder)
     }
 }

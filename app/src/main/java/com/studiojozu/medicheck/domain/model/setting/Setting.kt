@@ -9,19 +9,19 @@ import java.util.*
 /**
  * 設定を画面から受信し、DBに保存する。また、DBのデータを画面表示用に加工する。
  *
- * @property mUseReminder リマンダ機能を使用するか？
- * @property mRemindInterval リマンダ機能のインターバル時間
- * @property mRemindTimeout リマンダ機能のタイムアウト時間
+ * @property useReminder リマンダ機能を使用するか？
+ * @property remindInterval リマンダ機能のインターバル時間
+ * @property remindTimeout リマンダ機能のタイムアウト時間
  */
-data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
-                   val mRemindInterval: RemindIntervalType = RemindIntervalType(),
-                   val mRemindTimeout: RemindTimeoutType = RemindTimeoutType()) : Serializable {
+data class Setting(val useReminder: UseReminderType = UseReminderType(),
+                   val remindInterval: RemindIntervalType = RemindIntervalType(),
+                   val remindTimeout: RemindTimeoutType = RemindTimeoutType()) : Serializable {
 
     companion object {
         const val serialVersionUID = -8960841441881026848L
     }
 
-    fun useReminder(): Boolean = mUseReminder.isTrue
+    fun useReminder(): Boolean = useReminder.isTrue
 
     /**
      * パラメータnowに指名した時刻が、リマインド機能の限界時間を超えているか？
@@ -33,7 +33,7 @@ data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
      */
     fun isRemindTimeout(now: Calendar, scheduleDate: ADateType<*>, scheduleTime: ATimeType<*>): Boolean {
         val reminderDatetimeType = ReminderDatetimeType(now)
-        return mRemindTimeout.isTimeout(reminderDatetimeType, scheduleDate, scheduleTime)
+        return remindTimeout.isTimeout(reminderDatetimeType, scheduleDate, scheduleTime)
     }
 
     /**
@@ -49,7 +49,7 @@ data class Setting(val mUseReminder: UseReminderType = UseReminderType(),
         val currentDateTime = ReminderDatetimeType(now)
 
         val diffMinutes = currentDateTime.diffMinutes(scheduleDatetime)
-        return if (diffMinutes <= 0L) false else (diffMinutes % mRemindInterval.dbValue == 0L)
+        return if (diffMinutes <= 0L) false else (diffMinutes % remindInterval.dbValue == 0L)
     }
 
     /**

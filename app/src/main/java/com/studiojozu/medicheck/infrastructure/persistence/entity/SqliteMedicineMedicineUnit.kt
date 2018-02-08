@@ -8,31 +8,31 @@ class SqliteMedicineMedicineUnit(medicineId: MedicineIdType) : SqliteMedicine(me
 
     /** 薬単位.表示文字列  */
     @ColumnInfo(name = "medicine_unit_value")
-    var mMedicineUnitValue: MedicineUnitValueType = MedicineUnitValueType()
+    var medicineUnitValue: MedicineUnitValueType = MedicineUnitValueType()
 
     /** 薬単位.表示順  */
     @ColumnInfo(name = "medicine_unit_display_order")
-    var mMedicineUnitDisplayOrder: MedicineUnitDisplayOrderType = MedicineUnitDisplayOrderType()
+    var medicineUnitDisplayOrder: MedicineUnitDisplayOrderType = MedicineUnitDisplayOrderType()
 
     @Ignore
     fun toMedicine(): Medicine {
         val medicineUnit = MedicineUnit(
-                mMedicineUnitId = mMedicineUnitId,
-                mMedicineUnitValue = mMedicineUnitValue,
-                mMedicineUnitDisplayOrder = mMedicineUnitDisplayOrder)
+                medicineUnitId = medicineUnitId,
+                medicineUnitValue = medicineUnitValue,
+                medicineUnitDisplayOrder = medicineUnitDisplayOrder)
 
         return Medicine(
-                mMedicineId = mMedicineId,
-                mMedicineName = mMedicineName,
-                mMedicineTakeNumber = mMedicineTakeNumber,
-                mMedicineDateNumber = mMedicineDateNumber,
-                mMedicineStartDatetime = mMedicineStartDatetime,
-                mMedicineInterval = mMedicineInterval,
-                mMedicineIntervalMode = mMedicineIntervalMode,
-                mMedicinePhoto = mMedicinePhoto,
-                mMedicineNeedAlarm = mMedicineNeedAlarm,
-                mMedicineDeleteFlag = mMedicineDeleteFlag,
-                mMedicineUnit = medicineUnit
+                medicineId = medicineId,
+                medicineName = medicineName,
+                medicineTakeNumber = medicineTakeNumber,
+                medicineDateNumber = medicineDateNumber,
+                medicineStartDatetime = medicineStartDatetime,
+                medicineInterval = medicineInterval,
+                medicineIntervalMode = medicineIntervalMode,
+                medicinePhoto = medicinePhoto,
+                medicineNeedAlarm = medicineNeedAlarm,
+                medicineDeleteFlag = medicineDeleteFlag,
+                medicineUnit = medicineUnit
         )
     }
 }

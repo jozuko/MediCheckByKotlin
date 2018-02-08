@@ -14,7 +14,7 @@ class AlarmBroadcastReceiver : BroadcastReceiver() {
 
     override fun onReceive(p0: Context?, p1: Intent?) {
         val context = p0 ?: return
-        (context.applicationContext as MediCheckApplication).mComponent.inject(this)
+        (context.applicationContext as MediCheckApplication).component.inject(this)
 
         resetAlarm()
         showNotification(context)

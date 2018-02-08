@@ -18,15 +18,15 @@ class PlanDateTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     fun constructor_WithParameter() {
-        var entity = PlanDate(mPlanDatetime = TestDatetimeType(2017, 1, 2, 3, 4))
-        assertNotSame("", entity.mTimetableId.dbValue)
-        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
-        assertEquals("17/01/02 3:04", entity.mPlanDatetime.displayValue)
+        var entity = PlanDate(planDatetime = TestDatetimeType(2017, 1, 2, 3, 4))
+        assertNotSame("", entity.timetableId.dbValue)
+        assertEquals("17/01/02", entity.schedulePlanDate.displayValue)
+        assertEquals("17/01/02 3:04", entity.planDatetime.displayValue)
 
-        entity = PlanDate(mPlanDatetime = TestDatetimeType(2017, 1, 2, 3, 4), mTimetableId = TimetableIdType("12345678"))
-        assertEquals("12345678", entity.mTimetableId.dbValue)
-        assertEquals("17/01/02", entity.mSchedulePlanDate.displayValue)
-        assertEquals("17/01/02 3:04", entity.mPlanDatetime.displayValue)
+        entity = PlanDate(planDatetime = TestDatetimeType(2017, 1, 2, 3, 4), timetableId = TimetableIdType("12345678"))
+        assertEquals("12345678", entity.timetableId.dbValue)
+        assertEquals("17/01/02", entity.schedulePlanDate.displayValue)
+        assertEquals("17/01/02 3:04", entity.planDatetime.displayValue)
     }
 
 }

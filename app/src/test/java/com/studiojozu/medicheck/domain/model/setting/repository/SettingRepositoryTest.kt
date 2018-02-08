@@ -27,27 +27,27 @@ class SettingRepositoryTest : ATestParent() {
         // select init data
         var setting = settingRepository.find()
         assertEquals(true, setting.useReminder())
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), setting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), setting.mRemindTimeout)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), setting.remindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), setting.remindTimeout)
 
         // updateSetting
         val updateSetting = Setting(
-                mUseReminder = UseReminderType(false),
-                mRemindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1),
-                mRemindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_10))
+                useReminder = UseReminderType(false),
+                remindInterval = RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1),
+                remindTimeout = RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_10))
         settingRepository.insert(updateSetting)
 
         // select update data
         setting = settingRepository.find()
         assertEquals(false, setting.useReminder())
-        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1), setting.mRemindInterval)
-        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_10), setting.mRemindTimeout)
+        assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1), setting.remindInterval)
+        assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_10), setting.remindTimeout)
 
         // delete setting
         settingRepository.delete()
         setting = settingRepository.find()
-        assertEquals(Setting().mUseReminder, setting.mUseReminder)
-        assertEquals(Setting().mRemindInterval, setting.mRemindInterval)
-        assertEquals(Setting().mRemindTimeout, setting.mRemindTimeout)
+        assertEquals(Setting().useReminder, setting.useReminder)
+        assertEquals(Setting().remindInterval, setting.remindInterval)
+        assertEquals(Setting().remindTimeout, setting.remindTimeout)
     }
 }

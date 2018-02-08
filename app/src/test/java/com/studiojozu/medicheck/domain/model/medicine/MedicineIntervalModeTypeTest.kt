@@ -11,7 +11,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 class MedicineIntervalModeTypeTest : ATestParent() {
-    private val mValueProperty = findProperty(MedicineIntervalModeType::class, "mValue")
+    private val mValueProperty = findProperty(MedicineIntervalModeType::class, "value")
 
     @Test
     @Throws(Exception::class)

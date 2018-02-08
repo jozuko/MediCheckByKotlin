@@ -10,22 +10,22 @@ import com.studiojozu.medicheck.domain.model.setting.TimetableComparator
 import com.studiojozu.medicheck.domain.model.setting.TimetableTimeType
 import java.util.*
 
-data class AlarmSchedule(private val mSchedule: Schedule,
-                         private val mTimetable: Timetable,
-                         private val mMedicine: Medicine,
-                         private val mPerson: Person) {
+data class AlarmSchedule(private val schedule: Schedule,
+                         private val timetable: Timetable,
+                         private val medicine: Medicine,
+                         private val person: Person) {
 
     val medicineName: String
-        get() = mMedicine.mMedicineName.displayValue
+        get() = medicine.medicineName.displayValue
 
     val personName: String
-        get() = mPerson.mPersonName.displayValue
+        get() = person.personName.displayValue
 
     private val alarmDate: SchedulePlanDateType
-        get() = mSchedule.mSchedulePlanDate
+        get() = schedule.schedulePlanDate
 
     private val alarmTime: TimetableTimeType
-        get() = mTimetable.getTimetableTime()
+        get() = timetable.timetableTime
 
     fun isNeedAlarm(now: Calendar, setting: Setting): Boolean {
         if (isSameDateTime(now)) return true
@@ -41,5 +41,5 @@ data class AlarmSchedule(private val mSchedule: Schedule,
             = alarmDate.compareTo(other.alarmDate)
 
     fun compareTime(other: AlarmSchedule): Int
-            = TimetableComparator(TimetableComparator.ComparePattern.Time).compare(mTimetable, other.mTimetable)
+            = TimetableComparator(TimetableComparator.ComparePattern.TIME).compare(timetable, other.timetable)
 }
