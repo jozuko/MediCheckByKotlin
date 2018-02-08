@@ -50,7 +50,7 @@ class DatabaseCallback(private val mContext: Context) : RoomDatabase.Callback() 
         contentValues.put("remind_interval", RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5).dbValue)
         contentValues.put("remind_timeout", RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24).dbValue)
 
-        db.insert("mSchedule", OnConflictStrategy.IGNORE, contentValues)
+        db.insert("setting", OnConflictStrategy.IGNORE, contentValues)
     }
 
     private fun initTimetable(db: SupportSQLiteDatabase) {

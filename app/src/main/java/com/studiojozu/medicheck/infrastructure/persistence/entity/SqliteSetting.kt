@@ -8,7 +8,7 @@ import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
 import com.studiojozu.medicheck.domain.model.setting.Setting
 import com.studiojozu.medicheck.domain.model.setting.UseReminderType
 
-@Entity(tableName = "mSchedule")
+@Entity(tableName = "setting")
 class SqliteSetting {
     class Builder {
         lateinit var mSetting: Setting
