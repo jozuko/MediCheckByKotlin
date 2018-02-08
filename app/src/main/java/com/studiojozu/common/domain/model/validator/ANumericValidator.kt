@@ -3,16 +3,16 @@ package com.studiojozu.common.domain.model.validator
 import android.support.annotation.StringRes
 import com.studiojozu.medicheck.R
 
-abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, mAllowMinValue: Boolean, mAllowMaxValue: Boolean) : IRequiredValidator {
+abstract class ANumericValidator protected constructor(min: Long, max: Long, allowMinValue: Boolean, allowMaxValue: Boolean) : IRequiredValidator {
 
-    private val mMin: Long
-    private val mMax: Long
+    private val min: Long
+    private val max: Long
 
     init {
-        val min = if (mMin < mMax) mMin else mMax
-        this.mMin = if (mAllowMinValue) min else min.inc()
-        val max = if (mMin < mMax) mMax else mMin
-        this.mMax = if (mAllowMaxValue) max else max.dec()
+        val minValue = if (min < max) min else max
+        val maxValue = if (min < max) max else min
+        this.min = if (allowMinValue) minValue else minValue.inc()
+        this.max = if (allowMaxValue) maxValue else maxValue.dec()
     }
 
     @StringRes
@@ -25,7 +25,7 @@ abstract class ANumericValidator protected constructor(mMin: Long, mMax: Long, m
         if (!isLong(data))
             return R.string.validation_numeric
 
-        return if (data.toLong() in mMin..mMax) IValidator.NO_ERROR_RESOURCE_ID else R.string.validation_out_of_range
+        return if (data.toLong() in min..max) IValidator.NO_ERROR_RESOURCE_ID else R.string.validation_out_of_range
     }
 
     private fun isLong(data: String): Boolean = try {

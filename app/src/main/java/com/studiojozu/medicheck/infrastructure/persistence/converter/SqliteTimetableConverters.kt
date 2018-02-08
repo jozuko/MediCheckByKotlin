@@ -1,7 +1,7 @@
 package com.studiojozu.medicheck.infrastructure.persistence.converter
 
 import android.arch.persistence.room.TypeConverter
-import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
+import com.studiojozu.medicheck.domain.model.medicine.OneShotType
 import com.studiojozu.medicheck.domain.model.setting.TimetableDisplayOrderType
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.domain.model.setting.TimetableNameType
@@ -33,8 +33,8 @@ class SqliteTimetableConverters {
     fun toLong(value: TimetableDisplayOrderType) = value.dbValue
 
     @TypeConverter
-    fun toIsOneShot(value: Boolean) = IsOneShotType(value)
+    fun toIsOneShot(value: Boolean) = OneShotType(value)
 
     @TypeConverter
-    fun toBoolean(value: IsOneShotType) = value.isTrue
+    fun toBoolean(value: OneShotType) = value.isTrue
 }

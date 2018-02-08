@@ -21,16 +21,16 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
             val values = TreeMap<Int, String>()
             val resources = context.resources
 
-            RemindTimeoutPattern.values().forEach { it -> values.put(it.mTimeoutMinutes, it.getDisplayValue(resources)) }
+            RemindTimeoutPattern.values().forEach { it -> values.put(it.timeoutMinutes, it.getDisplayValue(resources)) }
             return values
         }
     }
 
-    private val mValue: RemindTimeoutPattern
+    private val value: RemindTimeoutPattern
 
     init {
-        mValue = when (timeoutMinute) {
-            is RemindTimeoutType -> timeoutMinute.mValue
+        value = when (timeoutMinute) {
+            is RemindTimeoutType -> timeoutMinute.value
             is RemindTimeoutPattern -> timeoutMinute
             is Long -> RemindTimeoutPattern.typeOfTimeoutMinute(timeoutMinute.toInt())
             is Int -> RemindTimeoutPattern.typeOfTimeoutMinute(timeoutMinute)
@@ -39,14 +39,14 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
     }
 
     override val dbValue: Int
-        get() = mValue.mTimeoutMinutes
+        get() = value.timeoutMinutes
 
     override val displayValue: String
         get() = throw RuntimeException("you need to call getDisplayValue(Resources).")
 
-    fun getDisplayValue(resources: Resources): String = mValue.getDisplayValue(resources)
+    fun getDisplayValue(resources: Resources): String = value.getDisplayValue(resources)
 
-    override fun compareTo(other: RemindTimeoutType): Int = mValue.compareTo(other.mValue)
+    override fun compareTo(other: RemindTimeoutType): Int = value.compareTo(other.value)
 
     /**
      * パラメータnowに指名した時刻が、リマインド機能の限界時間を超えているか？
@@ -61,7 +61,7 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
         return reminderDateTime < now
     }
 
-    enum class RemindTimeoutPattern constructor(internal val mTimeoutMinutes: Int, private val mDisplayValue: String, @param:StringRes private val mStringRes: Int) {
+    enum class RemindTimeoutPattern constructor(internal val timeoutMinutes: Int, private val displayValue: String, @param:StringRes private val stringRes: Int) {
         MINUTE_1(1, "1", R.string.interval_minute),
         MINUTE_5(5, "5", R.string.interval_minutes),
         MINUTE_10(10, "10", R.string.interval_minutes),
@@ -75,9 +75,9 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
         HOUR_24(60 * 24, "24", R.string.interval_hours);
 
         companion object {
-            internal fun typeOfTimeoutMinute(timeoutMinutes: Int): RemindTimeoutPattern = values().firstOrNull { it.mTimeoutMinutes == timeoutMinutes } ?: RemindTimeoutPattern.HOUR_24
+            internal fun typeOfTimeoutMinute(timeoutMinutes: Int): RemindTimeoutPattern = values().firstOrNull { it.timeoutMinutes == timeoutMinutes } ?: RemindTimeoutPattern.HOUR_24
         }
 
-        fun getDisplayValue(resources: Resources): String = resources.getString(mStringRes, mDisplayValue)
+        fun getDisplayValue(resources: Resources): String = resources.getString(stringRes, displayValue)
     }
 }

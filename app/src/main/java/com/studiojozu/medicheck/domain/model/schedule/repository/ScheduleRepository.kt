@@ -19,11 +19,11 @@ class ScheduleRepository(private val sqliteScheduleRepository: SqliteScheduleRep
 
     fun insertAll(scheduleList: ScheduleList) =
             scheduleList.forEach { it ->
-        sqliteScheduleRepository.insert(SqliteSchedule.build { mSchedule = it })
+                sqliteScheduleRepository.insert(SqliteSchedule.build { schedule = it })
     }
 
     fun insert(schedule: Schedule) =
-            sqliteScheduleRepository.insert(SqliteSchedule.build { mSchedule = schedule })
+            sqliteScheduleRepository.insert(SqliteSchedule.build { this.schedule = schedule })
 
     fun deleteExceptHistoryByMedicineId(medicineId: MedicineIdType) =
             sqliteScheduleRepository.deleteExceptHistoryByMedicineId(medicineId = medicineId.dbValue)

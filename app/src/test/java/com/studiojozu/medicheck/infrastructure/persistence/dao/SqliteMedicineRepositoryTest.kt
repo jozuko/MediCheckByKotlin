@@ -43,7 +43,7 @@ class SqliteMedicineRepositoryTest : ATestParent() {
         assert(insertMedicineEntity, medicines[0])
 
         // update
-        val updateMedicineEntity = insertMedicineEntity.copy(mMedicineName = MedicineNameType("メルカゾール"))
+        val updateMedicineEntity = insertMedicineEntity.copy(medicineName = MedicineNameType("メルカゾール"))
         dao.insert(setSqliteMedicine(updateMedicineEntity))
         medicines = dao.findAll()
         assertEquals(1, medicines.size)
@@ -67,7 +67,7 @@ class SqliteMedicineRepositoryTest : ATestParent() {
         dao.insert(setSqliteMedicine(insertMedicineEntity))
 
         // findById
-        val medicine1 = dao.findById(insertMedicineEntity.mMedicineId.dbValue)
+        val medicine1 = dao.findById(insertMedicineEntity.medicineId.dbValue)
         assert(insertMedicineEntity, medicine1!!)
 
         // findById
@@ -87,60 +87,60 @@ class SqliteMedicineRepositoryTest : ATestParent() {
 
         // prepare
         // 人を1人登録
-        database.personDao().insert(SqlitePerson.build { mPerson = person1 })
+        database.personDao().insert(SqlitePerson.build { person = person1 })
         // タイムテーブルを3つ登録
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable1 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable2 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable3 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable1 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable2 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable3 })
 
         // insert data
-        val sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit }
+        val sqliteMedicineUnit = SqliteMedicineUnit.build { medicineUnit = medicineUnit1 }
 
         // 薬1
-        val sqliteMedicine1 = SqliteMedicine.build { mMedicine = medicine1 }
+        val sqliteMedicine1 = SqliteMedicine.build { medicine = medicine1 }
         // 薬1を人1に連結
         val sqlitePersonMediRelationArray1 = arrayOf(SqlitePersonMediRelation.build {
-            mPersonId = person1.mPersonId
-            mMedicineId = medicine1.mMedicineId
+            personId = person1.personId
+            medicineId = medicine1.medicineId
         })
         // 薬1にタイムテーブルを3つ登録
         val sqliteMediTimeRelationArray1 = arrayOf(
                 SqliteMediTimeRelation.build {
-                    mMedicineId = medicine1.mMedicineId
-                    mTimetableId = timetable1.mTimetableId
-                    mIsOneShot = IsOneShotType(false)
+                    medicineId = medicine1.medicineId
+                    timetableId = timetable1.timetableId
+                    oneShot = OneShotType(false)
                 },
                 SqliteMediTimeRelation.build {
-                    mMedicineId = medicine1.mMedicineId
-                    mTimetableId = timetable2.mTimetableId
-                    mIsOneShot = IsOneShotType(false)
+                    medicineId = medicine1.medicineId
+                    timetableId = timetable2.timetableId
+                    oneShot = OneShotType(false)
                 },
                 SqliteMediTimeRelation.build {
-                    mMedicineId = medicine1.mMedicineId
-                    mTimetableId = timetable3.mTimetableId
-                    mIsOneShot = IsOneShotType(false)
+                    medicineId = medicine1.medicineId
+                    timetableId = timetable3.timetableId
+                    oneShot = OneShotType(false)
                 })
         val sqliteScheduleArray1 = arrayOf(
-                SqliteSchedule.build { mSchedule = schedule1 },
-                SqliteSchedule.build { mSchedule = schedule2 },
-                SqliteSchedule.build { mSchedule = schedule3 }
+                SqliteSchedule.build { schedule = schedule1 },
+                SqliteSchedule.build { schedule = schedule2 },
+                SqliteSchedule.build { schedule = schedule3 }
         )
 
         // 薬2
-        val sqliteMedicine2 = SqliteMedicine.build { mMedicine = medicine2 }
+        val sqliteMedicine2 = SqliteMedicine.build { medicine = medicine2 }
         // 薬2に人1を連結
         val sqlitePersonMediRelationArray2 = arrayOf(SqlitePersonMediRelation.build {
-            mPersonId = person1.mPersonId
-            mMedicineId = medicine2.mMedicineId
+            personId = person1.personId
+            medicineId = medicine2.medicineId
         })
         // 薬2にタイムテーブルを1つ登録
         val sqliteMediTimeRelationArray2 = arrayOf(SqliteMediTimeRelation.build {
-            mMedicineId = medicine2.mMedicineId
-            mTimetableId = timetable1.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine2.medicineId
+            timetableId = timetable1.timetableId
+            oneShot = OneShotType(false)
         })
         // スケジュールを登録
-        val sqliteScheduleArray2 = arrayOf(SqliteSchedule.build { mSchedule = schedule4 })
+        val sqliteScheduleArray2 = arrayOf(SqliteSchedule.build { schedule = schedule4 })
 
         // insert - medicine1
         dao.insertMedicine(sqliteMedicine = sqliteMedicine1,
@@ -150,25 +150,25 @@ class SqliteMedicineRepositoryTest : ATestParent() {
                 sqliteScheduleArray = sqliteScheduleArray1)
 
         // find
-        val actualMedicine = dao.findById(medicine1.mMedicineId.dbValue)!!
-        assertEquals(medicine1.mMedicineId, actualMedicine.mMedicineId)
+        val actualMedicine = dao.findById(medicine1.medicineId.dbValue)!!
+        assertEquals(medicine1.medicineId, actualMedicine.medicineId)
         val actualMedicineUnit1 = database.medicineUnitDao().findById(medicine1.medicineUnitId.dbValue)!!
-        assertEquals(medicine1.medicineUnitId, actualMedicineUnit1.mMedicineUnitId)
-        val actualPerson = database.personMediRelationDao().findPersonByMedicineId(medicine1.mMedicineId.dbValue)!!
-        assertEquals(person1.mPersonId, actualPerson.mPersonId)
-        val actualTimetableArray = database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.mMedicineId.dbValue)
+        assertEquals(medicine1.medicineUnitId, actualMedicineUnit1.medicineUnitId)
+        val actualPerson = database.personMediRelationDao().findPersonByMedicineId(medicine1.medicineId.dbValue)!!
+        assertEquals(person1.personId, actualPerson.personId)
+        val actualTimetableArray = database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.medicineId.dbValue)
         assertEquals(3, actualTimetableArray.size)
-        assertEquals(timetable1.mTimetableId, actualTimetableArray[0].mTimetableId)
-        assertEquals(timetable2.mTimetableId, actualTimetableArray[1].mTimetableId)
-        assertEquals(timetable3.mTimetableId, actualTimetableArray[2].mTimetableId)
-        val actualScheduleArray = database.scheduleDao().findByMedicineId(medicine1.mMedicineId.dbValue)
+        assertEquals(timetable1.timetableId, actualTimetableArray[0].timetableId)
+        assertEquals(timetable2.timetableId, actualTimetableArray[1].timetableId)
+        assertEquals(timetable3.timetableId, actualTimetableArray[2].timetableId)
+        val actualScheduleArray = database.scheduleDao().findByMedicineId(medicine1.medicineId.dbValue)
         assertEquals(3, actualScheduleArray.size)
-        assertEquals(timetable1.mTimetableId, actualScheduleArray[0].mTimetableId)
-        assertEquals(medicine1.mMedicineId, actualScheduleArray[0].mMedicineId)
-        assertEquals(timetable2.mTimetableId, actualScheduleArray[1].mTimetableId)
-        assertEquals(medicine1.mMedicineId, actualScheduleArray[1].mMedicineId)
-        assertEquals(timetable3.mTimetableId, actualScheduleArray[2].mTimetableId)
-        assertEquals(medicine1.mMedicineId, actualScheduleArray[2].mMedicineId)
+        assertEquals(timetable1.timetableId, actualScheduleArray[0].timetableId)
+        assertEquals(medicine1.medicineId, actualScheduleArray[0].medicineId)
+        assertEquals(timetable2.timetableId, actualScheduleArray[1].timetableId)
+        assertEquals(medicine1.medicineId, actualScheduleArray[1].medicineId)
+        assertEquals(timetable3.timetableId, actualScheduleArray[2].timetableId)
+        assertEquals(medicine1.medicineId, actualScheduleArray[2].medicineId)
 
         // insert - medicine2
         dao.insertMedicine(sqliteMedicine = sqliteMedicine2,
@@ -177,19 +177,19 @@ class SqliteMedicineRepositoryTest : ATestParent() {
                 sqliteMediTimeRelationArray = sqliteMediTimeRelationArray2,
                 sqliteScheduleArray = sqliteScheduleArray2)
 
-        val actualMedicine2 = dao.findById(medicine2.mMedicineId.dbValue)!!
-        assertEquals(medicine2.mMedicineId, actualMedicine2.mMedicineId)
+        val actualMedicine2 = dao.findById(medicine2.medicineId.dbValue)!!
+        assertEquals(medicine2.medicineId, actualMedicine2.medicineId)
         val actualMedicineUnit2 = database.medicineUnitDao().findById(medicine2.medicineUnitId.dbValue)!!
-        assertEquals(medicine2.medicineUnitId, actualMedicineUnit2.mMedicineUnitId)
-        val actualPerson2 = database.personMediRelationDao().findPersonByMedicineId(medicine2.mMedicineId.dbValue)!!
-        assertEquals(person1.mPersonId, actualPerson2.mPersonId)
-        val actualTimetableArray2 = database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.mMedicineId.dbValue)
+        assertEquals(medicine2.medicineUnitId, actualMedicineUnit2.medicineUnitId)
+        val actualPerson2 = database.personMediRelationDao().findPersonByMedicineId(medicine2.medicineId.dbValue)!!
+        assertEquals(person1.personId, actualPerson2.personId)
+        val actualTimetableArray2 = database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.medicineId.dbValue)
         assertEquals(1, actualTimetableArray2.size)
-        assertEquals(timetable1.mTimetableId, actualTimetableArray2[0].mTimetableId)
-        val actualScheduleArray2 = database.scheduleDao().findByMedicineId(medicine2.mMedicineId.dbValue)
+        assertEquals(timetable1.timetableId, actualTimetableArray2[0].timetableId)
+        val actualScheduleArray2 = database.scheduleDao().findByMedicineId(medicine2.medicineId.dbValue)
         assertEquals(1, actualScheduleArray2.size)
-        assertEquals(timetable1.mTimetableId, actualScheduleArray2[0].mTimetableId)
-        assertEquals(medicine2.mMedicineId, actualScheduleArray2[0].mMedicineId)
+        assertEquals(timetable1.timetableId, actualScheduleArray2[0].timetableId)
+        assertEquals(medicine2.medicineId, actualScheduleArray2[0].medicineId)
 
         // delete
         dao.deleteMedicine(sqliteMedicine = sqliteMedicine1,
@@ -197,14 +197,14 @@ class SqliteMedicineRepositoryTest : ATestParent() {
                 sqliteMediTimeRelationArray = sqliteMediTimeRelationArray1,
                 sqliteScheduleArray = sqliteScheduleArray1)
 
-        assertNull(dao.findById(medicine1.mMedicineId.dbValue))
-        assertNotNull(dao.findById(medicine2.mMedicineId.dbValue))
-        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine1.mMedicineId.dbValue))
-        assertNotNull(database.personMediRelationDao().findPersonByMedicineId(medicine2.mMedicineId.dbValue))
-        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.mMedicineId.dbValue).isEmpty())
-        assertFalse(database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.mMedicineId.dbValue).isEmpty())
-        assertTrue(database.scheduleDao().findByMedicineId(medicine1.mMedicineId.dbValue).isEmpty())
-        assertFalse(database.scheduleDao().findByMedicineId(medicine2.mMedicineId.dbValue).isEmpty())
+        assertNull(dao.findById(medicine1.medicineId.dbValue))
+        assertNotNull(dao.findById(medicine2.medicineId.dbValue))
+        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine1.medicineId.dbValue))
+        assertNotNull(database.personMediRelationDao().findPersonByMedicineId(medicine2.medicineId.dbValue))
+        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.medicineId.dbValue).isEmpty())
+        assertFalse(database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.medicineId.dbValue).isEmpty())
+        assertTrue(database.scheduleDao().findByMedicineId(medicine1.medicineId.dbValue).isEmpty())
+        assertFalse(database.scheduleDao().findByMedicineId(medicine2.medicineId.dbValue).isEmpty())
 
         // delete
         dao.deleteMedicine(sqliteMedicine = sqliteMedicine2,
@@ -212,91 +212,91 @@ class SqliteMedicineRepositoryTest : ATestParent() {
                 sqliteMediTimeRelationArray = sqliteMediTimeRelationArray2,
                 sqliteScheduleArray = sqliteScheduleArray2)
 
-        assertNull(dao.findById(medicine1.mMedicineId.dbValue))
-        assertNull(dao.findById(medicine2.mMedicineId.dbValue))
-        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine1.mMedicineId.dbValue))
-        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine2.mMedicineId.dbValue))
-        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.mMedicineId.dbValue).isEmpty())
-        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.mMedicineId.dbValue).isEmpty())
-        assertTrue(database.scheduleDao().findByMedicineId(medicine1.mMedicineId.dbValue).isEmpty())
-        assertTrue(database.scheduleDao().findByMedicineId(medicine2.mMedicineId.dbValue).isEmpty())
+        assertNull(dao.findById(medicine1.medicineId.dbValue))
+        assertNull(dao.findById(medicine2.medicineId.dbValue))
+        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine1.medicineId.dbValue))
+        assertNull(database.personMediRelationDao().findPersonByMedicineId(medicine2.medicineId.dbValue))
+        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine1.medicineId.dbValue).isEmpty())
+        assertTrue(database.mediTimeRelationDao().findTimetableByMedicineId(medicine2.medicineId.dbValue).isEmpty())
+        assertTrue(database.scheduleDao().findByMedicineId(medicine1.medicineId.dbValue).isEmpty())
+        assertTrue(database.scheduleDao().findByMedicineId(medicine2.medicineId.dbValue).isEmpty())
     }
 
     private fun setSqliteMedicine(entity: Medicine) =
-            SqliteMedicine.build { mMedicine = entity }
+            SqliteMedicine.build { medicine = entity }
 
     private fun assert(expect: com.studiojozu.medicheck.domain.model.medicine.Medicine, actual: SqliteMedicine) {
-        assertEquals(expect.mMedicineId, actual.mMedicineId)
-        assertEquals(expect.mMedicineName, actual.mMedicineName)
-        assertEquals(expect.mMedicineTakeNumber, actual.mMedicineTakeNumber)
-        assertEquals(expect.mMedicineUnit.mMedicineUnitId, actual.mMedicineUnitId)
-        assertEquals(expect.mMedicineDateNumber, actual.mMedicineDateNumber)
-        assertEquals(expect.mMedicineStartDatetime, actual.mMedicineStartDatetime)
-        assertEquals(expect.mMedicineInterval, actual.mMedicineInterval)
-        assertEquals(expect.mMedicineIntervalMode, actual.mMedicineIntervalMode)
-        assertEquals(expect.mMedicinePhoto, actual.mMedicinePhoto)
-        assertEquals(expect.mMedicineNeedAlarm, actual.mMedicineNeedAlarm)
-        assertEquals(expect.mMedicineDeleteFlag, actual.mMedicineDeleteFlag)
+        assertEquals(expect.medicineId, actual.medicineId)
+        assertEquals(expect.medicineName, actual.medicineName)
+        assertEquals(expect.medicineTakeNumber, actual.medicineTakeNumber)
+        assertEquals(expect.medicineUnit.medicineUnitId, actual.medicineUnitId)
+        assertEquals(expect.medicineDateNumber, actual.medicineDateNumber)
+        assertEquals(expect.medicineStartDatetime, actual.medicineStartDatetime)
+        assertEquals(expect.medicineInterval, actual.medicineInterval)
+        assertEquals(expect.medicineIntervalMode, actual.medicineIntervalMode)
+        assertEquals(expect.medicinePhoto, actual.medicinePhoto)
+        assertEquals(expect.medicineNeedAlarm, actual.medicineNeedAlarm)
+        assertEquals(expect.medicineDeleteFlag, actual.medicineDeleteFlag)
     }
 
-    private val medicineUnit = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("unit01"),
-            mMedicineUnitValue = MedicineUnitValueType("錠"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+    private val medicineUnit1 = MedicineUnit(
+            medicineUnitId = MedicineUnitIdType("unit01"),
+            medicineUnitValue = MedicineUnitValueType("錠"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
 
     private val medicine1 = Medicine(
-            mMedicineId = MedicineIdType("medicine01"),
-            mMedicineName = MedicineNameType("メルカゾール"),
-            mMedicineUnit = medicineUnit)
+            medicineId = MedicineIdType("medicine01"),
+            medicineName = MedicineNameType("メルカゾール"),
+            medicineUnit = medicineUnit1)
 
     private val medicine2 = Medicine(
-            mMedicineId = MedicineIdType("medicine02"),
-            mMedicineName = MedicineNameType("チラーヂン"),
-            mMedicineUnit = medicineUnit)
+            medicineId = MedicineIdType("medicine02"),
+            medicineName = MedicineNameType("チラーヂン"),
+            medicineUnit = medicineUnit1)
 
     private val person1 = Person(
-            mPersonId = PersonIdType("person01"),
-            mPersonName = PersonNameType("自分"),
-            mPersonDisplayOrder = PersonDisplayOrderType(2))
+            personId = PersonIdType("person01"),
+            personName = PersonNameType("自分"),
+            personDisplayOrder = PersonDisplayOrderType(2))
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("timetable01"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable01"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val timetable2 = Timetable(
-            mTimetableId = TimetableIdType("timetable02"),
-            mTimetableName = TimetableNameType("昼"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(21))
+            timetableId = TimetableIdType("timetable02"),
+            timetableName = TimetableNameType("昼"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(21))
 
     private val timetable3 = Timetable(
-            mTimetableId = TimetableIdType("timetable03"),
-            mTimetableName = TimetableNameType("夜"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(22))
+            timetableId = TimetableIdType("timetable03"),
+            timetableName = TimetableNameType("夜"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(22))
 
     private val schedule1 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable1.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(true))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable1.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(true))
 
     private val schedule2 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable2.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable2.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 
     private val schedule3 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable3.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable3.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 
-    private val schedule4 = schedule1.copy(mMedicineId = medicine2.mMedicineId)
+    private val schedule4 = schedule1.copy(medicineId = medicine2.medicineId)
 }

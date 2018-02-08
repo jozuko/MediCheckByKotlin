@@ -3,7 +3,7 @@ package com.studiojozu.medicheck.infrastructure.persistence.preference
 import android.content.SharedPreferences
 import com.studiojozu.medicheck.domain.model.person.PersonIdType
 
-class PreferencePersonRepository(private val mSharedPreferences: SharedPreferences) {
+class PreferencePersonRepository(private val sharedPreferences: SharedPreferences) {
 
     companion object {
         private const val KEY_DEFAULT_PERSON_ID = "default_person_id"
@@ -11,13 +11,13 @@ class PreferencePersonRepository(private val mSharedPreferences: SharedPreferenc
 
     var latestUsedPersonId: PersonIdType?
         get() {
-            val personId = mSharedPreferences.getString(KEY_DEFAULT_PERSON_ID, null) ?: return null
+            val personId = sharedPreferences.getString(KEY_DEFAULT_PERSON_ID, null) ?: return null
             return PersonIdType(personId)
         }
         set(personId) {
             personId ?: return
 
-            val editor = mSharedPreferences.edit()
+            val editor = sharedPreferences.edit()
             editor.putString(KEY_DEFAULT_PERSON_ID, personId.dbValue)
             editor.apply()
         }

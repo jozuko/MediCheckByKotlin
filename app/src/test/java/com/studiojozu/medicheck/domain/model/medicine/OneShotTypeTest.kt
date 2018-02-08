@@ -10,14 +10,14 @@ import org.robolectric.annotation.Config
 @Suppress("FunctionName")
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
-class IsOneShotTypeTest : ATestParent() {
+class OneShotTypeTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
     fun constructor() {
-        Assert.assertFalse(IsOneShotType().isTrue)
-        Assert.assertTrue(IsOneShotType(true).isTrue)
-        Assert.assertFalse(IsOneShotType(false).isTrue)
-        Assert.assertTrue(IsOneShotType(1).isTrue)
+        Assert.assertFalse(OneShotType().isTrue)
+        Assert.assertTrue(OneShotType(true).isTrue)
+        Assert.assertFalse(OneShotType(false).isTrue)
+        Assert.assertTrue(OneShotType(1).isTrue)
     }
 }

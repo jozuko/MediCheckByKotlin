@@ -33,84 +33,84 @@ class MedicineRegisterServiceTest : ATestParent() {
     @Inject
     lateinit var medicineRegisterService: MedicineRegisterService
 
-    private val medicineUnit = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("unit01"),
-            mMedicineUnitValue = MedicineUnitValueType("錠"),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+    private val medicineUnit1 = MedicineUnit(
+            medicineUnitId = MedicineUnitIdType("unit01"),
+            medicineUnitValue = MedicineUnitValueType("錠"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
 
     private val person1 = Person(
-            mPersonId = PersonIdType("person01"),
-            mPersonName = PersonNameType("自分"),
-            mPersonDisplayOrder = PersonDisplayOrderType(2))
+            personId = PersonIdType("person01"),
+            personName = PersonNameType("自分"),
+            personDisplayOrder = PersonDisplayOrderType(2))
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("timetable01"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable01"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val timetable2 = Timetable(
-            mTimetableId = TimetableIdType("timetable02"),
-            mTimetableName = TimetableNameType("昼"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(21))
+            timetableId = TimetableIdType("timetable02"),
+            timetableName = TimetableNameType("昼"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(21))
 
     private val timetable3 = Timetable(
-            mTimetableId = TimetableIdType("timetable03"),
-            mTimetableName = TimetableNameType("夜"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(22))
+            timetableId = TimetableIdType("timetable03"),
+            timetableName = TimetableNameType("夜"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(22))
 
     private val medicine1 = Medicine(
-            mMedicineId = MedicineIdType("medicine01"),
-            mMedicineName = MedicineNameType("メルカゾール"),
-            mMedicineUnit = medicineUnit,
-            mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
-            mMedicineDateNumber = MedicineDateNumberType(1),
-            mTimetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)))
+            medicineId = MedicineIdType("medicine01"),
+            medicineName = MedicineNameType("メルカゾール"),
+            medicineUnit = medicineUnit1,
+            medicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
+            medicineDateNumber = MedicineDateNumberType(1),
+            timetableList = MedicineTimetableList(mutableListOf(timetable1, timetable2, timetable3)))
 
     private val medicine2 = Medicine(
-            mMedicineId = MedicineIdType("medicine02"),
-            mMedicineName = MedicineNameType("チラーヂン"),
-            mMedicineUnit = medicineUnit,
-            mMedicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
-            mMedicineDateNumber = MedicineDateNumberType(1),
-            mTimetableList = MedicineTimetableList(mutableListOf(timetable1)))
+            medicineId = MedicineIdType("medicine02"),
+            medicineName = MedicineNameType("チラーヂン"),
+            medicineUnit = medicineUnit1,
+            medicineStartDatetime = MedicineStartDatetimeType(2017, 1, 2, 3, 4),
+            medicineDateNumber = MedicineDateNumberType(1),
+            timetableList = MedicineTimetableList(mutableListOf(timetable1)))
 
     @Before
     fun setUp() {
         (RuntimeEnvironment.application as MediCheckTestApplication).mAppTestComponent.inject(this)
 
         // 人を1人登録
-        database.personDao().insert(SqlitePerson.build { mPerson = person1 })
+        database.personDao().insert(SqlitePerson.build { person = person1 })
 
         // タイムテーブルを3つ登録
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable1 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable2 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable3 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable1 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable2 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable3 })
     }
 
     @After
     fun after() {
         // delete data
-        database.personDao().delete(SqlitePerson.build { mPerson = person1 })
+        database.personDao().delete(SqlitePerson.build { person = person1 })
 
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable1 })
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable2 })
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable3 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable1 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable2 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable3 })
 
-        database.medicineDao().delete(SqliteMedicine.build { mMedicine = medicine1 })
-        database.medicineDao().delete(SqliteMedicine.build { mMedicine = medicine2 })
-        database.medicineUnitDao().delete(SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
+        database.medicineDao().delete(SqliteMedicine.build { medicine = medicine1 })
+        database.medicineDao().delete(SqliteMedicine.build { medicine = medicine2 })
+        database.medicineUnitDao().delete(SqliteMedicineUnit.build { medicineUnit = medicineUnit1 })
 
-        database.personMediRelationDao().deleteByMedicineId(medicine1.mMedicineId.dbValue)
-        database.personMediRelationDao().deleteByMedicineId(medicine2.mMedicineId.dbValue)
+        database.personMediRelationDao().deleteByMedicineId(medicine1.medicineId.dbValue)
+        database.personMediRelationDao().deleteByMedicineId(medicine2.medicineId.dbValue)
 
-        database.mediTimeRelationDao().deleteByMedicineId(medicine1.mMedicineId.dbValue)
-        database.mediTimeRelationDao().deleteByMedicineId(medicine2.mMedicineId.dbValue)
+        database.mediTimeRelationDao().deleteByMedicineId(medicine1.medicineId.dbValue)
+        database.mediTimeRelationDao().deleteByMedicineId(medicine2.medicineId.dbValue)
 
-        database.scheduleDao().deleteAllByMedicineId(medicine1.mMedicineId.dbValue)
-        database.scheduleDao().deleteAllByMedicineId(medicine2.mMedicineId.dbValue)
+        database.scheduleDao().deleteAllByMedicineId(medicine1.medicineId.dbValue)
+        database.scheduleDao().deleteAllByMedicineId(medicine2.medicineId.dbValue)
     }
 
     @Test
@@ -126,7 +126,7 @@ class MedicineRegisterServiceTest : ATestParent() {
         assertEquals(0, database.scheduleDao().findAll().size)
 
         // call target method
-        medicineRegisterService.registerMedicine(medicine = medicine1, personIdType = person1.mPersonId)
+        medicineRegisterService.registerMedicine(medicine = medicine1, personIdType = person1.personId)
 
         // after method call
         assertEquals(2, database.personDao().findAll().size)
@@ -138,7 +138,7 @@ class MedicineRegisterServiceTest : ATestParent() {
         assertEquals(3, database.scheduleDao().findAll().size)
 
         // call target method
-        medicineRegisterService.registerMedicine(medicine = medicine2, personIdType = person1.mPersonId)
+        medicineRegisterService.registerMedicine(medicine = medicine2, personIdType = person1.personId)
 
         // after method call
         assertEquals(2, database.personDao().findAll().size)

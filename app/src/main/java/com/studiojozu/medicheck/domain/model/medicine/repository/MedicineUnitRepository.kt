@@ -19,8 +19,8 @@ class MedicineUnitRepository(private val sqliteMedicineUnitRepository: SqliteMed
             sqliteMedicineUnitRepository.maxDisplayOrder()
 
     fun insert(medicineUnit: MedicineUnit) =
-            sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
+            sqliteMedicineUnitRepository.insert(sqliteMedicineUnit = SqliteMedicineUnit.build { this.medicineUnit = medicineUnit })
 
     fun delete(medicineUnit: MedicineUnit) =
-            sqliteMedicineUnitRepository.delete(sqliteMedicineUnit = SqliteMedicineUnit.build { mMedicineUnit = medicineUnit })
+            sqliteMedicineUnitRepository.delete(sqliteMedicineUnit = SqliteMedicineUnit.build { this.medicineUnit = medicineUnit })
 }

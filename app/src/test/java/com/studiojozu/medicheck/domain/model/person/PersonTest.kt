@@ -11,21 +11,21 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml")
 class PersonTest : ATestParent() {
-    private val mPersonNameProperty = findProperty(Person::class, "mPersonName")
+    private val mPersonNameProperty = findProperty(Person::class, "personName")
     private fun getPersonName(entity: Person): PersonNameType = mPersonNameProperty.call(entity) as PersonNameType
 
-    private val mPersonPhotoProperty = findProperty(Person::class, "mPersonPhoto")
+    private val mPersonPhotoProperty = findProperty(Person::class, "personPhoto")
     private fun getPersonPhoto(entity: Person): PersonPhotoType = mPersonPhotoProperty.call(entity) as PersonPhotoType
 
-    private val mPersonDisplayOrderProperty = findProperty(Person::class, "mPersonDisplayOrder")
+    private val mPersonDisplayOrderProperty = findProperty(Person::class, "personDisplayOrder")
     private fun getPersonDisplayOrder(entity: Person): PersonDisplayOrderType = mPersonDisplayOrderProperty.call(entity) as PersonDisplayOrderType
 
     @Test
     @Throws(Exception::class)
     fun constructor_NoParameter() {
         val entity = Person()
-        assertNotNull(entity.mPersonId.dbValue)
-        assertNotSame("", entity.mPersonId.dbValue)
+        assertNotNull(entity.personId.dbValue)
+        assertNotSame("", entity.personId.dbValue)
         assertEquals("", getPersonName(entity).dbValue)
         assertEquals("", getPersonPhoto(entity).dbValue)
         assertEquals(-1L, getPersonDisplayOrder(entity).dbValue)

@@ -7,11 +7,11 @@ class MedicineIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : AVal
         const val serialVersionUID = -469466334517497620L
     }
 
-    private val mValue: DateIntervalPattern
+    private val value: DateIntervalPattern
 
     init {
-        mValue = when (initValue) {
-            is MedicineIntervalModeType -> initValue.mValue
+        value = when (initValue) {
+            is MedicineIntervalModeType -> initValue.value
             is DateIntervalPattern -> initValue
             is Long -> DateIntervalPattern.typeOf(initValue.toInt())
             is Int -> DateIntervalPattern.typeOf(initValue)
@@ -20,13 +20,13 @@ class MedicineIntervalModeType(initValue: Any = DateIntervalPattern.DAYS) : AVal
     }
 
     override val dbValue: Int
-        get() = mValue.ordinal
+        get() = value.ordinal
 
     override val displayValue: String
-        get() = mValue.toString()
+        get() = value.toString()
 
     val isDays: Boolean
-        get() = mValue == DateIntervalPattern.DAYS
+        get() = value == DateIntervalPattern.DAYS
 
     override fun compareTo(other: MedicineIntervalModeType): Int = dbValue.compareTo(other.dbValue)
 

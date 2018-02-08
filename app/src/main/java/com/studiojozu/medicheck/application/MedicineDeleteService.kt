@@ -20,13 +20,13 @@ class MedicineDeleteService(application: MediCheckApplication) {
     lateinit var scheduleRepository: ScheduleRepository
 
     init {
-        application.mComponent.inject(this)
+        application.component.inject(this)
     }
 
     fun deleteMedicine(medicine: Medicine) {
-        val person = personMediRelationRepository.findPersonByMedicineId(medicineIdType = medicine.mMedicineId)
-        val sqliteMediTimeRelationArray = mediTimeRelationRepository.findTimetableByMedicineId(medicineIdType = medicine.mMedicineId)
-        val sqliteScheduleArray = scheduleRepository.findByMedicineId(medicineIdType = medicine.mMedicineId)
+        val person = personMediRelationRepository.findPersonByMedicineId(medicineIdType = medicine.medicineId)
+        val sqliteMediTimeRelationArray = mediTimeRelationRepository.findTimetableByMedicineId(medicineIdType = medicine.medicineId)
+        val sqliteScheduleArray = scheduleRepository.findByMedicineId(medicineIdType = medicine.medicineId)
 
         medicineViewRepository.delete(medicine,
                 person,

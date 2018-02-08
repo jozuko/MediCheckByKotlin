@@ -8,20 +8,20 @@ import com.studiojozu.medicheck.domain.model.medicine.*
 @Entity(tableName = "medicine")
 open class SqliteMedicine(medicineId: MedicineIdType) {
     class Builder {
-        lateinit var mMedicine: Medicine
+        lateinit var medicine: Medicine
 
         fun build(): SqliteMedicine {
-            val sqliteMedicine = SqliteMedicine(medicineId = mMedicine.mMedicineId)
-            sqliteMedicine.mMedicineName = mMedicine.mMedicineName
-            sqliteMedicine.mMedicineTakeNumber = mMedicine.mMedicineTakeNumber
-            sqliteMedicine.mMedicineUnitId = mMedicine.mMedicineUnit.mMedicineUnitId
-            sqliteMedicine.mMedicineDateNumber = mMedicine.mMedicineDateNumber
-            sqliteMedicine.mMedicineStartDatetime = mMedicine.mMedicineStartDatetime
-            sqliteMedicine.mMedicineInterval = mMedicine.mMedicineInterval
-            sqliteMedicine.mMedicineIntervalMode = mMedicine.mMedicineIntervalMode
-            sqliteMedicine.mMedicinePhoto = mMedicine.mMedicinePhoto
-            sqliteMedicine.mMedicineNeedAlarm = mMedicine.mMedicineNeedAlarm
-            sqliteMedicine.mMedicineDeleteFlag = mMedicine.mMedicineDeleteFlag
+            val sqliteMedicine = SqliteMedicine(medicineId = medicine.medicineId)
+            sqliteMedicine.medicineName = medicine.medicineName
+            sqliteMedicine.medicineTakeNumber = medicine.medicineTakeNumber
+            sqliteMedicine.medicineUnitId = medicine.medicineUnit.medicineUnitId
+            sqliteMedicine.medicineDateNumber = medicine.medicineDateNumber
+            sqliteMedicine.medicineStartDatetime = medicine.medicineStartDatetime
+            sqliteMedicine.medicineInterval = medicine.medicineInterval
+            sqliteMedicine.medicineIntervalMode = medicine.medicineIntervalMode
+            sqliteMedicine.medicinePhoto = medicine.medicinePhoto
+            sqliteMedicine.medicineNeedAlarm = medicine.medicineNeedAlarm
+            sqliteMedicine.medicineDeleteFlag = medicine.medicineDeleteFlag
 
             return sqliteMedicine
         }
@@ -36,47 +36,48 @@ open class SqliteMedicine(medicineId: MedicineIdType) {
     }
 
     /** ID  */
+    @Suppress("CanBePrimaryConstructorProperty")
     @PrimaryKey
     @ColumnInfo(name = "medicine_id")
-    var mMedicineId: MedicineIdType = medicineId
+    var medicineId: MedicineIdType = medicineId
 
     /** 名前  */
     @ColumnInfo(name = "medicine_name")
-    var mMedicineName: MedicineNameType = MedicineNameType()
+    var medicineName: MedicineNameType = MedicineNameType()
 
     /** 服用数  */
     @ColumnInfo(name = "medicine_take_number")
-    var mMedicineTakeNumber: MedicineTakeNumberType = MedicineTakeNumberType()
+    var medicineTakeNumber: MedicineTakeNumberType = MedicineTakeNumberType()
 
     /** 服用数 単位  */
     @ColumnInfo(name = "medicine_unit_id")
-    var mMedicineUnitId: MedicineUnitIdType = MedicineUnitIdType()
+    var medicineUnitId: MedicineUnitIdType = MedicineUnitIdType()
 
     /** 服用日数  */
     @ColumnInfo(name = "medicine_date_number")
-    var mMedicineDateNumber: MedicineDateNumberType = MedicineDateNumberType()
+    var medicineDateNumber: MedicineDateNumberType = MedicineDateNumberType()
 
     /** 服用開始日時  */
     @ColumnInfo(name = "medicine_start_datetime")
-    var mMedicineStartDatetime: MedicineStartDatetimeType = MedicineStartDatetimeType()
+    var medicineStartDatetime: MedicineStartDatetimeType = MedicineStartDatetimeType()
 
     /** 服用間隔  */
     @ColumnInfo(name = "medicine_interval")
-    var mMedicineInterval: MedicineIntervalType = MedicineIntervalType()
+    var medicineInterval: MedicineIntervalType = MedicineIntervalType()
 
     /** 服用間隔タイプ  */
     @ColumnInfo(name = "medicine_interval_mode")
-    var mMedicineIntervalMode: MedicineIntervalModeType = MedicineIntervalModeType()
+    var medicineIntervalMode: MedicineIntervalModeType = MedicineIntervalModeType()
 
     /** 薬の写真  */
     @ColumnInfo(name = "medicine_photo")
-    var mMedicinePhoto: MedicinePhotoType = MedicinePhotoType()
+    var medicinePhoto: MedicinePhotoType = MedicinePhotoType()
 
     /** アラーム要否  */
     @ColumnInfo(name = "medicine_need_alarm")
-    var mMedicineNeedAlarm: MedicineNeedAlarmType = MedicineNeedAlarmType()
+    var medicineNeedAlarm: MedicineNeedAlarmType = MedicineNeedAlarmType()
 
     /** 削除フラグ  */
     @ColumnInfo(name = "medicine_delete_flag")
-    var mMedicineDeleteFlag: MedicineDeleteFlagType = MedicineDeleteFlagType()
+    var medicineDeleteFlag: MedicineDeleteFlagType = MedicineDeleteFlagType()
 }

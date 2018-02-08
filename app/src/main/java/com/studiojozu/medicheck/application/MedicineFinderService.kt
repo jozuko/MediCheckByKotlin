@@ -19,7 +19,7 @@ class MedicineFinderService(application: MediCheckApplication) {
     lateinit var timetableRepository: TimetableRepository
 
     init {
-        application.mComponent.inject(this)
+        application.component.inject(this)
     }
 
     fun existMedicine(): Boolean {
@@ -28,7 +28,7 @@ class MedicineFinderService(application: MediCheckApplication) {
     }
 
     fun findByMedicineId(medicineId: MedicineIdType): Medicine =
-            medicineViewRepository.findByMedicineId(medicineId) ?: Medicine(mMedicineId = medicineId)
+            medicineViewRepository.findByMedicineId(medicineId) ?: Medicine(medicineId = medicineId)
 
     val defaultMedicineUnit: MedicineUnit
         get() {

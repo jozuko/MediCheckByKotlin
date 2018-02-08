@@ -12,12 +12,12 @@ import com.studiojozu.medicheck.domain.model.medicine.MedicineUnitValueType
 @Entity(tableName = "medicine_unit")
 class SqliteMedicineUnit(medicineUnitId: MedicineUnitIdType) {
     class Builder {
-        lateinit var mMedicineUnit: MedicineUnit
+        lateinit var medicineUnit: MedicineUnit
 
         fun build(): SqliteMedicineUnit {
-            val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = mMedicineUnit.mMedicineUnitId)
-            sqliteMedicineUnit.mMedicineUnitValue = mMedicineUnit.mMedicineUnitValue
-            sqliteMedicineUnit.mMedicineUnitDisplayOrder = mMedicineUnit.mMedicineUnitDisplayOrder
+            val sqliteMedicineUnit = SqliteMedicineUnit(medicineUnitId = medicineUnit.medicineUnitId)
+            sqliteMedicineUnit.medicineUnitValue = medicineUnit.medicineUnitValue
+            sqliteMedicineUnit.medicineUnitDisplayOrder = medicineUnit.medicineUnitDisplayOrder
 
             return sqliteMedicineUnit
         }
@@ -32,21 +32,22 @@ class SqliteMedicineUnit(medicineUnitId: MedicineUnitIdType) {
     }
 
     /** ID  */
+    @Suppress("CanBePrimaryConstructorProperty")
     @PrimaryKey
     @ColumnInfo(name = "medicine_unit_id")
-    var mMedicineUnitId: MedicineUnitIdType = medicineUnitId
+    var medicineUnitId: MedicineUnitIdType = medicineUnitId
 
     /** 表示文字列  */
     @ColumnInfo(name = "medicine_unit_value")
-    var mMedicineUnitValue: MedicineUnitValueType = MedicineUnitValueType()
+    var medicineUnitValue: MedicineUnitValueType = MedicineUnitValueType()
 
     /** 表示順  */
     @ColumnInfo(name = "medicine_unit_display_order")
-    var mMedicineUnitDisplayOrder: MedicineUnitDisplayOrderType = MedicineUnitDisplayOrderType()
+    var medicineUnitDisplayOrder: MedicineUnitDisplayOrderType = MedicineUnitDisplayOrderType()
 
     @Ignore
     fun toMedicineUnit() =
-            MedicineUnit(mMedicineUnitId = this.mMedicineUnitId,
-                    mMedicineUnitValue = this.mMedicineUnitValue,
-                    mMedicineUnitDisplayOrder = this.mMedicineUnitDisplayOrder)
+            MedicineUnit(medicineUnitId = this.medicineUnitId,
+                    medicineUnitValue = this.medicineUnitValue,
+                    medicineUnitDisplayOrder = this.medicineUnitDisplayOrder)
 }

@@ -14,8 +14,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (application as MediCheckApplication).mComponent.inject(this)
+        (application as MediCheckApplication).component.inject(this)
 
-        Toast.makeText(this, medicineFinderService.defaultTimetable?.mTimetableName?.displayValue, Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, medicineFinderService.defaultTimetable?.timetableName?.displayValue, Toast.LENGTH_SHORT).show()
     }
 }

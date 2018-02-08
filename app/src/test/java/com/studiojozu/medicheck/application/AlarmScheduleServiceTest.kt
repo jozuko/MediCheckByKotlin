@@ -44,137 +44,137 @@ class AlarmScheduleServiceTest : ATestParent() {
         // find alarm data
         alarmSchedules = alarmScheduleService.getNeedAlarmSchedules()
         assertEquals(1, alarmSchedules.size)
-        assertEquals(medicine1.mMedicineName.displayValue, alarmSchedules[0].medicineName)
-        assertEquals(person1.mPersonName.displayValue, alarmSchedules[0].personName)
+        assertEquals(medicine1.medicineName.displayValue, alarmSchedules[0].medicineName)
+        assertEquals(person1.personName.displayValue, alarmSchedules[0].personName)
 
         deleteNeedAlarmData()
     }
 
     private fun createNeedAlarmData() {
-        database.personDao().insert(SqlitePerson.build { mPerson = person1 })
-        database.medicineUnitDao().insert(SqliteMedicineUnit.build { mMedicineUnit = medicineUnit1 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable1 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable2 })
-        database.timetableDao().insert(SqliteTimetable.build { mTimetable = timetable3 })
-        database.medicineDao().insert(SqliteMedicine.build { mMedicine = medicine1 })
+        database.personDao().insert(SqlitePerson.build { person = person1 })
+        database.medicineUnitDao().insert(SqliteMedicineUnit.build { medicineUnit = medicineUnit1 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable1 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable2 })
+        database.timetableDao().insert(SqliteTimetable.build { timetable = timetable3 })
+        database.medicineDao().insert(SqliteMedicine.build { medicine = medicine1 })
 
         database.mediTimeRelationDao().insert(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable1.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable1.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.mediTimeRelationDao().insert(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable2.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable2.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.mediTimeRelationDao().insert(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable3.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable3.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.personMediRelationDao().insert(SqlitePersonMediRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mPersonId = person1.mPersonId
+            medicineId = medicine1.medicineId
+            personId = person1.personId
         })
 
-        database.scheduleDao().insert(SqliteSchedule.build { mSchedule = schedule1 })
-        database.scheduleDao().insert(SqliteSchedule.build { mSchedule = schedule2 })
-        database.scheduleDao().insert(SqliteSchedule.build { mSchedule = schedule3 })
+        database.scheduleDao().insert(SqliteSchedule.build { schedule = schedule1 })
+        database.scheduleDao().insert(SqliteSchedule.build { schedule = schedule2 })
+        database.scheduleDao().insert(SqliteSchedule.build { schedule = schedule3 })
     }
 
     private fun deleteNeedAlarmData() {
-        database.personDao().delete(SqlitePerson.build { mPerson = person1 })
-        database.medicineUnitDao().delete(SqliteMedicineUnit.build { mMedicineUnit = medicineUnit1 })
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable1 })
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable2 })
-        database.timetableDao().delete(SqliteTimetable.build { mTimetable = timetable3 })
-        database.medicineDao().delete(SqliteMedicine.build { mMedicine = medicine1 })
+        database.personDao().delete(SqlitePerson.build { person = person1 })
+        database.medicineUnitDao().delete(SqliteMedicineUnit.build { medicineUnit = medicineUnit1 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable1 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable2 })
+        database.timetableDao().delete(SqliteTimetable.build { timetable = timetable3 })
+        database.medicineDao().delete(SqliteMedicine.build { medicine = medicine1 })
 
         database.mediTimeRelationDao().delete(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable1.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable1.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.mediTimeRelationDao().delete(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable2.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable2.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.mediTimeRelationDao().delete(SqliteMediTimeRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mTimetableId = timetable3.mTimetableId
-            mIsOneShot = IsOneShotType(false)
+            medicineId = medicine1.medicineId
+            timetableId = timetable3.timetableId
+            oneShot = OneShotType(false)
         })
 
         database.personMediRelationDao().delete(SqlitePersonMediRelation.build {
-            mMedicineId = medicine1.mMedicineId
-            mPersonId = person1.mPersonId
+            medicineId = medicine1.medicineId
+            personId = person1.personId
         })
 
-        database.scheduleDao().delete(SqliteSchedule.build { mSchedule = schedule1 })
-        database.scheduleDao().delete(SqliteSchedule.build { mSchedule = schedule2 })
-        database.scheduleDao().delete(SqliteSchedule.build { mSchedule = schedule3 })
+        database.scheduleDao().delete(SqliteSchedule.build { schedule = schedule1 })
+        database.scheduleDao().delete(SqliteSchedule.build { schedule = schedule2 })
+        database.scheduleDao().delete(SqliteSchedule.build { schedule = schedule3 })
     }
 
     private val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
 
     private val person1 = Person(
-            mPersonId = PersonIdType("person01"),
-            mPersonName = PersonNameType("自分"),
-            mPersonDisplayOrder = PersonDisplayOrderType(10))
+            personId = PersonIdType("person01"),
+            personName = PersonNameType("自分"),
+            personDisplayOrder = PersonDisplayOrderType(10))
 
     private val medicineUnit1 = MedicineUnit(
-            mMedicineUnitId = MedicineUnitIdType("unit01"),
-            mMedicineUnitValue = MedicineUnitValueType(),
-            mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+            medicineUnitId = MedicineUnitIdType("unit01"),
+            medicineUnitValue = MedicineUnitValueType(),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
 
     private val medicine1 = Medicine(
-            mMedicineId = MedicineIdType("medicine01"),
-            mMedicineName = MedicineNameType("メルカゾール"),
-            mMedicineUnit = medicineUnit1)
+            medicineId = MedicineIdType("medicine01"),
+            medicineName = MedicineNameType("メルカゾール"),
+            medicineUnit = medicineUnit1)
 
     private val timetable1 = Timetable(
-            mTimetableId = TimetableIdType("timetable01"),
-            mTimetableName = TimetableNameType("朝"),
-            mTimetableTime = TimetableTimeType(CalendarNoSecond().calendar),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable01"),
+            timetableName = TimetableNameType("朝"),
+            timetableTime = TimetableTimeType(CalendarNoSecond().calendar),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val timetable2 = Timetable(
-            mTimetableId = TimetableIdType("timetable02"),
-            mTimetableName = TimetableNameType("昼"),
-            mTimetableTime = TimetableTimeType(12, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable02"),
+            timetableName = TimetableNameType("昼"),
+            timetableTime = TimetableTimeType(12, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val timetable3 = Timetable(
-            mTimetableId = TimetableIdType("timetable03"),
-            mTimetableName = TimetableNameType("夜"),
-            mTimetableTime = TimetableTimeType(19, 0),
-            mTimetableDisplayOrder = TimetableDisplayOrderType(20))
+            timetableId = TimetableIdType("timetable03"),
+            timetableName = TimetableNameType("夜"),
+            timetableTime = TimetableTimeType(19, 0),
+            timetableDisplayOrder = TimetableDisplayOrderType(20))
 
     private val schedule1 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable1.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable1.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 
     private val schedule2 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable2.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable2.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 
     private val schedule3 = Schedule(
-            mMedicineId = medicine1.mMedicineId,
-            mTimetableId = timetable3.mTimetableId,
-            mSchedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
-            mScheduleNeedAlarm = ScheduleNeedAlarmType(true),
-            mScheduleIsTake = ScheduleIsTakeType(false))
+            medicineId = medicine1.medicineId,
+            timetableId = timetable3.timetableId,
+            schedulePlanDate = SchedulePlanDateType(CalendarNoSecond().calendar),
+            scheduleNeedAlarm = ScheduleNeedAlarmType(true),
+            scheduleIsTake = ScheduleIsTakeType(false))
 }

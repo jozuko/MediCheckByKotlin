@@ -8,13 +8,13 @@ import com.studiojozu.medicheck.domain.model.setting.*
 @Entity(tableName = "timetable")
 class SqliteTimetable(timetableId: TimetableIdType) {
     class Builder {
-        lateinit var mTimetable: Timetable
+        lateinit var timetable: Timetable
 
         fun build(): SqliteTimetable {
-            val sqliteTimetable = SqliteTimetable(timetableId = mTimetable.mTimetableId)
-            sqliteTimetable.mTimetableName = mTimetable.mTimetableName
-            sqliteTimetable.mTimetableTime = mTimetable.mTimetableTime
-            sqliteTimetable.mTimetableDisplayOrder = mTimetable.mTimetableDisplayOrder
+            val sqliteTimetable = SqliteTimetable(timetableId = timetable.timetableId)
+            sqliteTimetable.timetableName = timetable.timetableName
+            sqliteTimetable.timetableTime = timetable.timetableTime
+            sqliteTimetable.timetableDisplayOrder = timetable.timetableDisplayOrder
 
             return sqliteTimetable
         }
@@ -29,26 +29,27 @@ class SqliteTimetable(timetableId: TimetableIdType) {
     }
 
     /** タイムテーブルID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @PrimaryKey
     @ColumnInfo(name = "timetable_id")
-    var mTimetableId: TimetableIdType = timetableId
+    var timetableId: TimetableIdType = timetableId
 
     /** 服用タイミング名 */
     @ColumnInfo(name = "timetable_name")
-    var mTimetableName: TimetableNameType = TimetableNameType()
+    var timetableName: TimetableNameType = TimetableNameType()
 
     /** 予定時刻 */
     @ColumnInfo(name = "timetable_time")
-    var mTimetableTime: TimetableTimeType = TimetableTimeType()
+    var timetableTime: TimetableTimeType = TimetableTimeType()
 
     /** 表示順 */
     @ColumnInfo(name = "timetable_display_order")
-    var mTimetableDisplayOrder: TimetableDisplayOrderType = TimetableDisplayOrderType()
+    var timetableDisplayOrder: TimetableDisplayOrderType = TimetableDisplayOrderType()
 
     fun toTimetable(): Timetable =
             Timetable(
-                    mTimetableId = mTimetableId,
-                    mTimetableName = mTimetableName,
-                    mTimetableTime = mTimetableTime,
-                    mTimetableDisplayOrder = mTimetableDisplayOrder)
+                    timetableId = timetableId,
+                    timetableName = timetableName,
+                    timetableTime = timetableTime,
+                    timetableDisplayOrder = timetableDisplayOrder)
 }

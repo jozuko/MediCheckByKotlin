@@ -18,16 +18,16 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
             val values = TreeMap<Int, String>()
             val resources = context.resources
 
-            RemindIntervalPattern.values().forEach { it -> values.put(it.mIntervalMinutes, it.getDisplayValue(resources)) }
+            RemindIntervalPattern.values().forEach { it -> values.put(it.intervalMinutes, it.getDisplayValue(resources)) }
             return values
         }
     }
 
-    private val mValue: RemindIntervalPattern
+    private val value: RemindIntervalPattern
 
     init {
-        mValue = when (intervalMinutes) {
-            is RemindIntervalType -> intervalMinutes.mValue
+        value = when (intervalMinutes) {
+            is RemindIntervalType -> intervalMinutes.value
             is RemindIntervalPattern -> intervalMinutes
             is Long -> RemindIntervalPattern.typeOfIntervalMinute(intervalMinutes.toInt())
             is Int -> RemindIntervalPattern.typeOfIntervalMinute(intervalMinutes)
@@ -36,16 +36,16 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
     }
 
     override val dbValue: Int
-        get() = mValue.mIntervalMinutes
+        get() = value.intervalMinutes
 
     override val displayValue: String
         get() = throw RuntimeException("you need to call getDisplayValue(Resources).")
 
-    fun getDisplayValue(resources: Resources): String = mValue.getDisplayValue(resources)
+    fun getDisplayValue(resources: Resources): String = value.getDisplayValue(resources)
 
-    override fun compareTo(other: RemindIntervalType): Int = mValue.compareTo(other.mValue)
+    override fun compareTo(other: RemindIntervalType): Int = value.compareTo(other.value)
 
-    enum class RemindIntervalPattern(internal val mIntervalMinutes: Int, private val mDisplayValue: String, @param:StringRes private val mStringRes: Int) {
+    enum class RemindIntervalPattern(internal val intervalMinutes: Int, private val displayValue: String, @param:StringRes private val stringRes: Int) {
         MINUTE_1(1, "1", R.string.interval_minute),
         MINUTE_5(5, "5", R.string.interval_minutes),
         MINUTE_10(10, "10", R.string.interval_minutes),
@@ -54,9 +54,9 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
         HOUR_1(60, "1", R.string.interval_hour);
 
         companion object {
-            internal fun typeOfIntervalMinute(intervalMinutes: Int): RemindIntervalPattern = values().firstOrNull { it.mIntervalMinutes == intervalMinutes } ?: RemindIntervalPattern.MINUTE_5
+            internal fun typeOfIntervalMinute(intervalMinutes: Int): RemindIntervalPattern = values().firstOrNull { it.intervalMinutes == intervalMinutes } ?: RemindIntervalPattern.MINUTE_5
         }
 
-        fun getDisplayValue(resources: Resources): String = resources.getString(mStringRes, mDisplayValue)
+        fun getDisplayValue(resources: Resources): String = resources.getString(stringRes, displayValue)
     }
 }

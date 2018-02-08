@@ -30,8 +30,8 @@ class PersonMediRelationRepositoryTest : ATestParent() {
     fun setUp() = (RuntimeEnvironment.application as MediCheckTestApplication).mAppTestComponent.inject(this)
 
     private val medicineUnit1 = setSqliteMedicineUnit(getMedicineUnit("錠"))
-    private val medicine1 = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit1.mMedicineUnitId.dbValue))
-    private val medicine2 = setSqliteMedicine(getMedicine("Previcox", medicineUnit1.mMedicineUnitId.dbValue))
+    private val medicine1 = setSqliteMedicine(getMedicine("メルカゾール", medicineUnit1.medicineUnitId.dbValue))
+    private val medicine2 = setSqliteMedicine(getMedicine("Previcox", medicineUnit1.medicineUnitId.dbValue))
     private val person1 = setSqlitePerson(getPerson("Jozuko Dev"))
     private val person2 = setSqlitePerson(getPerson("Luke"))
 
@@ -42,24 +42,24 @@ class PersonMediRelationRepositoryTest : ATestParent() {
         addData(database)
 
         // insert
-        dao.insert(person1.mPersonId, medicine1.mMedicineId)
-        var person = dao.findPersonByMedicineId(medicine1.mMedicineId)!!
-        var medicines = dao.findMedicineByPersonId(person.mPersonId)
-        assertEquals(person1.mPersonId, person.mPersonId)
+        dao.insert(person1.personId, medicine1.medicineId)
+        var person = dao.findPersonByMedicineId(medicine1.medicineId)!!
+        var medicines = dao.findMedicineByPersonId(person.personId)
+        assertEquals(person1.personId, person.personId)
         assertEquals(1, medicines.size)
-        assertEquals(medicine1.mMedicineId, medicines[0].mMedicineId)
+        assertEquals(medicine1.medicineId, medicines[0].medicineId)
 
         // update
-        dao.insert(person1.mPersonId, medicine1.mMedicineId)
-        person = dao.findPersonByMedicineId(medicine1.mMedicineId)!!
-        medicines = dao.findMedicineByPersonId(person.mPersonId)
-        assertEquals(person1.mPersonId, person.mPersonId)
+        dao.insert(person1.personId, medicine1.medicineId)
+        person = dao.findPersonByMedicineId(medicine1.medicineId)!!
+        medicines = dao.findMedicineByPersonId(person.personId)
+        assertEquals(person1.personId, person.personId)
         assertEquals(1, medicines.size)
-        assertEquals(medicine1.mMedicineId, medicines[0].mMedicineId)
+        assertEquals(medicine1.medicineId, medicines[0].medicineId)
 
         // delete
-        dao.deleteByMedicineId(medicine1.mMedicineId)
-        assertNull(dao.findPersonByMedicineId(medicine1.mMedicineId))
+        dao.deleteByMedicineId(medicine1.medicineId)
+        assertNull(dao.findPersonByMedicineId(medicine1.medicineId))
 
         removeData(database)
     }
@@ -71,35 +71,35 @@ class PersonMediRelationRepositoryTest : ATestParent() {
         addData(database)
 
         // insert
-        dao.insert(person1.mPersonId, medicine1.mMedicineId)
+        dao.insert(person1.personId, medicine1.medicineId)
 
         // existByPersonIdMedicineId
-        assertTrue(dao.existByPersonIdMedicineId(person1.mPersonId, medicine1.mMedicineId))
-        assertFalse(dao.existByPersonIdMedicineId(person1.mPersonId, medicine2.mMedicineId))
-        assertFalse(dao.existByPersonIdMedicineId(person2.mPersonId, medicine2.mMedicineId))
+        assertTrue(dao.existByPersonIdMedicineId(person1.personId, medicine1.medicineId))
+        assertFalse(dao.existByPersonIdMedicineId(person1.personId, medicine2.medicineId))
+        assertFalse(dao.existByPersonIdMedicineId(person2.personId, medicine2.medicineId))
 
         removeData(database)
     }
 
     private fun getMedicineUnit(value: String = ""): MedicineUnit =
-            MedicineUnit(mMedicineUnitValue = MedicineUnitValueType(value))
+            MedicineUnit(medicineUnitValue = MedicineUnitValueType(value))
 
     private fun getMedicine(name: String = "", unitId: String = MedicineUnitIdType().dbValue): Medicine =
             Medicine(
-                    mMedicineName = MedicineNameType(name),
-                    mMedicineUnit = MedicineUnit(mMedicineUnitId = MedicineUnitIdType(unitId)))
+                    medicineName = MedicineNameType(name),
+                    medicineUnit = MedicineUnit(medicineUnitId = MedicineUnitIdType(unitId)))
 
     private fun getPerson(name: String = ""): Person =
-            Person(mPersonName = PersonNameType(name))
+            Person(personName = PersonNameType(name))
 
     private fun setSqliteMedicine(entity: Medicine): SqliteMedicine =
-            SqliteMedicine.build { mMedicine = entity }
+            SqliteMedicine.build { medicine = entity }
 
     private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
-            SqliteMedicineUnit.build { mMedicineUnit = entity }
+            SqliteMedicineUnit.build { medicineUnit = entity }
 
     private fun setSqlitePerson(entity: Person): SqlitePerson =
-            SqlitePerson.build { mPerson = entity }
+            SqlitePerson.build { person = entity }
 
     private fun addData(database: AppDatabase) {
         database.medicineDao().insert(medicine1)

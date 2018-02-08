@@ -15,7 +15,7 @@ import java.util.*
 @Config(manifest = "src/main/AndroidManifest.xml")
 class ALongTypeTest : ATestParent() {
 
-    private val mValueProperty = findProperty(TestLongType::class, "mValue")
+    private val mValueProperty = findProperty(TestLongType::class, "value")
 
     @Test
     @Throws(Exception::class)

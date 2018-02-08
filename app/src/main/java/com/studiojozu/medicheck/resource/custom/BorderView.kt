@@ -11,7 +11,7 @@ import com.studiojozu.medicheck.R
 
 class BorderView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
 
-    private val mPaint = Paint()
+    private val paint = Paint()
     private val borderSize: Float = context.resources.getDimensionPixelSize(R.dimen.border_size).toFloat()
 
     init {
@@ -25,7 +25,7 @@ class BorderView(context: Context, attrs: AttributeSet?) : View(context, attrs) 
         var lineTo = borderSize
 
         while (lineTo <= width) {
-            canvas.drawLine(lineFrom, center, lineTo, center, mPaint)
+            canvas.drawLine(lineFrom, center, lineTo, center, paint)
             if (lineTo == width) break
 
             lineFrom = lineTo + (borderSize * 2)
@@ -43,9 +43,9 @@ class BorderView(context: Context, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun initPaint() {
-        mPaint.isAntiAlias = true
-        mPaint.color = ContextCompat.getColor(context, R.color.line)
-        mPaint.style = Paint.Style.STROKE
-        mPaint.strokeWidth = borderSize
+        paint.isAntiAlias = true
+        paint.color = ContextCompat.getColor(context, R.color.line)
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = borderSize
     }
 }

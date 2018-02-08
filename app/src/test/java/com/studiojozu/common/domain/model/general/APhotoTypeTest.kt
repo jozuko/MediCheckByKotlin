@@ -17,7 +17,7 @@ import java.util.*
 @Config(manifest = "src/main/AndroidManifest.xml")
 class APhotoTypeTest : ATestParent() {
 
-    private val mValueProperty = findProperty(TestPhotoType::class, "mValue")
+    private val mValueProperty = findProperty(TestPhotoType::class, "value")
 
     @Test
     @Throws(Exception::class)

@@ -7,16 +7,16 @@ import com.studiojozu.medicheck.domain.model.person.PersonIdType
 
 class PreferenceRepository(context: Context) {
 
-    private val mSharedPreferences: SharedPreferences = context.getSharedPreferences("medicheck", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences = context.getSharedPreferences("medicheck", Context.MODE_PRIVATE)
 
     var defaultPersonId: PersonIdType?
         get() {
-            val personId = mSharedPreferences.getString(KEY_DEFAULT_PERSON_ID, null) ?: return null
+            val personId = sharedPreferences.getString(KEY_DEFAULT_PERSON_ID, null) ?: return null
 
             return PersonIdType(personId)
         }
         set(personIdType) {
-            val editor = mSharedPreferences.edit()
+            val editor = sharedPreferences.edit()
             editor.putString(KEY_DEFAULT_PERSON_ID, personIdType?.dbValue)
             editor.apply()
         }

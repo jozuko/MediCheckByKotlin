@@ -15,9 +15,9 @@ import com.studiojozu.medicheck.R
  */
 class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomView<DescriptionButtonView>(context, attrs) {
 
-    private var mClientClickListener: OnClickListener? = null
+    private var clientClickListener: OnClickListener? = null
 
-    private var mUnBinder: Unbinder = ButterKnife.bind(this, currentView)
+    private var unBinder: Unbinder = ButterKnife.bind(this, currentView)
 
     @BindView(R.id.description_button_layout)
     lateinit var layoutGroup: ShrinkRelativeLayout
@@ -43,7 +43,7 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
 
         // ButterKnifeでonClickをbindすると、同時に2つのViewが発火したと判定されて、結果、発火しないことになるので、自力で作成する
         layoutGroup.setOnClickListener {
-            mClientClickListener?.onClick(this)
+            clientClickListener?.onClick(this)
         }
 
         // Pressの際の縮小値を設定
@@ -75,10 +75,10 @@ class DescriptionButtonView(context: Context, attrs: AttributeSet?) : ACustomVie
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        mUnBinder.unbind()
+        unBinder.unbind()
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
-        mClientClickListener = listener
+        clientClickListener = listener
     }
 }

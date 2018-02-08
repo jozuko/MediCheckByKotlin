@@ -1,7 +1,7 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
-import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
+import com.studiojozu.medicheck.domain.model.medicine.OneShotType
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
@@ -32,27 +32,27 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
 
         // insert
         val insertData = setSqliteMediTimeRelation(MedicineIdType("12345678"), TimetableIdType())
-        insertData.mIsOneShot = IsOneShotType(false)
+        insertData.oneShot = OneShotType(false)
 
         dao.insert(insertData)
 
         entities = dao.findAll()
         assertEquals(1, entities.size)
-        assertEquals(insertData.mMedicineId, entities[0].mMedicineId)
-        assertEquals(insertData.mTimetableId, entities[0].mTimetableId)
-        assertEquals(insertData.mIsOneShot, entities[0].mIsOneShot)
+        assertEquals(insertData.medicineId, entities[0].medicineId)
+        assertEquals(insertData.timetableId, entities[0].timetableId)
+        assertEquals(insertData.oneShot, entities[0].oneShot)
 
         // update
-        val updateData = setSqliteMediTimeRelation(insertData.mMedicineId, insertData.mTimetableId)
-        updateData.mIsOneShot = IsOneShotType(true)
+        val updateData = setSqliteMediTimeRelation(insertData.medicineId, insertData.timetableId)
+        updateData.oneShot = OneShotType(true)
 
         dao.insert(updateData)
 
         entities = dao.findAll()
         assertEquals(1, entities.size)
-        assertEquals(updateData.mMedicineId, entities[0].mMedicineId)
-        assertEquals(updateData.mTimetableId, entities[0].mTimetableId)
-        assertEquals(updateData.mIsOneShot, entities[0].mIsOneShot)
+        assertEquals(updateData.medicineId, entities[0].medicineId)
+        assertEquals(updateData.timetableId, entities[0].timetableId)
+        assertEquals(updateData.oneShot, entities[0].oneShot)
 
         // delete
         dao.delete(insertData)
@@ -71,15 +71,15 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
 
         // insert
         val insertData1 = setSqliteMediTimeRelation(MedicineIdType(), TimetableIdType())
-        insertData1.mIsOneShot = IsOneShotType(false)
+        insertData1.oneShot = OneShotType(false)
         dao.insert(insertData1)
 
-        val insertData2 = setSqliteMediTimeRelation(MedicineIdType(), insertData1.mTimetableId)
-        insertData2.mIsOneShot = IsOneShotType(false)
+        val insertData2 = setSqliteMediTimeRelation(MedicineIdType(), insertData1.timetableId)
+        insertData2.oneShot = OneShotType(false)
         dao.insert(insertData2)
 
-        val insertData3 = setSqliteMediTimeRelation(insertData1.mMedicineId, TimetableIdType(""))
-        insertData3.mIsOneShot = IsOneShotType(true)
+        val insertData3 = setSqliteMediTimeRelation(insertData1.medicineId, TimetableIdType(""))
+        insertData3.oneShot = OneShotType(true)
         dao.insert(insertData3)
 
         Assert.assertEquals(3, dao.findAll().size)
@@ -106,11 +106,11 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         // insert
         val medicineId1 = MedicineIdType()
         val medicineId2 = MedicineIdType()
-        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
-        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
-        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
-        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
-        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
+        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].timetableId)
+        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].timetableId)
+        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].timetableId)
+        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].timetableId)
+        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].timetableId)
         dao.insert(insertData1)
         dao.insert(insertData2)
         dao.insert(insertData3)
@@ -121,19 +121,19 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         val timetableArray = dao.findTimetableByMedicineId(medicineId1.dbValue)
         assertEquals(3, timetableArray.size)
         var index = 0
-        assertEquals("朝", timetableArray[index].mTimetableName.dbValue)
-        assertEquals("7:00", timetableArray[index].mTimetableTime.displayValue)
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("朝", timetableArray[index].timetableName.dbValue)
+        assertEquals("7:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
 
         index = 1
-        assertEquals("昼", timetableArray[index].mTimetableName.dbValue)
-        assertEquals("12:00", timetableArray[index].mTimetableTime.displayValue)
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("昼", timetableArray[index].timetableName.dbValue)
+        assertEquals("12:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
 
         index = 2
-        assertEquals("夜", timetableArray[index].mTimetableName.dbValue)
-        assertEquals("19:00", timetableArray[index].mTimetableTime.displayValue)
-        assertEquals((index + 1).toLong(), timetableArray[index].mTimetableDisplayOrder.dbValue)
+        assertEquals("夜", timetableArray[index].timetableName.dbValue)
+        assertEquals("19:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
 
         // delete
         dao.delete(insertData1)
@@ -154,11 +154,11 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
         // insert
         val medicineId1 = MedicineIdType()
         val medicineId2 = MedicineIdType()
-        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].mTimetableId)
-        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].mTimetableId)
-        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].mTimetableId)
-        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].mTimetableId)
-        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].mTimetableId)
+        val insertData1 = setSqliteMediTimeRelation(medicineId1, timetables[0].timetableId)
+        val insertData2 = setSqliteMediTimeRelation(medicineId1, timetables[1].timetableId)
+        val insertData3 = setSqliteMediTimeRelation(medicineId1, timetables[2].timetableId)
+        val insertData4 = setSqliteMediTimeRelation(medicineId2, timetables[0].timetableId)
+        val insertData5 = setSqliteMediTimeRelation(medicineId2, timetables[3].timetableId)
         dao.insert(insertData1)
         dao.insert(insertData2)
         dao.insert(insertData3)
@@ -184,8 +184,8 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
 
     private fun setSqliteMediTimeRelation(medicineIdType: MedicineIdType, timetableIdType: TimetableIdType): SqliteMediTimeRelation =
             SqliteMediTimeRelation.build {
-                mMedicineId = medicineIdType
-                mTimetableId = timetableIdType
-                mIsOneShot = IsOneShotType(true)
+                medicineId = medicineIdType
+                timetableId = timetableIdType
+                oneShot = OneShotType(true)
             }
 }

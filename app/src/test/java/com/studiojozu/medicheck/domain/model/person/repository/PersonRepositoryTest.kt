@@ -30,9 +30,9 @@ class PersonRepositoryTest : ATestParent() {
     @Throws(Exception::class)
     fun crud() {
         val defaultPerson = Person(
-                mPersonName = PersonNameType("Myself"),
-                mPersonPhoto = PersonPhotoType(""),
-                mPersonDisplayOrder = PersonDisplayOrderType(1))
+                personName = PersonNameType("Myself"),
+                personPhoto = PersonPhotoType(""),
+                personDisplayOrder = PersonDisplayOrderType(1))
 
         // select no data
         var persons = personRepository.findAll()
@@ -41,7 +41,7 @@ class PersonRepositoryTest : ATestParent() {
         assertIgnoreId(defaultPerson, persons[0])
 
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         personRepository.insert(insertEntity)
         persons = personRepository.findAll()
         Assert.assertEquals(2, persons.size)
@@ -49,7 +49,7 @@ class PersonRepositoryTest : ATestParent() {
         assert(insertEntity, persons[1])
 
         // update
-        val updateEntity = insertEntity.copy(mPersonName = PersonNameType("Jozuko Dev"))
+        val updateEntity = insertEntity.copy(personName = PersonNameType("Jozuko Dev"))
         personRepository.insert(updateEntity)
         persons = personRepository.findAll()
         Assert.assertEquals(2, persons.size)
@@ -68,11 +68,11 @@ class PersonRepositoryTest : ATestParent() {
     @Throws(Exception::class)
     fun findById() {
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         personRepository.insert(insertEntity)
 
         // findById
-        val entity1 = personRepository.findById(insertEntity.mPersonId)!!
+        val entity1 = personRepository.findById(insertEntity.personId)!!
         assert(insertEntity, entity1)
 
         // findById
@@ -88,11 +88,11 @@ class PersonRepositoryTest : ATestParent() {
     @Throws(Exception::class)
     fun existPersonById() {
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         personRepository.insert(insertEntity)
 
         // findById
-        assertTrue(personRepository.existPersonById(insertEntity.mPersonId))
+        assertTrue(personRepository.existPersonById(insertEntity.personId))
 
         // findById
         assertFalse(personRepository.existPersonById(PersonIdType("unknown id")))
@@ -105,13 +105,13 @@ class PersonRepositoryTest : ATestParent() {
     @Throws(Exception::class)
     fun maxDisplayOrder() {
 
-        personRepository.delete(Person(mPersonId = PersonIdType(SqlitePerson.DEFAULT_PERSON_ID)))
+        personRepository.delete(Person(personId = PersonIdType(SqlitePerson.DEFAULT_PERSON_ID)))
 
         // maxDisplayOrder
         Assert.assertEquals(0L, personRepository.maxDisplayOrder())
 
         // insert
-        val insertEntity = Person(mPersonDisplayOrder = PersonDisplayOrderType(2))
+        val insertEntity = Person(personDisplayOrder = PersonDisplayOrderType(2))
         personRepository.insert(insertEntity)
 
         // maxDisplayOrder
@@ -123,16 +123,16 @@ class PersonRepositoryTest : ATestParent() {
     }
 
     private fun assert(expect: Person, actual: Person) {
-        Assert.assertEquals(expect.mPersonId, actual.mPersonId)
-        Assert.assertEquals(expect.mPersonName, actual.mPersonName)
-        Assert.assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
-        Assert.assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
+        Assert.assertEquals(expect.personId, actual.personId)
+        Assert.assertEquals(expect.personName, actual.personName)
+        Assert.assertEquals(expect.personPhoto, actual.personPhoto)
+        Assert.assertEquals(expect.personDisplayOrder, actual.personDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: Person, actual: Person) {
-        Assert.assertEquals(expect.mPersonName, actual.mPersonName)
-        Assert.assertEquals(expect.mPersonPhoto, actual.mPersonPhoto)
-        Assert.assertEquals(expect.mPersonDisplayOrder, actual.mPersonDisplayOrder)
+        Assert.assertEquals(expect.personName, actual.personName)
+        Assert.assertEquals(expect.personPhoto, actual.personPhoto)
+        Assert.assertEquals(expect.personDisplayOrder, actual.personDisplayOrder)
     }
 
 }

@@ -16,7 +16,7 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderVie
         fun onClickedHeaderBack()
     }
 
-    private var mClientOnClickBackListener: OnClickBackListener? = null
+    private var clientOnClickBackListener: OnClickBackListener? = null
 
     private var parentActivity: Activity? = null
 
@@ -54,7 +54,7 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderVie
 
     @Suppress("unused")
     fun setOnClickBackListener(listener: OnClickBackListener?) {
-        mClientOnClickBackListener = listener
+        clientOnClickBackListener = listener
     }
 
     fun setParentActivity(activity: Activity) {
@@ -66,6 +66,6 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ACustomView<HeaderVie
      */
     @OnClick(R.id.button_back)
     fun onClickMenuButton() {
-        mClientOnClickBackListener?.onClickedHeaderBack()
+        clientOnClickBackListener?.onClickedHeaderBack()
     }
 }

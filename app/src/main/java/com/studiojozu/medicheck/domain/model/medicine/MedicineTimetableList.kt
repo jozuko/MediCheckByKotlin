@@ -13,59 +13,59 @@ class MedicineTimetableList : Iterable<Timetable>, Iterator<Timetable>, Serializ
         const val serialVersionUID = -6268967129299051940L
     }
 
-    private var mTimetableList: MutableList<Timetable> = mutableListOf()
+    private var timetableList: MutableList<Timetable> = mutableListOf()
 
-    @Transient private var mTimetableIterator: Iterator<Timetable>? = null
+    @Transient private var timetableIterator: Iterator<Timetable>? = null
 
     var isOneShotMedicine = false
 
     val timetableListOrderByTime: List<Timetable>
         get() {
             val cloneList = this.copy()
-            Collections.sort(cloneList.mTimetableList, TimetableComparator(TimetableComparator.ComparePattern.Time))
-            return cloneList.mTimetableList
+            Collections.sort(cloneList.timetableList, TimetableComparator(TimetableComparator.ComparePattern.TIME))
+            return cloneList.timetableList
         }
 
     val timetableListOrderByDisplayOrder: List<Timetable>
         get() {
             val cloneList = this.copy()
-            Collections.sort(cloneList.mTimetableList, TimetableComparator(TimetableComparator.ComparePattern.DisplayOrder))
-            return cloneList.mTimetableList
+            Collections.sort(cloneList.timetableList, TimetableComparator(TimetableComparator.ComparePattern.DISPLAY_ORDER))
+            return cloneList.timetableList
         }
 
     val count: Int
-        get() = mTimetableList.size
+        get() = timetableList.size
 
     val displayValue: String
-        get() = if (isOneShotMedicine) "" else mTimetableList.joinToString("\n") { it.timetableNameWithTime }
+        get() = if (isOneShotMedicine) "" else timetableList.joinToString("\n") { it.timetableNameWithTime }
 
     constructor()
 
     constructor(timetables: MutableList<Timetable>) {
-        mTimetableList = timetables
+        timetableList = timetables
     }
 
     private fun copy(): MedicineTimetableList {
         val copyTarget = MedicineTimetableList()
-        copyTarget.mTimetableList.addAll(this.mTimetableList.map { it.copy() })
+        copyTarget.timetableList.addAll(this.timetableList.map { it.copy() })
         return copyTarget
     }
 
     override fun iterator(): Iterator<Timetable> {
         val other = copy()
-        other.mTimetableIterator = mTimetableList.iterator()
+        other.timetableIterator = timetableList.iterator()
         return other
     }
 
-    override fun hasNext(): Boolean = mTimetableIterator!!.hasNext()
+    override fun hasNext(): Boolean = timetableIterator!!.hasNext()
 
-    override fun next(): Timetable = mTimetableIterator!!.next()
+    override fun next(): Timetable = timetableIterator!!.next()
 
-    private fun clearTimetableList() = mTimetableList.clear()
+    private fun clearTimetableList() = timetableList.clear()
 
     fun setTimetableList(timetableList: List<Timetable>?) {
         clearTimetableList()
-        timetableList?.let { mTimetableList.addAll(it) }
+        timetableList?.let { this.timetableList.addAll(it) }
     }
 
     /**
@@ -86,8 +86,8 @@ class MedicineTimetableList : Iterable<Timetable>, Iterator<Timetable>, Serializ
     private fun getPlanDate(startDatetime: ADatetimeType<*>, planDate: PlanDate?): PlanDate {
         val resultPlanDate = planDate ?: PlanDate(startDatetime, TimetableIdType())
         return timetableListOrderByTime
-                .map { it.getPlanDateTime(resultPlanDate.mPlanDatetime) }
-                .firstOrNull { it.mPlanDatetime > startDatetime }
+                .map { it.getPlanDateTime(resultPlanDate.planDatetime) }
+                .firstOrNull { it.planDatetime > startDatetime }
                 ?: getPlanDate(startDatetime, resultPlanDate.addDay(1))
     }
 
@@ -98,9 +98,9 @@ class MedicineTimetableList : Iterable<Timetable>, Iterator<Timetable>, Serializ
      * @return 最終時刻を表すTimetableIDの場合はtrueを返却する
      */
     fun isFinalTime(timetableId: TimetableIdType): Boolean {
-        if (mTimetableList.isEmpty()) return false
-        return timetableListOrderByTime[count - 1].mTimetableId == timetableId
+        if (timetableList.isEmpty()) return false
+        return timetableListOrderByTime[count - 1].timetableId == timetableId
     }
 
-    fun contain(timetable: Timetable?): Boolean = mTimetableList.contains(timetable)
+    fun contain(timetable: Timetable?): Boolean = timetableList.contains(timetable)
 }

@@ -2,20 +2,20 @@ package com.studiojozu.medicheck.infrastructure.persistence.entity
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
-import com.studiojozu.medicheck.domain.model.medicine.IsOneShotType
 import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
+import com.studiojozu.medicheck.domain.model.medicine.OneShotType
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 
 @Entity(tableName = "medi_time_relation", primaryKeys = arrayOf("medicine_id", "timetable_id"))
 open class SqliteMediTimeRelation(medicineId: MedicineIdType, timetableId: TimetableIdType) {
     class Builder {
-        lateinit var mMedicineId: MedicineIdType
-        lateinit var mTimetableId: TimetableIdType
-        lateinit var mIsOneShot: IsOneShotType
+        lateinit var medicineId: MedicineIdType
+        lateinit var timetableId: TimetableIdType
+        lateinit var oneShot: OneShotType
 
         fun build(): SqliteMediTimeRelation {
-            val sqliteMediTimeRelation = SqliteMediTimeRelation(medicineId = mMedicineId, timetableId = mTimetableId)
-            sqliteMediTimeRelation.mIsOneShot = mIsOneShot
+            val sqliteMediTimeRelation = SqliteMediTimeRelation(medicineId = medicineId, timetableId = timetableId)
+            sqliteMediTimeRelation.oneShot = oneShot
 
             return sqliteMediTimeRelation
         }
@@ -30,14 +30,16 @@ open class SqliteMediTimeRelation(medicineId: MedicineIdType, timetableId: Timet
     }
 
     /** 薬ID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @ColumnInfo(name = "medicine_id")
-    var mMedicineId: MedicineIdType = medicineId
+    var medicineId: MedicineIdType = medicineId
 
     /** タイムテーブルID */
+    @Suppress("CanBePrimaryConstructorProperty")
     @ColumnInfo(name = "timetable_id")
-    var mTimetableId: TimetableIdType = timetableId
+    var timetableId: TimetableIdType = timetableId
 
     /** 頓服？ */
     @ColumnInfo(name = "is_one_shot")
-    var mIsOneShot: IsOneShotType = IsOneShotType()
+    var oneShot: OneShotType = OneShotType()
 }

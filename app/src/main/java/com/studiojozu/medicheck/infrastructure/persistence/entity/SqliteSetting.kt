@@ -11,13 +11,13 @@ import com.studiojozu.medicheck.domain.model.setting.UseReminderType
 @Entity(tableName = "setting")
 class SqliteSetting {
     class Builder {
-        lateinit var mSetting: Setting
+        lateinit var setting: Setting
 
         fun build(): SqliteSetting {
             val sqliteSetting = SqliteSetting()
-            sqliteSetting.mUseReminder = mSetting.mUseReminder
-            sqliteSetting.mRemindInterval = mSetting.mRemindInterval
-            sqliteSetting.mRemindTimeout = mSetting.mRemindTimeout
+            sqliteSetting.useReminder = setting.useReminder
+            sqliteSetting.remindInterval = setting.remindInterval
+            sqliteSetting.remindTimeout = setting.remindTimeout
 
             return sqliteSetting
         }
@@ -34,22 +34,22 @@ class SqliteSetting {
     /** ID */
     @PrimaryKey
     @ColumnInfo(name = "setting_id")
-    var mSettingId: Long = 0
+    var settingId: Long = 0
 
     /** 繰り返し通知を使用する？ */
     @ColumnInfo(name = "use_reminder")
-    var mUseReminder: UseReminderType = UseReminderType()
+    var useReminder: UseReminderType = UseReminderType()
 
     /** 繰り返し通知間隔 */
     @ColumnInfo(name = "remind_interval")
-    var mRemindInterval: RemindIntervalType = RemindIntervalType()
+    var remindInterval: RemindIntervalType = RemindIntervalType()
 
     /** 繰り返し通知最大時間(これ以上は通知しない) */
     @ColumnInfo(name = "remind_timeout")
-    var mRemindTimeout: RemindTimeoutType = RemindTimeoutType()
+    var remindTimeout: RemindTimeoutType = RemindTimeoutType()
 
     fun toSetting(): Setting =
-            Setting(mUseReminder = mUseReminder,
-                    mRemindInterval = mRemindInterval,
-                    mRemindTimeout = mRemindTimeout)
+            Setting(useReminder = useReminder,
+                    remindInterval = remindInterval,
+                    remindTimeout = remindTimeout)
 }

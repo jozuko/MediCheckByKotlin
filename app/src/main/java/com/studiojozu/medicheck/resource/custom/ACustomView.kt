@@ -20,18 +20,18 @@ abstract class ACustomView<out T>(private val mContext: Context, attrs: Attribut
         internal const val UNKNOWN_RESOURCE_ID = -1
     }
 
-    private val mLayoutInflater: LayoutInflater = LayoutInflater.from(mContext)
-    private var mCustomView: T
-    private var mActivity: Activity? = null
+    private val layoutInflater: LayoutInflater = LayoutInflater.from(mContext)
+    private var customView: T
+    private var activity: Activity? = null
 
     init {
         @Suppress("UNCHECKED_CAST")
         @Suppress("LeakingThis")
-        mCustomView = mLayoutInflater.inflate(layoutResource(), this)!! as T
+        customView = layoutInflater.inflate(layoutResource(), this)!! as T
     }
 
     protected val currentView: T
-        get() = mCustomView
+        get() = customView
 
     @LayoutRes
     protected abstract fun layoutResource(): Int

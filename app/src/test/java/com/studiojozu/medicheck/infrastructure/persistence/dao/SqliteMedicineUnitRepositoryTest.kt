@@ -33,21 +33,21 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
         dao.insert(setSqliteMedicineUnit(insertMedicineUnit))
         entities = dao.findAll()
         Assert.assertEquals(2, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
         assert(insertMedicineUnit, entities[1])
 
         // update
-        val updateMedicineUnit = insertMedicineUnit.copy(mMedicineUnitValue = MedicineUnitValueType("個"))
+        val updateMedicineUnit = insertMedicineUnit.copy(medicineUnitValue = MedicineUnitValueType("個"))
         dao.insert(setSqliteMedicineUnit(updateMedicineUnit))
         entities = dao.findAll()
         Assert.assertEquals(2, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
         assert(updateMedicineUnit, entities[1])
 
         // delete
@@ -55,7 +55,7 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
         dao.delete(setSqliteMedicineUnit(deleteMedicineUnit))
         entities = dao.findAll()
         Assert.assertEquals(1, entities.size)
-        assertIgnoreId(MedicineUnit(mMedicineUnitValue = MedicineUnitValueType("shot"), mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
+        assertIgnoreId(MedicineUnit(medicineUnitValue = MedicineUnitValueType("shot"), medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(1)), entities[0])
     }
 
     @Test
@@ -66,13 +66,13 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
         dao.insert(setSqliteMedicineUnit(insertMedicineUnit))
 
         // findById - exists
-        var entity = dao.findById(insertMedicineUnit.mMedicineUnitId.dbValue)
+        var entity = dao.findById(insertMedicineUnit.medicineUnitId.dbValue)
         assert(insertMedicineUnit, entity!!)
 
         // findById - not exists
@@ -94,25 +94,25 @@ class SqliteMedicineUnitRepositoryTest : ATestParent() {
 
         // insert
         val insertMedicineUnit = MedicineUnit(
-                mMedicineUnitId = MedicineUnitIdType("12345678"),
-                mMedicineUnitValue = MedicineUnitValueType("錠"),
-                mMedicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
+                medicineUnitId = MedicineUnitIdType("12345678"),
+                medicineUnitValue = MedicineUnitValueType("錠"),
+                medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(3))
         dao.insert(setSqliteMedicineUnit(insertMedicineUnit))
 
         assertEquals(3L, dao.maxDisplayOrder())
     }
 
     private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
-            SqliteMedicineUnit.build { mMedicineUnit = entity }
+            SqliteMedicineUnit.build { medicineUnit = entity }
 
     private fun assert(expect: MedicineUnit, actual: SqliteMedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitId, actual.mMedicineUnitId)
-        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.medicineUnitId, actual.medicineUnitId)
+        Assert.assertEquals(expect.medicineUnitValue, actual.medicineUnitValue)
+        Assert.assertEquals(expect.medicineUnitDisplayOrder, actual.medicineUnitDisplayOrder)
     }
 
     private fun assertIgnoreId(expect: MedicineUnit, actual: SqliteMedicineUnit) {
-        Assert.assertEquals(expect.mMedicineUnitValue, actual.mMedicineUnitValue)
-        Assert.assertEquals(expect.mMedicineUnitDisplayOrder, actual.mMedicineUnitDisplayOrder)
+        Assert.assertEquals(expect.medicineUnitValue, actual.medicineUnitValue)
+        Assert.assertEquals(expect.medicineUnitDisplayOrder, actual.medicineUnitDisplayOrder)
     }
 }

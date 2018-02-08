@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 class TakeNumberValidator
     : ANumericDecimalValidator(
-        mMin = BigDecimal(0),
-        mMax = BigDecimal(Integer.MAX_VALUE),
-        mAllowMinValue = false,
-        mAllowMaxValue = true)
+        min = BigDecimal(0),
+        max = BigDecimal(Integer.MAX_VALUE),
+        allowMinValue = false,
+        allowMaxValue = true)
