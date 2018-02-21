@@ -41,4 +41,9 @@ open class ServiceModule {
     open fun providerScheduleService() =
             ScheduleService()
 
+    @Singleton
+    @Provides
+    open fun providerSettingFinderService(application: Application) =
+            SettingFinderService(application as MediCheckApplication)
+
 }

@@ -5,7 +5,6 @@ import android.content.res.Resources
 import android.support.annotation.StringRes
 import com.studiojozu.common.domain.model.AValueObject
 import com.studiojozu.medicheck.R
-import java.util.*
 
 /**
  * 通知の繰り返し間隔を表す型クラス
@@ -14,8 +13,8 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
     companion object {
         const val serialVersionUID = -2200953636883165844L
 
-        fun getAllValues(context: Context): TreeMap<Int, String> {
-            val values = TreeMap<Int, String>()
+        fun getAllValues(context: Context): MutableMap<Int, String> {
+            val values = mutableMapOf<Int, String>()
             val resources = context.resources
 
             RemindIntervalPattern.values().forEach { it -> values.put(it.intervalMinutes, it.getDisplayValue(resources)) }

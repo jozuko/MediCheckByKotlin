@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="false">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@android:color/transparent"/>
+                    <size android:width="52dp" android:height="32dp"/>
+                    <padding android:bottom="8dp" android:left="0dp" android:right="0dp" android:top="8dp"/>
+                </shape>
+            </item>
+
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="8dp"/>
+                    <size android:width="26dp" android:height="16dp"/>
+                    <solid android:color="@color/switch_background_off"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <item android:state_checked="true">
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@android:color/transparent"/>
+                    <size android:width="52dp" android:height="32dp"/>
+                    <padding android:bottom="8dp" android:left="0dp" android:right="0dp" android:top="8dp"/>
+                </shape>
+            </item>
+
+            <item>
+                <shape android:shape="rectangle">
+                    <corners android:radius="8dp"/>
+                    <size android:width="26dp" android:height="16dp"/>
+                    <solid android:color="@color/switch_background_on"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+</selector>

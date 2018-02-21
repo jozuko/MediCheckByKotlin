@@ -1,11 +1,30 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- アプリのテーマ -->
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:alertDialogStyle">@style/AlertDialog.AppCompat.Light</item>
+        <item name="android:alertDialogTheme">@style/StandardAlertDialog</item>
+
         <item name="android:buttonStyle">@style/StandardButtonTheme</item>
         <item name="android:imageButtonStyle">@style/StandardButtonTheme</item>
         <item name="android:textViewStyle">@style/StandardTextTheme</item>
         <item name="android:checkboxStyle">@style/StandardCheckBox</item>
+        <item name="android:spinnerItemStyle">@style/StandardSpinnerItemStyle</item>
+        <item name="android:spinnerDropDownItemStyle">@style/StandardSpinnerDropDownItemStyle</item>
+    </style>
+
+    <!-- Theme - AlertDialog -->
+    <style name="StandardAlertDialog" parent="Base.V7.Theme.AppCompat.Light.Dialog">
+        <item name="android:fullBright">@android:color/transparent</item>
+        <item name="android:fullDark">@android:color/transparent</item>
+        <item name="android:topBright">@drawable/dashed_border_background</item>
+        <item name="android:topDark">@drawable/dashed_border_background</item>
+        <item name="android:centerBright">@drawable/dashed_border_background</item>
+        <item name="android:centerDark">@drawable/dashed_border_background</item>
+        <item name="android:centerMedium">@drawable/dashed_border_background</item>
+        <item name="android:bottomBright">@color/background</item>
+        <item name="android:bottomDark">@color/background</item>
+        <item name="android:bottomMedium">@color/background</item>
     </style>
 
     <!-- Theme - Button -->
@@ -36,25 +55,26 @@
         <item name="android:background">@color/background</item>
     </style>
 
-    <!-- Style - DialogLayout -->
-    <style name="DialogViewStyle" parent="AppTheme">
-        <item name="android:background">@color/dialog_background</item>
-        <item name="android:padding">@dimen/view_padding</item>
-    </style>
-
     <!-- Style - Label -->
     <style name="StandardLabelStyle" parent="android:Widget.TextView">
         <item name="android:textColor">@color/label_text</item>
         <item name="android:textSize">@dimen/label_text_size</item>
-        <item name="android:layout_marginRight">@dimen/label_margin</item>
+        <item name="android:paddingRight">@dimen/label_margin</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical|right</item>
+        <item name="fontPath">fonts/rounded-mgenplus-1pp-medium.ttf</item>
     </style>
 
     <!-- Style - Big text label -->
     <style name="BigTextLabelStyle" parent="StandardLabelStyle">
         <item name="android:textSize">@dimen/big_text_size</item>
+    </style>
+
+    <!-- Style - Standard Label for input -->
+    <style name="InputLabelStyle" parent="StandardLabelStyle">
+        <item name="android:paddingTop">@dimen/input_padding</item>
+        <item name="android:paddingBottom">@dimen/input_padding</item>
     </style>
 
     <!-- Style - Standard Editable TextView -->
@@ -63,9 +83,11 @@
         <item name="android:textSize">@dimen/text_size_input</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/input_padding</item>
+        <item name="android:paddingTop">@dimen/input_padding</item>
+        <item name="android:paddingBottom">@dimen/input_padding</item>
         <item name="android:background">@drawable/edit_background_selector</item>
         <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <!-- Style - Standard CheckTextView -->
@@ -142,6 +164,37 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_marginBottom">@dimen/border_margin</item>
+    </style>
+
+    <!-- Spinner Style -->
+    <style name="StandardSpinnerStyle">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:paddingTop">@dimen/input_padding</item>
+        <item name="android:paddingBottom">@dimen/input_padding</item>
+    </style>
+
+    <!-- Spinner Item Style -->
+    <style name="StandardSpinnerItemStyle" parent="Base.Widget.AppCompat.TextView.SpinnerItem">
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:textColor">@drawable/input_text_color</item>
+    </style>
+
+    <!-- Spinner DropDownItem Style -->
+    <style name="StandardSpinnerDropDownItemStyle" parent="Base.Widget.AppCompat.DropDownItem.Spinner">
+        <item name="android:textSize">@dimen/text_size_input</item>
+        <item name="android:textColor">@drawable/input_text_color</item>
+        <item name="android:checkMark">@drawable/check_mark_selector</item>
+    </style>
+
+    <style name="StandardSwitchStyle">
+        <item name="android:layout_gravity">left</item>
+        <item name="android:background">@null</item>
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="showText">true</item>
+        <item name="track">@drawable/switch_background</item>
+        <item name="android:paddingTop">@dimen/input_padding</item>
+        <item name="android:paddingBottom">@dimen/input_padding</item>
     </style>
 
     <style name="MgenFontBlack">

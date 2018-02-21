@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background">#edef9c</color>
-    <color name="dialog_background">#7F000000</color>
+    <color name="yellow">#edef9c</color>
+    <color name="shadow_green">#7ca481</color>
+    <color name="background_green">#9ac29f</color>
+    <color name="background_yellow">#d9de84</color>
+    <color name="text_green">#5e8663</color>
+
+    <color name="background">@color/yellow</color>
+    <color name="gray">#6d6d6d</color>
+    <color name="light_gray">#a5a5a5</color>
+
 
     <color name="input_text">@android:color/black</color>
-    <color name="input_background">@color/background</color>
-    <color name="input_background_shadow">#7ca481</color>
-    <color name="input_background_pressed">#d9de84</color>
-    <color name="input_background_disabled">#6d6d6d</color>
-    <color name="input_background_shadow_disabled">#a5a5a5</color>
+    <color name="input_text_pressed">#888888</color>
+    <color name="input_text_disabled">@color/gray</color>
+    <color name="input_background">@color/yellow</color>
+    <color name="input_background_pressed">@color/background_yellow</color>
+    <color name="input_background_disabled">@color/gray</color>
+    <color name="input_background_shadow">@color/shadow_green</color>
+    <color name="input_background_shadow_disabled">@color/light_gray</color>
 
     <color name="label_text">@android:color/black</color>
-
-    <color name="line">@color/input_background_shadow</color>
+    <color name="line">@color/shadow_green</color>
 
     <color name="button_text">@android:color/white</color>
-    <color name="button_description_text">#5e8663</color>
-    <color name="button_background">#9ac29f</color>
-    <color name="button_shadow">@color/input_background_shadow</color>
-    <color name="button_background_pressed">@color/input_background_pressed</color>
+    <color name="button_description_text">@color/text_green</color>
+    <color name="button_background">@color/background_green</color>
+    <color name="button_shadow">@color/shadow_green</color>
+    <color name="button_background_pressed">@color/background_yellow</color>
     <color name="button_shadow_pressed">@android:color/transparent</color>
 
-    <color name="check_list_item_background">@color/input_background</color>
-    <color name="check_list_item_pressed_background">@color/input_background_pressed</color>
+    <color name="check_list_item_background">@color/yellow</color>
+    <color name="check_list_item_pressed_background">@color/background_yellow</color>
     <color name="check_list_child_background">@android:color/transparent</color>
-    <color name="check_list_child_text">@color/input_text</color>
+    <color name="check_list_child_text">@android:color/black</color>
 
     <color name="calendar_day_of_week_label">@android:color/white</color>
     <color name="calendar_day_same_month">@android:color/black</color>
     <color name="calendar_day_different_month">#aaaaaa</color>
+
+    <color name="switch_thumb_on">@color/shadow_green</color>
+    <color name="switch_thumb_off">#aaaaaa</color>
+    <color name="switch_background_on">#c4e0c7</color>
+    <color name="switch_background_off">#888888</color>
 </resources>
