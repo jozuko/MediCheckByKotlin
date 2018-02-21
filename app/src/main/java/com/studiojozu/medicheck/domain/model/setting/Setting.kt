@@ -64,5 +64,5 @@ data class Setting(val useReminder: UseReminderType = UseReminderType(),
      *
      * @return リマインド機能のインターバル一覧
      */
-    fun getRemindIntervalMap(context: Context): TreeMap<Int, String> = RemindIntervalType.getAllValues(context.applicationContext)
+    fun getRemindIntervalMap(context: Context): MutableMap<Int, String> = RemindIntervalType.getAllValues(context.applicationContext)
 }

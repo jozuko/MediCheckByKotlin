@@ -55,10 +55,7 @@
 
     <dimen name="table_row_padding">5dp</dimen>
 
-    <dimen name="spinner_padding">@dimen/input_padding</dimen>
-    <dimen name="spinner_padding_right">42dp</dimen>
-    <dimen name="spinner_margin">@dimen/input_margin</dimen>
-    <dimen name="spinner_text_size">@dimen/text_size_input</dimen>
+    <dimen name="spinner_height">30dp</dimen>
 
     <dimen name="image_spinner_child_padding">@dimen/no_padding</dimen>
     <dimen name="image_spinner_text_margin">5dp</dimen>
@@ -78,5 +75,6 @@
     <dimen name="calendar_day_text">20sp</dimen>
 
     <dimen name="checkbox_padding_left">36dp</dimen>
+
 
 </resources>
