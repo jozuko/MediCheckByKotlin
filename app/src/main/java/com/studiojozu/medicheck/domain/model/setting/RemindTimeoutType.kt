@@ -75,6 +75,11 @@ class RemindTimeoutType @JvmOverloads constructor(timeoutMinute: Any = RemindTim
         HOUR_24(60 * 24, "24", R.string.interval_hours);
 
         companion object {
+            fun typeOf(rowIndex: Int): RemindTimeoutPattern {
+                if (rowIndex >= 0 && rowIndex < RemindTimeoutPattern.values().size) return RemindTimeoutPattern.values()[rowIndex]
+                return RemindTimeoutPattern.HOUR_24
+            }
+
             internal fun typeOfTimeoutMinute(timeoutMinutes: Int): RemindTimeoutPattern = values().firstOrNull { it.timeoutMinutes == timeoutMinutes } ?: RemindTimeoutPattern.HOUR_24
         }
 

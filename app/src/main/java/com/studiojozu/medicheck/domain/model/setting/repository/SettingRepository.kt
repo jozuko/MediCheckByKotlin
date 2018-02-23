@@ -11,8 +11,8 @@ class SettingRepository(private val sqliteSettingRepository: SqliteSettingReposi
         return sqliteSetting.toSetting()
     }
 
-    fun insert(setting: Setting) =
-            sqliteSettingRepository.insert(SqliteSetting.build { this.setting = setting })
-
-    fun delete() = sqliteSettingRepository.delete()
+    fun updateData(newSetting: Setting) {
+        sqliteSettingRepository.delete()
+        sqliteSettingRepository.insert(SqliteSetting.build { setting = newSetting })
+    }
 }

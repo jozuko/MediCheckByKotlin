@@ -53,6 +53,11 @@ class RemindIntervalType @JvmOverloads constructor(intervalMinutes: Any = Remind
         HOUR_1(60, "1", R.string.interval_hour);
 
         companion object {
+            fun typeOf(rowIndex: Int): RemindIntervalPattern {
+                if (rowIndex >= 0 && rowIndex < RemindIntervalPattern.values().size) return RemindIntervalPattern.values()[rowIndex]
+                return RemindIntervalPattern.MINUTE_5
+            }
+
             internal fun typeOfIntervalMinute(intervalMinutes: Int): RemindIntervalPattern = values().firstOrNull { it.intervalMinutes == intervalMinutes } ?: RemindIntervalPattern.MINUTE_5
         }
 

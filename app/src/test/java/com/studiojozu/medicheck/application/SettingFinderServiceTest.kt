@@ -1,7 +1,8 @@
-package com.studiojozu.medicheck.domain.model.setting.repository
+package com.studiojozu.medicheck.application
 
 import com.studiojozu.medicheck.di.MediCheckTestApplication
 import com.studiojozu.medicheck.domain.model.setting.*
+import com.studiojozu.medicheck.domain.model.setting.repository.SettingRepository
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -13,7 +14,9 @@ import javax.inject.Inject
 
 @RunWith(RobolectricTestRunner::class)
 @Config(manifest = "src/main/AndroidManifest.xml", application = MediCheckTestApplication::class)
-class SettingRepositoryTest : ATestParent() {
+class SettingFinderServiceTest : ATestParent() {
+    @Inject
+    lateinit var settingFinderService: SettingFinderService
 
     @Inject
     lateinit var settingRepository: SettingRepository
@@ -23,9 +26,8 @@ class SettingRepositoryTest : ATestParent() {
 
     @Test
     @Throws(Exception::class)
-    fun crud() {
-        // select init data
-        var setting = settingRepository.find()
+    fun findSetting() {
+        var setting = settingFinderService.findSetting()
         assertEquals(true, setting.useReminder())
         assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.MINUTE_5), setting.remindInterval)
         assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.HOUR_24), setting.remindTimeout)
@@ -38,7 +40,7 @@ class SettingRepositoryTest : ATestParent() {
         settingRepository.updateData(updateSetting)
 
         // select update data
-        setting = settingRepository.find()
+        setting = settingFinderService.findSetting()
         assertEquals(false, setting.useReminder())
         assertEquals(RemindIntervalType(RemindIntervalType.RemindIntervalPattern.HOUR_1), setting.remindInterval)
         assertEquals(RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.MINUTE_10), setting.remindTimeout)

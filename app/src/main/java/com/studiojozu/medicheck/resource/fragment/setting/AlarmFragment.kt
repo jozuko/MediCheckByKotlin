@@ -5,6 +5,7 @@ import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import butterknife.BindView
@@ -12,21 +13,29 @@ import butterknife.ButterKnife
 import butterknife.Unbinder
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.application.SettingFinderService
+import com.studiojozu.medicheck.application.SettingSaveService
+import com.studiojozu.medicheck.domain.model.setting.RemindIntervalType
+import com.studiojozu.medicheck.domain.model.setting.RemindTimeoutType
 import com.studiojozu.medicheck.domain.model.setting.Setting
+import com.studiojozu.medicheck.domain.model.setting.UseReminderType
 import javax.inject.Inject
 
 class AlarmFragment : ABaseFragment() {
+
     @Inject
     lateinit var settingFinderService: SettingFinderService
 
+    @Inject
+    lateinit var settingSaveService: SettingSaveService
+
     @BindView(R.id.setting_item_use_reminder_switch)
-    lateinit var mUseReminderSwitch: SwitchCompat
+    lateinit var useReminderSwitch: SwitchCompat
 
     @BindView(R.id.setting_item_reminder_interval_spinner)
-    lateinit var mReminderIntervalSpinner: Spinner
+    lateinit var reminderIntervalSpinner: Spinner
 
     @BindView(R.id.setting_item_reminder_timeout_spinner)
-    lateinit var mReminderTimeoutSpinner: Spinner
+    lateinit var reminderTimeoutSpinner: Spinner
 
     private var unBinder: Unbinder? = null
 
@@ -62,10 +71,14 @@ class AlarmFragment : ABaseFragment() {
         setInitialDataUseReminder()
         setInitialDataInterval()
         setInitialDataTimeout()
+
+        setUseReminderSwitchItemSelectedListener()
+        setReminderIntervalSpinnerItemSelectedListener()
+        setReminderTimeoutSpinnerItemSelectedListener()
     }
 
     private fun setInitialDataUseReminder() {
-        mUseReminderSwitch.isChecked = settingSavedData.useReminder()
+        useReminderSwitch.isChecked = settingSavedData.useReminder()
     }
 
     private fun setInitialDataInterval() {
@@ -73,8 +86,8 @@ class AlarmFragment : ABaseFragment() {
         val defaultIndex = valueArray.indexOf(settingSavedData.remindInterval.getDisplayValue(resources))
 
         val adapter = createSpinnerAdapter(valueArray)
-        mReminderIntervalSpinner.adapter = adapter
-        mReminderIntervalSpinner.setSelection(defaultIndex)
+        reminderIntervalSpinner.adapter = adapter
+        reminderIntervalSpinner.setSelection(defaultIndex)
     }
 
     private fun setInitialDataTimeout() {
@@ -82,8 +95,8 @@ class AlarmFragment : ABaseFragment() {
         val defaultIndex = valueArray.indexOf(settingSavedData.remindTimeout.getDisplayValue(resources))
 
         val adapter = createSpinnerAdapter(valueArray)
-        mReminderTimeoutSpinner.adapter = adapter
-        mReminderTimeoutSpinner.setSelection(defaultIndex)
+        reminderTimeoutSpinner.adapter = adapter
+        reminderTimeoutSpinner.setSelection(defaultIndex)
     }
 
     private fun createSpinnerAdapter(valueArray: Array<String>): ArrayAdapter<String> {
@@ -91,5 +104,30 @@ class AlarmFragment : ABaseFragment() {
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
 
         return adapter
+    }
+
+    private fun setUseReminderSwitchItemSelectedListener() =
+            useReminderSwitch.setOnCheckedChangeListener({ _, isChecked ->
+                settingSavedData = settingSaveService.save(settingSavedData, UseReminderType(isChecked))
+            })
+
+    private fun setReminderIntervalSpinnerItemSelectedListener() {
+        reminderIntervalSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+                settingSavedData = settingSaveService.save(settingSavedData, RemindIntervalType(RemindIntervalType.RemindIntervalPattern.typeOf(position)))
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>) = Unit
+        }
+    }
+
+    private fun setReminderTimeoutSpinnerItemSelectedListener() {
+        reminderTimeoutSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>, view: View, position: Int, id: Long) {
+                settingSavedData = settingSaveService.save(settingSavedData, RemindTimeoutType(RemindTimeoutType.RemindTimeoutPattern.typeOf(position)))
+            }
+
+            override fun onNothingSelected(adapterView: AdapterView<*>) = Unit
+        }
     }
 }

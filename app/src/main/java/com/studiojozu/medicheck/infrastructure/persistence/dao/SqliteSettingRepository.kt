@@ -1,20 +1,23 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteSetting
 
 @Dao
-interface SqliteSettingRepository {
+abstract class SqliteSettingRepository {
+
+    @Transaction
+    open fun updateData(insertData: SqliteSetting) {
+        delete()
+        insert(insertData)
+    }
 
     @Query("select * from setting limit 1")
-    fun find(): SqliteSetting?
+    abstract fun find(): SqliteSetting?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(sqliteSetting: SqliteSetting)
+    abstract fun insert(sqliteSetting: SqliteSetting)
 
     @Query("delete from setting")
-    fun delete()
+    abstract fun delete()
 }

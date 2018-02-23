@@ -1,6 +1,5 @@
 package com.studiojozu.medicheck.resource.activity
 
-import android.app.AlertDialog
 import android.os.Bundle
 import butterknife.BindView
 import butterknife.ButterKnife
@@ -25,12 +24,6 @@ class SettingActivity : ABaseActivity(), SettingFragmentListener, HeaderView.OnC
         headerView.setParentActivity(this)
         headerView.setOnClickBackListener(this)
         showChildFragment(SettingFragmentListener.SettingFragmentType.MENU)
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("dialog")
-        builder.setMessage("test!")
-        builder.setPositiveButton("OK", null)
-        builder.show()
     }
 
     override fun goNext(fragmentType: SettingFragmentListener.SettingFragmentType) =

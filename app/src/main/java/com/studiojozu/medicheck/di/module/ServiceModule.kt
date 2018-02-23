@@ -46,4 +46,8 @@ open class ServiceModule {
     open fun providerSettingFinderService(application: Application) =
             SettingFinderService(application as MediCheckApplication)
 
+    @Singleton
+    @Provides
+    open fun providerSettingSaveService(application: Application) =
+            SettingSaveService(application as MediCheckApplication)
 }

@@ -24,4 +24,5 @@ interface AppComponent {
     fun inject(medicineDeleteService: MedicineDeleteService)
     fun inject(medicineRegisterService: MedicineRegisterService)
     fun inject(settingFinderService: SettingFinderService)
+    fun inject(settingSaveService: SettingSaveService)
 }
