@@ -9,20 +9,27 @@ import com.studiojozu.medicheck.resource.activity.SettingActivity
 import com.studiojozu.medicheck.resource.alarm.AlarmBroadcastReceiver
 import com.studiojozu.medicheck.resource.alarm.MedicineAlarm
 import com.studiojozu.medicheck.resource.fragment.setting.AlarmFragment
+import com.studiojozu.medicheck.resource.fragment.setting.TimetableFragment
 import javax.inject.Singleton
 
 @Singleton
 @dagger.Component(modules = arrayOf(ApplicationModule::class, PersistenceModule::class, ServiceModule::class))
 interface AppComponent {
     fun inject(mainActivity: MainActivity)
+
     fun inject(settingActivity: SettingActivity)
     fun inject(alarmFragment: AlarmFragment)
+    fun inject(timetableFragment: TimetableFragment)
+
     fun inject(alarmBroadcastReceiver: AlarmBroadcastReceiver)
+
     fun inject(medicineAlarm: MedicineAlarm)
+
     fun inject(alarmScheduleService: AlarmScheduleService)
     fun inject(medicineFinderService: MedicineFinderService)
     fun inject(medicineDeleteService: MedicineDeleteService)
     fun inject(medicineRegisterService: MedicineRegisterService)
     fun inject(settingFinderService: SettingFinderService)
     fun inject(settingSaveService: SettingSaveService)
+    fun inject(timetableFinderService: TimetableFinderService)
 }

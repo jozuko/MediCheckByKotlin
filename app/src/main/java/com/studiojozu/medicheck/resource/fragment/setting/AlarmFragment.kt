@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import butterknife.BindView
 import butterknife.ButterKnife
-import butterknife.Unbinder
 import com.studiojozu.medicheck.R
 import com.studiojozu.medicheck.application.SettingFinderService
 import com.studiojozu.medicheck.application.SettingSaveService
@@ -37,8 +36,6 @@ class AlarmFragment : ABaseFragment() {
     @BindView(R.id.setting_item_reminder_timeout_spinner)
     lateinit var reminderTimeoutSpinner: Spinner
 
-    private var unBinder: Unbinder? = null
-
     private lateinit var settingSavedData: Setting
 
     private lateinit var remindIntervalTypes: MutableMap<Int, String>
@@ -53,11 +50,6 @@ class AlarmFragment : ABaseFragment() {
 
         setInitialData()
         return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        unBinder?.unbind()
     }
 
     private fun getView(inflater: LayoutInflater, container: ViewGroup?): View

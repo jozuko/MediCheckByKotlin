@@ -50,4 +50,9 @@ open class ServiceModule {
     @Provides
     open fun providerSettingSaveService(application: Application) =
             SettingSaveService(application as MediCheckApplication)
+
+    @Singleton
+    @Provides
+    open fun providerTimetableFinderService(application: Application) =
+            TimetableFinderService(application as MediCheckApplication)
 }

@@ -13,7 +13,7 @@ interface SettingFragmentListener {
                 = when (this) {
             ALARM -> AlarmFragment()
             PERSON -> PersonFragment()
-            TAKE_TIME -> TakeTimeFragment()
+            TAKE_TIME -> TimetableFragment()
             else -> SettingMenuFragment()
         }
 
