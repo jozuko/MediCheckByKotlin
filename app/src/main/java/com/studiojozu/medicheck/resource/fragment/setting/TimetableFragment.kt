@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.studiojozu.medicheck.R
@@ -38,12 +37,21 @@ class TimetableFragment : ABaseFragment() {
             = inflater.inflate(R.layout.fragment_setting_timetable, container, false)
 
     private fun setInitialData() {
-        timetableListView.adapter = object : SortableArrayAdapter<Timetable>(context, android.R.layout.simple_list_item_1, savedTimetables) {
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-                val itemView = super.getView(position, convertView, parent)
-                itemView.findViewById<TextView>(android.R.id.text1).text = getItem(position).timetableNameWithTime
-
-                return itemView
+        timetableListView.adapter = SortableArrayAdapter(
+                context = context,
+                objects = savedTimetables,
+                fragment = this,
+                showTextListener = object : SortableArrayAdapter.OnShowTextListener<Timetable> {
+                    override fun getText(targetObject: Timetable): String = targetObject.timetableNameWithTime
+                },
+                onDeleteClickListener = object : SortableArrayAdapter.OnDeleteClickListener<Timetable> {
+                    override fun onDeleteClicked(targetObject: Timetable, position: Int) {
+                        TODO("not implemented")
+                    }
+                })
+        timetableListView.setOnItemClickListener { parent, view, position, id ->
+            run {
+                TODO("not implemented")
             }
         }
     }

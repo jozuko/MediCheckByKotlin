@@ -25,6 +25,10 @@
         <item name="android:bottomBright">@color/background</item>
         <item name="android:bottomDark">@color/background</item>
         <item name="android:bottomMedium">@color/background</item>
+
+        <item name="colorAccent">@color/text_green</item>
+        <item name="backgroundTint">@color/background</item>
+        <item name="android:background">@color/background</item>
     </style>
 
     <!-- Theme - Button -->

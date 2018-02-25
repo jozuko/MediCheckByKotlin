@@ -45,11 +45,13 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
     /** ドラッグに使用するImageView */
     private val dragImageView: ImageView = ImageView(context)
 
+    /** ドラッグに使用するImageViewのLayoutParams */
     private val dragImageViewLayoutParams: WindowManager.LayoutParams = WindowManager.LayoutParams()
 
     /** WindowManager */
     private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
+    /** ゆっくりとしたスクロールスピード */
     private val scrollSlowSpeed: Int
         get() = (SCROLL_SPEED_SLOW * context.resources.displayMetrics.density).toInt()
 
@@ -58,8 +60,10 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
         get() = super.getAdapter() as SortableArrayAdapter<*>
         set(value) = super.setAdapter(value)
 
+    /** 連続スクロール処理 */
     private var scrollTask: Runnable? = null
 
+    /** スクロールの向きを表すスピード */
     private var scrollSpeed = 0
 
     /**

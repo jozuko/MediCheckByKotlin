@@ -81,4 +81,6 @@
     <string name="setting_item_title_use_reminder">Use reminder</string>
     <string name="setting_item_title_reminder_interval">Reminder interval</string>
     <string name="setting_item_title_reminder_timeout">Reminder timeout</string>
+
+    <string name="dialog_delete_message">Are you sure you want to delete?\n%1$s</string>
 </resources>
