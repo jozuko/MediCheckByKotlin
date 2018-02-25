@@ -19,7 +19,6 @@ import android.widget.ListView
 class SortableListView(context: Context, attrs: AttributeSet) : ListView(context, attrs) {
 
     companion object {
-        private const val SCROLL_SPEED_FAST = 25
         private const val SCROLL_SPEED_SLOW = 8
     }
 
@@ -51,9 +50,6 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
     /** WindowManager */
     private val windowManager: WindowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
-    private val scrollFastSpeed: Int
-        get() = (SCROLL_SPEED_FAST * context.resources.displayMetrics.density).toInt()
-
     private val scrollSlowSpeed: Int
         get() = (SCROLL_SPEED_SLOW * context.resources.displayMetrics.density).toInt()
 
@@ -61,6 +57,10 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
     var adapter: SortableArrayAdapter<*>?
         get() = super.getAdapter() as SortableArrayAdapter<*>
         set(value) = super.setAdapter(value)
+
+    private var scrollTask: Runnable? = null
+
+    private var scrollSpeed = 0
 
     /**
      * Viewの初期化
@@ -158,8 +158,8 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
         val y = motionEvent.y.toInt()
 
         // スクロール処理
-        val scrollSpeed = getScrollSpeed(motionEvent)
-        scroll(scrollSpeed)
+        scrollSpeed = getScrollSpeed(motionEvent)
+        scroll()
 
         // Dragに使用するImageViewのtopを変更
         dragImageView.visibility = if ((dragBitmap?.height ?: -1) < 0) View.INVISIBLE else View.VISIBLE
@@ -254,28 +254,18 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
      */
     private fun getScrollSpeed(motionEvent: MotionEvent): Int {
         val y = motionEvent.y.toInt()
-        val fastBound = height / 9
         val slowBound = height / 4
 
-        if (motionEvent.eventTime - motionEvent.downTime < 500)
-            return 0
-
-        if (y < slowBound)
-            return if (y < fastBound) -scrollFastSpeed else -scrollSlowSpeed
-
-        if (y > height - slowBound)
-            return if (y > height - fastBound) scrollFastSpeed else scrollSlowSpeed
+        if (y < slowBound) return -scrollSlowSpeed
+        if (y > height - slowBound) return scrollSlowSpeed
 
         return 0
     }
 
     /**
      * スクロール処理
-     * TODO あんまりヌルヌル感がないので、要改良
      */
-    private fun scroll(scrollSpeed: Int) {
-        if (scrollSpeed == 0) return
-
+    private fun scroll() {
         val middle = height / 2
         var middlePosition = pointToPosition(0, middle)
 
@@ -284,8 +274,17 @@ class SortableListView(context: Context, attrs: AttributeSet) : ListView(context
 
         val middleView = getListItemViewByPosition(middlePosition)
         middleView ?: return
-        Handler().postDelayed({
-            setSelectionFromTop(middlePosition, middleView.top - scrollSpeed)
-        }, 1)
+
+        if (scrollTask == null) {
+            scrollTask = Runnable {
+                if (scrollSpeed != 0) {
+                    setSelectionFromTop(middlePosition, middleView.top - scrollSpeed)
+                    Handler().postDelayed(scrollTask, 10)
+                } else {
+                    scrollTask = null
+                }
+            }
+            scrollTask?.run()
+        }
     }
 }
