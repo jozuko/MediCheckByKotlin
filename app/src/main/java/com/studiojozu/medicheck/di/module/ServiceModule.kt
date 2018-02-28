@@ -55,4 +55,9 @@ open class ServiceModule {
     @Provides
     open fun providerTimetableFinderService(application: Application) =
             TimetableFinderService(application as MediCheckApplication)
+
+    @Singleton
+    @Provides
+    open fun providerTimetableRegisterService(application: Application) =
+            TimetableRegisterService(application as MediCheckApplication)
 }

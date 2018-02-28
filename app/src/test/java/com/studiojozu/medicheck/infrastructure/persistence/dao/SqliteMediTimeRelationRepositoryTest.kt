@@ -1,11 +1,12 @@
 package com.studiojozu.medicheck.infrastructure.persistence.dao
 
-import com.studiojozu.medicheck.domain.model.medicine.MedicineIdType
-import com.studiojozu.medicheck.domain.model.medicine.OneShotType
+import com.studiojozu.medicheck.domain.model.medicine.*
 import com.studiojozu.medicheck.domain.model.setting.ATestParent
 import com.studiojozu.medicheck.domain.model.setting.TimetableIdType
 import com.studiojozu.medicheck.infrastructure.persistence.database.AppDatabase
 import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMediTimeRelation
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicine
+import com.studiojozu.medicheck.infrastructure.persistence.entity.SqliteMedicineUnit
 import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -146,6 +147,47 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
     @Test
     @Throws(Exception::class)
     @Config(qualifiers = "ja")
+    fun findTimetableByTimetableId() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.mediTimeRelationDao()
+        val timetables = database.timetableDao().findAll()
+
+        // 薬を登録
+        database.medicineUnitDao().insert(setSqliteMedicineUnit(medicineUnit1))
+        database.medicineDao().insert(setSqliteMedicine(medicine1))
+        database.medicineDao().insert(setSqliteMedicine(medicine2))
+
+        // insert
+        val insertData1 = setSqliteMediTimeRelation(medicine1.medicineId, timetables[0].timetableId)
+        val insertData2 = setSqliteMediTimeRelation(medicine1.medicineId, timetables[1].timetableId)
+        val insertData3 = setSqliteMediTimeRelation(medicine1.medicineId, timetables[2].timetableId)
+        val insertData4 = setSqliteMediTimeRelation(medicine2.medicineId, timetables[0].timetableId)
+        val insertData5 = setSqliteMediTimeRelation(medicine2.medicineId, timetables[3].timetableId)
+        dao.insert(insertData1)
+        dao.insert(insertData2)
+        dao.insert(insertData3)
+        dao.insert(insertData4)
+        dao.insert(insertData5)
+
+        // findTimetableByTimetableId
+        val timetableArray = dao.findMedicineByTimetableId(timetables[0].timetableId.dbValue)
+
+        // assert
+        assertEquals(2, timetableArray.size)
+        assertEquals(medicine1.medicineId.dbValue, timetableArray[0].medicineId.dbValue)
+        assertEquals(medicine2.medicineId.dbValue, timetableArray[1].medicineId.dbValue)
+
+        // delete
+        dao.delete(insertData1)
+        dao.delete(insertData2)
+        dao.delete(insertData3)
+        dao.delete(insertData4)
+        dao.delete(insertData5)
+    }
+
+    @Test
+    @Throws(Exception::class)
+    @Config(qualifiers = "ja")
     fun deleteByMedicineId() {
         val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
         val dao = database.mediTimeRelationDao()
@@ -188,4 +230,25 @@ class SqliteMediTimeRelationRepositoryTest : ATestParent() {
                 timetableId = timetableIdType
                 oneShot = OneShotType(true)
             }
+
+    private fun setSqliteMedicine(entity: Medicine) =
+            SqliteMedicine.build { medicine = entity }
+
+    private fun setSqliteMedicineUnit(entity: MedicineUnit): SqliteMedicineUnit =
+            SqliteMedicineUnit.build { medicineUnit = entity }
+
+    private val medicineUnit1 = MedicineUnit(
+            medicineUnitId = MedicineUnitIdType("unit01"),
+            medicineUnitValue = MedicineUnitValueType("錠"),
+            medicineUnitDisplayOrder = MedicineUnitDisplayOrderType(2))
+
+    private val medicine1 = Medicine(
+            medicineId = MedicineIdType("medicine01"),
+            medicineName = MedicineNameType("メルカゾール"),
+            medicineUnit = medicineUnit1)
+
+    private val medicine2 = Medicine(
+            medicineId = MedicineIdType("medicine02"),
+            medicineName = MedicineNameType("チラーヂン"),
+            medicineUnit = medicineUnit1)
 }

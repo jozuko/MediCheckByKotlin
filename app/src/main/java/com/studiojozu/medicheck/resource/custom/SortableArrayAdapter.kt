@@ -60,16 +60,14 @@ class SortableArrayAdapter<T>(
         val bundle = Bundle()
         bundle.putInt(KEY_POSITION, position)
 
-        val dialogFragment = MessageAlertDialogFragment.build(fragment, {
+        MessageAlertDialogFragment.build(fragment, {
             requestCode = REQUEST_CODE_DELETE_DIALOG
             message = context.resources.getString(R.string.dialog_delete_message, showTextListener.getText(getItem(position)))
             positiveButtonLabel = context.resources.getString(android.R.string.yes)
             negativeButtonLabel = context.resources.getString(android.R.string.no)
             params = bundle
             callback = this@SortableArrayAdapter
-        })
-
-        dialogFragment.show(fragment.childFragmentManager, "delete_dialog")
+        }).show(fragment.childFragmentManager, "delete_dialog")
     }
 
     /**
@@ -133,9 +131,10 @@ class SortableArrayAdapter<T>(
 
         val position = params.getInt(KEY_POSITION, -1)
         if (position < 0) return
+        if (resultCode != DialogInterface.BUTTON_POSITIVE) return
 
-        if (resultCode == DialogInterface.BUTTON_POSITIVE)
-            onDeleteClickListener.onDeleteClicked(getItem(position), position)
+        if (onDeleteClickListener.onDeleteClicked(getItem(position), position))
+            remove(getItem(position))
     }
 
     /** View生成時にテキストを取得するためのリスナー */
@@ -145,7 +144,7 @@ class SortableArrayAdapter<T>(
 
     /** 各Viewの削除ボタンが押されたこと通知するリスナー */
     interface OnDeleteClickListener<in T> {
-        fun onDeleteClicked(targetObject: T, position: Int)
+        fun onDeleteClicked(targetObject: T, position: Int): Boolean
     }
 
 }

@@ -32,4 +32,5 @@ interface AppComponent {
     fun inject(settingFinderService: SettingFinderService)
     fun inject(settingSaveService: SettingSaveService)
     fun inject(timetableFinderService: TimetableFinderService)
+    fun inject(timetableRegisterService: TimetableRegisterService)
 }
