@@ -31,6 +31,12 @@
         <item name="android:background">@color/background</item>
     </style>
 
+    <!-- Theme - EditableAlertDialog -->
+    <style name="EditableAlertDialog" parent="Base.V7.Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/text_green</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
     <!-- Theme - Button -->
     <style name="StandardButtonTheme" parent="android:Widget.Button">
         <item name="android:textColor">@color/button_text</item>
