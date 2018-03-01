@@ -192,4 +192,83 @@ class SqliteTimetableRepositoryTest : ATestParent() {
 
     private fun setSqliteTimetable(entity: Timetable) =
             SqliteTimetable.build { timetable = entity }
+
+    @Test
+    @Throws(Exception::class)
+    @Config(qualifiers = "ja")
+    fun update() {
+        val database = AppDatabase.getAppDatabase(RuntimeEnvironment.application.applicationContext)
+        val dao = database.timetableDao()
+
+        val defaultTimetableArray = dao.findAll()
+        defaultTimetableArray.forEachIndexed { index, sqliteTimetable ->
+            sqliteTimetable.timetableDisplayOrder = TimetableDisplayOrderType(defaultTimetableArray.size - index)
+        }
+
+        dao.update(defaultTimetableArray)
+        val timetableArray = dao.findAll()
+
+        // select init data
+        assertEquals(12, timetableArray.size)
+
+        var index = 11
+        assertEquals("朝", timetableArray[index].timetableName.dbValue)
+        assertEquals("7:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 10
+        assertEquals("昼", timetableArray[index].timetableName.dbValue)
+        assertEquals("12:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 9
+        assertEquals("夜", timetableArray[index].timetableName.dbValue)
+        assertEquals("19:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 8
+        assertEquals("就寝前", timetableArray[index].timetableName.dbValue)
+        assertEquals("22:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 7
+        assertEquals("朝食前", timetableArray[index].timetableName.dbValue)
+        assertEquals("6:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 6
+        assertEquals("昼食前", timetableArray[index].timetableName.dbValue)
+        assertEquals("11:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 5
+        assertEquals("夕食前", timetableArray[index].timetableName.dbValue)
+        assertEquals("18:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 4
+        assertEquals("朝食後", timetableArray[index].timetableName.dbValue)
+        assertEquals("7:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 3
+        assertEquals("昼食後", timetableArray[index].timetableName.dbValue)
+        assertEquals("12:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 2
+        assertEquals("夕食後", timetableArray[index].timetableName.dbValue)
+        assertEquals("19:30", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 1
+        assertEquals("食間(朝食 - 昼食)", timetableArray[index].timetableName.dbValue)
+        assertEquals("10:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+
+        index = 0
+        assertEquals("食間(昼食 - 夕食)", timetableArray[index].timetableName.dbValue)
+        assertEquals("16:00", timetableArray[index].timetableTime.displayValue)
+        assertEquals((index + 1).toLong(), timetableArray[index].timetableDisplayOrder.dbValue)
+    }
 }

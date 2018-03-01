@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StandardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:shrinkColumns="0"
+    android:stretchColumns="1"
+    tools:context="com.studiojozu.medicheck.resource.activity.SettingActivity">
+
+    <TableRow style="@style/InputTableRow">
+
+        <TextView
+            style="@style/InputLabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_name"/>
+
+        <EditText
+            android:id="@+id/edit_name"
+            style="@style/StandardEditableLabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textSize="20sp"
+            tools:ignore="UnusedIds"/>
+    </TableRow>
+
+    <TableRow style="@style/InputTableRow">
+
+        <TextView
+            style="@style/InputLabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_hours"/>
+
+        <TextView
+            android:id="@+id/edit_hours"
+            style="@style/SelectableLabelStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:textSize="20sp"
+            tools:ignore="UnusedIds"/>
+    </TableRow>
+
+</TableLayout>

@@ -18,6 +18,9 @@ interface SqliteTimetableRepository {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(sqliteTimetable: SqliteTimetable)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun update(sqliteTimetables: Array<SqliteTimetable>)
+
     @Delete
     fun delete(sqliteTimetable: SqliteTimetable)
 }

@@ -21,6 +21,11 @@ class TimetableRepository(private val sqliteTimetableRepository: SqliteTimetable
     fun insert(timetable: Timetable) =
             sqliteTimetableRepository.insert(SqliteTimetable.build { this.timetable = timetable })
 
+    fun update(timetables: List<Timetable>) =
+            sqliteTimetableRepository.update(timetables
+                    .map { SqliteTimetable.build { this.timetable = it } }
+                    .toTypedArray())
+
     fun delete(timetable: Timetable) =
             sqliteTimetableRepository.delete(SqliteTimetable.build { this.timetable = timetable })
 }

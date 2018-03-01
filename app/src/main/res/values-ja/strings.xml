@@ -81,4 +81,8 @@
     <string name="setting_item_title_use_reminder">繰り返し通知する</string>
     <string name="setting_item_title_reminder_interval">通知の繰り返し間隔</string>
     <string name="setting_item_title_reminder_timeout">通知の終了時間</string>
+
+    <string name="dialog_delete_message">%1$s\nを削除します。よろしいですか？</string>
+    <string name="message_can_not_delete_last_one">最後の1つは削除できません。</string>
+    <string name="message_can_not_delete_exist_relation_other">この項目は使用中のため、削除できません。</string>
 </resources>
