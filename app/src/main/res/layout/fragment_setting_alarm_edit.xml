@@ -36,7 +36,7 @@
             android:text="@string/label_hours"/>
 
         <TextView
-            android:id="@+id/edit_hours"
+            android:id="@+id/edit_time"
             style="@style/SelectableLabelStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
