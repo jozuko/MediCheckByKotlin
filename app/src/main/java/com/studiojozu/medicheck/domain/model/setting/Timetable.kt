@@ -9,9 +9,8 @@ import java.io.Serializable
  *
  * @property timetableId タイムテーブルID
  * @property timetableName 名称
- * @property timetableDisplayOrder 表示順
  * @property timetableTime 時刻
- * @property timetableNameWithTime タイムテーブルの名称＋(時刻)
+ * @property timetableDisplayOrder 表示順
  */
 data class Timetable(val timetableId: TimetableIdType = TimetableIdType(),
                      val timetableName: TimetableNameType = TimetableNameType(),
