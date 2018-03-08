@@ -36,4 +36,6 @@ interface AppTestComponent : AppComponent {
     fun inject(medicineRegisterServiceTest: MedicineRegisterServiceTest)
     fun inject(settingFinderServiceTest: SettingFinderServiceTest)
     fun inject(settingSaveServiceTest: SettingSaveServiceTest)
+    fun inject(timetableFinderServiceTest: TimetableFinderServiceTest)
+    fun inject(timetableRegisterServiceTest: TimetableRegisterServiceTest)
 }
