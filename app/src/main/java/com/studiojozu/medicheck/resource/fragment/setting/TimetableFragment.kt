@@ -32,7 +32,8 @@ import com.studiojozu.medicheck.resource.fragment.MessageAlertDialogFragment
 import com.studiojozu.medicheck.resource.fragment.TimePickerFragment
 import javax.inject.Inject
 
-class TimetableFragment : ABaseFragment() {
+class TimetableFragment : ABaseFragment(), SortableArrayAdapter.OnShowTextListener<Timetable>, SortableArrayAdapter.OnDeleteClickListener<Timetable>, SortableArrayAdapter.OnSortedListener {
+
     companion object {
         private const val REQUEST_CODE_EDIT = 1
 
@@ -76,27 +77,28 @@ class TimetableFragment : ABaseFragment() {
                 context = context,
                 objects = savedTimetables as MutableList<Timetable>,
                 fragment = this,
-                showTextListener = object : SortableArrayAdapter.OnShowTextListener<Timetable> {
-                    override fun getText(targetObject: Timetable): String = targetObject.timetableNameWithTime
-                },
-                onDeleteClickListener = object : SortableArrayAdapter.OnDeleteClickListener<Timetable> {
-                    override fun onDeleteClicked(targetObject: Timetable, position: Int): Boolean = delete(targetObject)
-                },
-                onSortedListener = object : SortableArrayAdapter.OnSortedListener {
-                    override fun onSorted() {
-                        val targetTimetables = (0..(timetableListView.adapter!!.count - 1))
-                                .map { position ->
-                                    val listItem = timetableListView.adapter!!.getItem(position) as Timetable
-                                    savedTimetables.first { savedTimetable -> savedTimetable.timetableId == listItem.timetableId }
-                                            .copy(timetableDisplayOrder = TimetableDisplayOrderType(position + 1))
-                                }
-
-                        timetableRegisterService.save(targetTimetables)
-                    }
-                }
-        )
+                showTextListener = this,
+                onDeleteClickListener = this,
+                onSortedListener = this)
 
         timetableListView.setOnItemClickListener { _, _, position, _ -> showEditDialog(position) }
+    }
+
+    override fun getText(targetObject: Timetable): String
+            = targetObject.timetableNameWithTime
+
+    override fun onDeleteClicked(targetObject: Timetable, position: Int): Boolean
+            = delete(targetObject)
+
+    override fun onSorted() {
+        val targetTimetables = (0..(timetableListView.adapter!!.count - 1))
+                .map { position ->
+                    val listItem = timetableListView.adapter!!.getItem(position) as Timetable
+                    savedTimetables.first { savedTimetable -> savedTimetable.timetableId == listItem.timetableId }
+                            .copy(timetableDisplayOrder = TimetableDisplayOrderType(position + 1))
+                }
+
+        timetableRegisterService.save(targetTimetables)
     }
 
     private fun showMessage(@StringRes resourceId: Int) =
