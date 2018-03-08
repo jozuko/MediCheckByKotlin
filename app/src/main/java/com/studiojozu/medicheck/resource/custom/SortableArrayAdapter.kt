@@ -17,7 +17,8 @@ class SortableArrayAdapter<T>(
         objects: MutableList<T>,
         private val fragment: Fragment,
         private val showTextListener: SortableArrayAdapter.OnShowTextListener<T>,
-        private val onDeleteClickListener: SortableArrayAdapter.OnDeleteClickListener<T>)
+        private val onDeleteClickListener: SortableArrayAdapter.OnDeleteClickListener<T>,
+        private val onSortedListener: OnSortedListener)
     : ArrayAdapter<T>(context, RESOURCE, 0, objects), MessageAlertDialogFragment.AlertDialogFragmentCallback {
 
     /** 定数定義 */
@@ -60,14 +61,15 @@ class SortableArrayAdapter<T>(
         val bundle = Bundle()
         bundle.putInt(KEY_POSITION, position)
 
-        MessageAlertDialogFragment.build(fragment, {
-            requestCode = REQUEST_CODE_DELETE_DIALOG
-            message = context.resources.getString(R.string.dialog_delete_message, showTextListener.getText(getItem(position)))
-            positiveButtonLabel = context.resources.getString(android.R.string.yes)
-            negativeButtonLabel = context.resources.getString(android.R.string.no)
-            params = bundle
-            callback = this@SortableArrayAdapter
-        }).show(fragment.childFragmentManager, "delete_dialog")
+        MessageAlertDialogFragment
+                .newInstance(
+                        requestCode = REQUEST_CODE_DELETE_DIALOG,
+                        message = context.resources.getString(R.string.dialog_delete_message, showTextListener.getText(getItem(position))),
+                        positiveButtonLabel = context.resources.getString(android.R.string.yes),
+                        negativeButtonLabel = context.resources.getString(android.R.string.no),
+                        params = bundle,
+                        callback = this@SortableArrayAdapter)
+                .show(fragment.childFragmentManager, "delete_dialog")
     }
 
     /**
@@ -110,8 +112,12 @@ class SortableArrayAdapter<T>(
         return draggingPosition
     }
 
+    /**
+     * ドラッグ終了
+     */
     fun onStopDrag() {
         draggingPosition = -1
+        onSortedListener.onSorted()
     }
 
     /**
@@ -133,8 +139,7 @@ class SortableArrayAdapter<T>(
         if (position < 0) return
         if (resultCode != DialogInterface.BUTTON_POSITIVE) return
 
-        if (onDeleteClickListener.onDeleteClicked(getItem(position), position))
-            remove(getItem(position))
+        onDeleteClickListener.onDeleteClicked(getItem(position), position)
     }
 
     /** View生成時にテキストを取得するためのリスナー */
@@ -147,4 +152,8 @@ class SortableArrayAdapter<T>(
         fun onDeleteClicked(targetObject: T, position: Int): Boolean
     }
 
+    /** 並べ替えされたことを通知するリスナー */
+    interface OnSortedListener {
+        fun onSorted()
+    }
 }

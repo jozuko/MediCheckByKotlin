@@ -10,6 +10,10 @@ import com.studiojozu.medicheck.R
 
 class SettingMenuFragment : ABaseFragment() {
 
+    companion object {
+        fun newInstance() = SettingMenuFragment()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = getView(inflater, container)
         ButterKnife.bind(this, view)

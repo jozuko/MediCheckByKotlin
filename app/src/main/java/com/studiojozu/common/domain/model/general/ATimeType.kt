@@ -22,6 +22,12 @@ abstract class ATimeType<out C : ATimeType<C>> : AValueObject<Long, C>, Comparab
             return format.format(value.time)
         }
 
+    val hourOfDay: Int
+        get() = value.get(Calendar.HOUR_OF_DAY)
+
+    val minute: Int
+        get() = value.get(Calendar.MINUTE)
+
     protected constructor(millisecond: Any) {
         val timeInMillis = when (millisecond) {
             is Long -> millisecond

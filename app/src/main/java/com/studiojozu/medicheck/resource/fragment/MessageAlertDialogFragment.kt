@@ -5,9 +5,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import com.studiojozu.medicheck.R
 import java.io.Serializable
@@ -33,16 +31,27 @@ class MessageAlertDialogFragment : DialogFragment() {
         private const val KEY_NEUTRAL_BUTTON_LABEL = "neutralButtonLabel"
         private const val KEY_PARAMS = "params"
 
-        fun build(activity: AppCompatActivity, f: MessageAlertDialogFragment.Builder.() -> Unit): MessageAlertDialogFragment {
-            val builder = MessageAlertDialogFragment.Builder(activity)
-            builder.f()
-            return builder.build()
-        }
+        fun newInstance(callback: AlertDialogFragmentCallback? = null,
+                        requestCode: Int = -1,
+                        title: String = "",
+                        message: String = "",
+                        positiveButtonLabel: String = "",
+                        negativeButtonLabel: String = "",
+                        neutralButtonLabel: String = "",
+                        params: Bundle? = null): MessageAlertDialogFragment {
+            val dialogFragment = MessageAlertDialogFragment()
 
-        fun build(fragment: Fragment, f: MessageAlertDialogFragment.Builder.() -> Unit): MessageAlertDialogFragment {
-            val builder = MessageAlertDialogFragment.Builder(fragment)
-            builder.f()
-            return builder.build()
+            dialogFragment.arguments = Bundle()
+            dialogFragment.arguments.putInt(KEY_REQUEST_CODE, requestCode)
+            dialogFragment.arguments.putString(KEY_TITLE, title)
+            dialogFragment.arguments.putString(KEY_MESSAGE, message)
+            dialogFragment.arguments.putString(KEY_POSITIVE_BUTTON_LABEL, positiveButtonLabel)
+            dialogFragment.arguments.putString(KEY_NEGATIVE_BUTTON_LABEL, negativeButtonLabel)
+            dialogFragment.arguments.putString(KEY_NEUTRAL_BUTTON_LABEL, neutralButtonLabel)
+            dialogFragment.arguments.putSerializable(KEY_CALLBACK, callback)
+            dialogFragment.arguments.putBundle(KEY_PARAMS, params)
+
+            return dialogFragment
         }
     }
 
@@ -90,47 +99,5 @@ class MessageAlertDialogFragment : DialogFragment() {
          * @param resultCode  0 : Activity.RESULT_CANCELED, -1 : DialogInterface.BUTTON_POSITIVE, -2 : DialogInterface.BUTTON_NEGATIVE, -3 : DialogInterface.BUTTON_NEUTRAL
          */
         fun onDismissListener(requestCode: Int, resultCode: Int, params: Bundle?)
-    }
-
-    /**
-     * ダイアログ生成クラス
-     */
-    class Builder {
-        constructor(activity: AppCompatActivity) {
-            parentActivity = activity
-            parentFragment = null
-        }
-
-        constructor(fragment: Fragment) {
-            parentActivity = null
-            parentFragment = fragment
-        }
-
-        private val parentActivity: AppCompatActivity?
-        private val parentFragment: Fragment?
-        var callback: AlertDialogFragmentCallback? = null
-        var requestCode = -1
-        var title = ""
-        var message = ""
-        var positiveButtonLabel = ""
-        var negativeButtonLabel = ""
-        var neutralButtonLabel = ""
-        var params: Bundle? = null
-
-        fun build(): MessageAlertDialogFragment {
-            val dialogFragment = MessageAlertDialogFragment()
-
-            dialogFragment.arguments = Bundle()
-            dialogFragment.arguments.putInt(KEY_REQUEST_CODE, requestCode)
-            dialogFragment.arguments.putString(KEY_TITLE, title)
-            dialogFragment.arguments.putString(KEY_MESSAGE, message)
-            dialogFragment.arguments.putString(KEY_POSITIVE_BUTTON_LABEL, positiveButtonLabel)
-            dialogFragment.arguments.putString(KEY_NEGATIVE_BUTTON_LABEL, negativeButtonLabel)
-            dialogFragment.arguments.putString(KEY_NEUTRAL_BUTTON_LABEL, neutralButtonLabel)
-            dialogFragment.arguments.putSerializable(KEY_CALLBACK, callback)
-            dialogFragment.arguments.putBundle(KEY_PARAMS, params)
-
-            return dialogFragment
-        }
     }
 }
