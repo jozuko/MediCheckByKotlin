@@ -1,31 +1,20 @@
 package com.studiojozu.medicheck.resource.fragment
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
-import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import com.studiojozu.medicheck.R
+import java.io.Serializable
 
 class MessageAlertDialogFragment : DialogFragment() {
-
-    /** ダイアログ タイトル */
-    private var title = ""
-    /** ダイアログ メッセージ */
-    private var message = ""
     /** ダイアログ コールバック */
     private var callback: AlertDialogFragmentCallback? = null
     /** リクエストコード */
     private var requestCode = -1
-    /** OK,Yes系のボタンラベル */
-    private var positiveButtonLabel = ""
-    /** Cancel系のボタンラベル */
-    private var negativeButtonLabel = ""
-    /** 真ん中に表示されるのボタンラベル */
-    private var neutralButtonLabel = ""
     /** コールバックの時に引き渡すパラメータ */
     private var params: Bundle? = null
 
@@ -33,16 +22,36 @@ class MessageAlertDialogFragment : DialogFragment() {
      * 定数定義
      */
     companion object {
-        fun build(activity: AppCompatActivity, f: MessageAlertDialogFragment.Builder.() -> Unit): MessageAlertDialogFragment {
-            val builder = MessageAlertDialogFragment.Builder(activity)
-            builder.f()
-            return builder.build()
-        }
+        private const val KEY_REQUEST_CODE = "requestCode"
+        private const val KEY_CALLBACK = "callback"
+        private const val KEY_TITLE = "title"
+        private const val KEY_MESSAGE = "message"
+        private const val KEY_POSITIVE_BUTTON_LABEL = "positiveButtonLabel"
+        private const val KEY_NEGATIVE_BUTTON_LABEL = "negativeButtonLabel"
+        private const val KEY_NEUTRAL_BUTTON_LABEL = "neutralButtonLabel"
+        private const val KEY_PARAMS = "params"
 
-        fun build(fragment: Fragment, f: MessageAlertDialogFragment.Builder.() -> Unit): MessageAlertDialogFragment {
-            val builder = MessageAlertDialogFragment.Builder(fragment)
-            builder.f()
-            return builder.build()
+        fun newInstance(callback: AlertDialogFragmentCallback? = null,
+                        requestCode: Int = -1,
+                        title: String = "",
+                        message: String = "",
+                        positiveButtonLabel: String = "",
+                        negativeButtonLabel: String = "",
+                        neutralButtonLabel: String = "",
+                        params: Bundle? = null): MessageAlertDialogFragment {
+            val dialogFragment = MessageAlertDialogFragment()
+
+            dialogFragment.arguments = Bundle()
+            dialogFragment.arguments.putInt(KEY_REQUEST_CODE, requestCode)
+            dialogFragment.arguments.putString(KEY_TITLE, title)
+            dialogFragment.arguments.putString(KEY_MESSAGE, message)
+            dialogFragment.arguments.putString(KEY_POSITIVE_BUTTON_LABEL, positiveButtonLabel)
+            dialogFragment.arguments.putString(KEY_NEGATIVE_BUTTON_LABEL, negativeButtonLabel)
+            dialogFragment.arguments.putString(KEY_NEUTRAL_BUTTON_LABEL, neutralButtonLabel)
+            dialogFragment.arguments.putSerializable(KEY_CALLBACK, callback)
+            dialogFragment.arguments.putBundle(KEY_PARAMS, params)
+
+            return dialogFragment
         }
     }
 
@@ -54,6 +63,15 @@ class MessageAlertDialogFragment : DialogFragment() {
             dismiss()
             callback?.onDismissListener(requestCode, which, params)
         }
+
+        val title = arguments?.getString(KEY_TITLE)
+        val message = arguments?.getString(KEY_MESSAGE)
+        val positiveButtonLabel = arguments?.getString(KEY_POSITIVE_BUTTON_LABEL)
+        val negativeButtonLabel = arguments?.getString(KEY_NEGATIVE_BUTTON_LABEL)
+        val neutralButtonLabel = arguments?.getString(KEY_NEUTRAL_BUTTON_LABEL)
+        callback = arguments?.getSerializable(KEY_CALLBACK) as? AlertDialogFragmentCallback
+        requestCode = arguments?.getInt(KEY_REQUEST_CODE) ?: -1
+        params = arguments?.getBundle(KEY_PARAMS)
 
         val builder = AlertDialog.Builder(activity, R.style.StandardAlertDialog)
         if (!TextUtils.isEmpty(title)) builder.setTitle(title)
@@ -69,57 +87,17 @@ class MessageAlertDialogFragment : DialogFragment() {
      * キャンセル処理
      */
     override fun onCancel(dialog: DialogInterface?) {
-        callback?.onDismissListener(requestCode, 0, params)
+        callback?.onDismissListener(requestCode, Activity.RESULT_CANCELED, params)
     }
 
     /**
      * ダイアログに対するコールバック
      */
-    interface AlertDialogFragmentCallback {
+    interface AlertDialogFragmentCallback : Serializable {
         /**
          * @param requestCode ダイアログ生成時に指定したリクエストコード
-         * @param resultCode  0 : Cancel, -1 : DialogInterface.BUTTON_POSITIVE, -2 : DialogInterface.BUTTON_NEGATIVE, -3 : DialogInterface.BUTTON_NEUTRAL
+         * @param resultCode  0 : Activity.RESULT_CANCELED, -1 : DialogInterface.BUTTON_POSITIVE, -2 : DialogInterface.BUTTON_NEGATIVE, -3 : DialogInterface.BUTTON_NEUTRAL
          */
         fun onDismissListener(requestCode: Int, resultCode: Int, params: Bundle?)
-    }
-
-    /**
-     * ダイアログ生成クラス
-     */
-    class Builder {
-        constructor(activity: AppCompatActivity) {
-            parentActivity = activity
-            parentFragment = null
-        }
-
-        constructor(fragment: Fragment) {
-            parentActivity = null
-            parentFragment = fragment
-        }
-
-        private val parentActivity: AppCompatActivity?
-        private val parentFragment: Fragment?
-        var callback: AlertDialogFragmentCallback? = null
-        var requestCode = -1
-        var title = ""
-        var message = ""
-        var positiveButtonLabel = ""
-        var negativeButtonLabel = ""
-        var neutralButtonLabel = ""
-        var params: Bundle? = null
-
-        fun build(): MessageAlertDialogFragment {
-            val dialogFragment = MessageAlertDialogFragment()
-            dialogFragment.requestCode = requestCode
-            dialogFragment.callback = callback
-            dialogFragment.title = title
-            dialogFragment.message = message
-            dialogFragment.positiveButtonLabel = positiveButtonLabel
-            dialogFragment.negativeButtonLabel = negativeButtonLabel
-            dialogFragment.neutralButtonLabel = neutralButtonLabel
-            dialogFragment.params = params
-
-            return dialogFragment
-        }
     }
 }

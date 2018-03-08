@@ -11,10 +11,10 @@ interface SettingFragmentListener {
 
         fun getFragment(): Fragment
                 = when (this) {
-            ALARM -> AlarmFragment()
-            PERSON -> PersonFragment()
-            TAKE_TIME -> TimetableFragment()
-            else -> SettingMenuFragment()
+            ALARM -> AlarmFragment.newInstance()
+            PERSON -> PersonFragment.newInstance()
+            TAKE_TIME -> TimetableFragment.newInstance()
+            else -> SettingMenuFragment.newInstance()
         }
 
     }

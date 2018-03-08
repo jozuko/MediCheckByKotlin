@@ -21,6 +21,10 @@ import javax.inject.Inject
 
 class AlarmFragment : ABaseFragment() {
 
+    companion object {
+        fun newInstance() = AlarmFragment()
+    }
+
     @Inject
     lateinit var settingFinderService: SettingFinderService
 

@@ -1,8 +1,10 @@
 package com.studiojozu.medicheck.resource.fragment
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -13,8 +15,20 @@ import com.studiojozu.medicheck.R
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     companion object {
+        const val KEY_REQUEST_CODE = "requestCode"
         const val KEY_HOUR_OF_DAY = "hourOfDay"
         const val KEY_MINUTE = "minute"
+
+        fun newInstance(requestCode: Int, hourOfDay: Int, minute: Int): TimePickerFragment {
+            val timePickerFragment = TimePickerFragment()
+
+            timePickerFragment.arguments = Bundle()
+            timePickerFragment.arguments.putInt(TimePickerFragment.KEY_REQUEST_CODE, requestCode)
+            timePickerFragment.arguments.putInt(TimePickerFragment.KEY_HOUR_OF_DAY, hourOfDay)
+            timePickerFragment.arguments.putInt(TimePickerFragment.KEY_MINUTE, minute)
+
+            return timePickerFragment
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -33,7 +47,9 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
             return
         }
 
-        arguments.putInt(KEY_HOUR_OF_DAY, hourOfDay)
-        arguments.putInt(KEY_MINUTE, minute)
+        val resultIntent = Intent()
+        resultIntent.putExtra(KEY_HOUR_OF_DAY, hourOfDay)
+        resultIntent.putExtra(KEY_MINUTE, minute)
+        parentFragment.onActivityResult(arguments?.getInt(KEY_REQUEST_CODE) ?: -1, Activity.RESULT_OK, resultIntent)
     }
 }

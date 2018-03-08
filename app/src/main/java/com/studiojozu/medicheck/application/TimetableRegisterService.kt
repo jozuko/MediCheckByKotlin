@@ -3,6 +3,7 @@ package com.studiojozu.medicheck.application
 import com.studiojozu.medicheck.di.MediCheckApplication
 import com.studiojozu.medicheck.domain.model.medicine.repository.MediTimeRelationRepository
 import com.studiojozu.medicheck.domain.model.setting.Timetable
+import com.studiojozu.medicheck.domain.model.setting.TimetableDisplayOrderType
 import com.studiojozu.medicheck.domain.model.setting.repository.TimetableRepository
 import javax.inject.Inject
 
@@ -17,10 +18,16 @@ class TimetableRegisterService(application: MediCheckApplication) {
         application.component.inject(this)
     }
 
-    fun insert(timetable: Timetable) =
+    fun save(timetable: Timetable) {
+        if (timetableRepository.findById(timetable.timetableId) != null) {
             timetableRepository.insert(timetable)
+            return
+        }
 
-    fun update(timetables: List<Timetable>) =
+        timetableRepository.insert(timetable.copy(timetableDisplayOrder = TimetableDisplayOrderType(timetableRepository.findAll().count() + 1)))
+    }
+
+    fun save(timetables: List<Timetable>) =
             timetableRepository.update(timetables)
 
     fun delete(timetable: Timetable): ErrorType {
