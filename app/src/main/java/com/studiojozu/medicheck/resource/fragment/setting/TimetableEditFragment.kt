@@ -50,7 +50,7 @@ class TimetableEditFragment : DialogFragment(), DialogInterface.OnClickListener 
 
     @SuppressLint("InflateParams")
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = View.inflate(context, R.layout.fragment_setting_alarm_edit, null)
+        val view = View.inflate(context, R.layout.fragment_setting_timetable_edit, null)
         unBinder = ButterKnife.bind(this@TimetableEditFragment, view)
 
         timetable = arguments?.get(KEY_TIMETABLE) as? Timetable ?: Timetable()
