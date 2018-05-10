@@ -18,7 +18,7 @@ abstract class ADateType<out C : ADateType<C>> : AValueObject<Long, C>, Comparab
 
     override val displayValue: String
         get() {
-            val format = SimpleDateFormat.getDateInstance(DateFormat.SHORT)
+            val format = SimpleDateFormat("yy/MM/dd", Locale.JAPAN)
             return format.format(value.time)
         }
 
